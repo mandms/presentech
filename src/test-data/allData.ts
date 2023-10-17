@@ -16,15 +16,15 @@ const shapeCircle: TShape = {
 };
 
 const shapeTriangle: TShape = {
-  backgroundColor: "#fff",
-  borderColor: "#000",
+  backgroundColor: "#ff6700",
+  borderColor: "#774177",
   id: "2",
   location: {
-    x: 700,
+    x: 500,
     y: 90,
   },
   size: {
-    width: 90,
+    width: 120,
     height: 90,
   },
   type: ShapeType.Triangle,
@@ -40,7 +40,7 @@ const shapeSquare: TShape = {
   },
   size: {
     width: 200,
-    height: 70,
+    height: 400,
   },
   type: ShapeType.Square,
 };
@@ -49,7 +49,7 @@ const img: Image = {
   id: "4",
   location: {
     x: 400,
-    y: 500,
+    y: 350,
   },
   path: "./logo192.png",
   size: {
@@ -109,8 +109,8 @@ const slide: TSlide = {
 };
 
 const presentation: TPresentation = {
-  name: "",
-  slides: [slide],
+  name: "Моя презинтация",
+  slides: [slide, slide, slide, slide, slide, slide, slide, slide],
 };
 
 const action: Action = {
