@@ -8,14 +8,12 @@ interface IPresentationProps {
 
 function Presentation(props: IPresentationProps): JSX.Element {
   const presentation = props.presentation;
-  const currentSlide = presentation.slides[0];
+  const currentSlide = presentation.slides[presentation.currentSlideId];
   return (
     <div className={styles.container}>
       <ol className={styles.preview}>
         {presentation.slides.map(slide => (
-          <li>
-            <Slide isPreview={true} key={slide.id} slide={slide} />
-          </li>
+          <Slide isPreview={true} key={slide.id} slide={slide} />
         ))}
       </ol>
       <div className={styles["container-current"]}>

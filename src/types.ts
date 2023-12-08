@@ -29,9 +29,11 @@ type TText = TItem & {
   content: TChar[];
 };
 
-type Image = TItem & {
+type IBackgroundImage = {
   path: string;
 };
+
+type TImage = TItem & IBackgroundImage;
 
 enum ShapeType {
   Triangle,
@@ -47,13 +49,14 @@ type TShape = TItem & {
 
 type TSlide = {
   id: number;
-  background: Image | string;
+  background: IBackgroundImage | string;
   items?: TItem[];
 };
 
 type TPresentation = {
   name: string;
   slides: TSlide[];
+  currentSlideId: number;
 };
 
 type Action = {
@@ -71,4 +74,4 @@ type TEditor = {
 };
 
 export { ShapeType };
-export type { TItem, TText, Image, TShape, TSlide, Action, History, TPresentation, TChar, TEditor };
+export type { TItem, TText, TImage, TShape, TSlide, Action, History, TPresentation, TChar, TEditor };

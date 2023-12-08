@@ -1,6 +1,7 @@
-import { TEditor } from "../../types";
+import { TEditor, TPresentation } from "../../types";
 import Presentation from "../Presentation/Presentation";
-import styles from "./Editor.module.css";
+import ToolBar from "./ToolBar/ToolBar";
+import { useState } from "react";
 
 interface IEditorProps {
   editor: TEditor;
@@ -8,25 +9,15 @@ interface IEditorProps {
 
 function Editor(props: IEditorProps): JSX.Element {
   const editor = props.editor;
+  const [presentation, setPresentation] = useState(editor.presentation);
+  const changePresentation = (data: TPresentation) => {
+    setPresentation(data);
+  };
+
   return (
     <>
-      <div>
-        <ul className={styles.toolbar}>
-          <a className={styles.link} href="#">
-            Назад
-          </a>
-          <a className={styles.link} href="#">
-            вперед
-          </a>
-          <a className={styles.link} href="#">
-            шрифт
-          </a>
-          <a className={styles.link} href="#">
-            размер шрифта
-          </a>
-        </ul>
-      </div>
-      <Presentation presentation={editor.presentation} />
+      <ToolBar changePresentation={changePresentation} presentation={presentation} />
+      <Presentation presentation={presentation} />
     </>
   );
 }

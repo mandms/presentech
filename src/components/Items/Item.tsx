@@ -1,13 +1,14 @@
-import { Image, TShape, TItem, TText } from "../../types";
+import { TShape, TItem, TText, TImage } from "../../types";
 import Text from "./Text";
-import Shape from "./Shape";
+import Shape from "./Shape/Shape";
+import Image from "./Image/Image";
 
 interface IItemProps {
   item: TItem;
 }
 
-function isImage(item: TItem): item is Image {
-  return (item as Image).path !== undefined;
+function isImage(item: TItem): item is TImage {
+  return (item as TImage).path !== undefined;
 }
 
 function isText(item: TItem): item is TText {
@@ -18,31 +19,13 @@ function isShape(item: TItem): item is TShape {
   return (item as TShape).type !== undefined;
 }
 
-function Item(props: IItemProps): JSX.Element {
-  const item = props.item;
+function Item({ item }: IItemProps): JSX.Element {
   return (
-    <>
+    <g>
       {isText(item) && <Text text={item} />}
-      {isImage(item) && (
-        <svg
-          x={item.location.x}
-          y={item.location.y}
-          width={item.size.width}
-          height={item.size.height}
-          xmlns="http://www.w3.org/2000/svg"
-          xmlns:xlink="http://www.w3.org/1999/xlink"
-        >
-          <image
-            style={{
-              width: "100%",
-              height: "100%",
-            }}
-            xlinkHref={item.path}
-          />
-        </svg>
-      )}
+      {isImage(item) && <Image image={item} />}
       {isShape(item) && <Shape shape={item} />}
-    </>
+    </g>
   );
 }
 

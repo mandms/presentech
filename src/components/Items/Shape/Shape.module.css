@@ -4,4 +4,5 @@
 
 .shape {
   cursor: pointer;
+  stroke-width: 1;
 }

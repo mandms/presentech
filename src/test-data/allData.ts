@@ -1,4 +1,4 @@
-import { Action, TChar, TEditor, History, Image, TPresentation, ShapeType, TSlide, TText, TShape } from "../types";
+import { Action, TChar, TEditor, History, TImage, TPresentation, ShapeType, TSlide, TText, TShape } from "../types";
 
 const shapeCircle: TShape = {
   backgroundColor: "#fff",
@@ -25,7 +25,7 @@ const shapeTriangle: TShape = {
   },
   size: {
     width: 120,
-    height: 90,
+    height: 120,
   },
   type: ShapeType.Triangle,
 };
@@ -39,22 +39,22 @@ const shapeSquare: TShape = {
     y: 50,
   },
   size: {
-    width: 200,
-    height: 400,
+    width: 400,
+    height: 100,
   },
   type: ShapeType.Square,
 };
 
-const img: Image = {
+const img: TImage = {
   id: "4",
-  location: {
-    x: 400,
-    y: 350,
-  },
   path: "./logo192.png",
   size: {
     width: 100,
     height: 100,
+  },
+  location: {
+    x: 400,
+    y: 350,
   },
 };
 
@@ -86,31 +86,71 @@ const text: TText = {
     y: 500,
   },
   size: {
-    width: 400,
-    height: 500,
+    width: 100,
+    height: 60,
   },
 };
 
 const slide: TSlide = {
   background: {
     path: "./img.png",
-    id: "1",
-    size: {
-      width: 400,
-      height: 400,
-    },
-    location: {
-      x: 0,
-      y: 0,
-    },
   },
   id: 0,
   items: [text, img, shapeCircle, shapeSquare, shapeTriangle],
 };
 
-const presentation: TPresentation = {
+const slide1: TSlide = {
+  background: {
+    path: "./img.png",
+  },
+  id: 1,
+  items: [text, img, shapeCircle, shapeSquare, shapeTriangle],
+};
+
+const slide2: TSlide = {
+  background: {
+    path: "./img.png",
+  },
+  id: 2,
+  items: [text, img, shapeCircle, shapeSquare, shapeTriangle],
+};
+
+const slide3: TSlide = {
+  background: {
+    path: "./img.png",
+  },
+  id: 3,
+  items: [text, img, shapeCircle, shapeSquare, shapeTriangle],
+};
+
+const slide4: TSlide = {
+  background: {
+    path: "./img.png",
+  },
+  id: 4,
+  items: [text, img, shapeCircle, shapeSquare, shapeTriangle],
+};
+
+const slide5: TSlide = {
+  background: {
+    path: "./img.png",
+  },
+  id: 5,
+  items: [text, img, shapeCircle, shapeSquare, shapeTriangle],
+};
+
+const slide6: TSlide = {
+  background: {
+    path: "./img.png",
+  },
+  id: 6,
+  items: [text, img, shapeCircle, shapeSquare, shapeTriangle],
+};
+
+export const presentation: TPresentation = {
   name: "Моя презинтация",
-  slides: [slide, slide, slide, slide, slide, slide, slide, slide],
+  slides: [slide, slide1, slide2, slide3, slide4, slide5, slide6],
+  currentSlideId: 2,
 };
 
 const action: Action = {

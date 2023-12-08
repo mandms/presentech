@@ -1,5 +1,8 @@
 .slide {
   aspect-ratio: 16 / 9;
   margin: auto;
-  overflow: visible;
+}
+
+.picture {
+  width: 100%;
 }
