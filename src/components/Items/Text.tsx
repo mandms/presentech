@@ -17,8 +17,8 @@ function Text(props: ITextProps): JSX.Element {
                 style={{
                   fill: char.color,
                   fontFamily: char.fontFamily,
-                  fontWeight: char.bold && "bold",
-                  fontStyle: char.italic && "italic",
+                  fontWeight: (char.bold && "bold") || undefined,
+                  fontStyle: (char.italic && "italic") || undefined,
                 }}
               >
                 {char.symbol}

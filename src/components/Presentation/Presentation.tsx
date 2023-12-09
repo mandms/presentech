@@ -13,7 +13,9 @@ function Presentation(props: IPresentationProps): JSX.Element {
     <div className={styles.container}>
       <ol className={styles.preview}>
         {presentation.slides.map(slide => (
-          <Slide isPreview={true} key={slide.id} slide={slide} />
+          <div className={styles.wrap} key={slide.id}>
+            <Slide isPreview={true} slide={slide} />
+          </div>
         ))}
       </ol>
       <div className={styles["container-current"]}>

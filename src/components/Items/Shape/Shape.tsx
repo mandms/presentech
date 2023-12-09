@@ -23,8 +23,12 @@ function Shape({ shape }: IShapeProps): JSX.Element {
       y={shape.location.y}
       className={styles.svg}
     >
-      {shape.type === ShapeType.Triangle && <polygon className={styles.shape} points="0,100 50,0 100,100" />}
-      {shape.type === ShapeType.Square && <polygon className={styles.shape} points="0,100 0,0 100,0 100,100" />}
+      {shape.type === ShapeType.Triangle && (
+        <polygon className={styles.shape} vectorEffect="non-scaling-stroke" points="0,100 50,0 100,100" />
+      )}
+      {shape.type === ShapeType.Square && (
+        <polygon className={styles.shape} vectorEffect="non-scaling-stroke" points="0,100 0,0 100,0 100,100" />
+      )}
       {shape.type === ShapeType.Circle && <circle className={styles.shape} cx="50" cy="50" r="50" />}
     </svg>
   );

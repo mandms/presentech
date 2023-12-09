@@ -40,7 +40,7 @@ const shapeSquare: TShape = {
   },
   size: {
     width: 400,
-    height: 100,
+    height: 50,
   },
   type: ShapeType.Square,
 };
@@ -150,7 +150,7 @@ const slide6: TSlide = {
 export const presentation: TPresentation = {
   name: "Моя презинтация",
   slides: [slide, slide1, slide2, slide3, slide4, slide5, slide6],
-  currentSlideId: 2,
+  currentSlideId: 0,
 };
 
 const action: Action = {

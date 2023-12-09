@@ -28,3 +28,11 @@
   overflow-x: hidden;
   overflow-y: scroll;
 }
+
+.wrap {
+  display: inline-table;
+  width: 200px;
+  height: 70px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
