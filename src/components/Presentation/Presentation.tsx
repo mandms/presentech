@@ -14,7 +14,10 @@ function Presentation(props: IPresentationProps): JSX.Element {
       <ol className={styles.preview}>
         {presentation.slides.map(slide => (
           <div className={styles.wrap} key={slide.id}>
-            <Slide isPreview={true} slide={slide} />
+              <div className={styles.miniSlide}>
+                  <span>{slide.id + 1}</span>
+                  <Slide isPreview={true} slide={slide} />
+              </div>
           </div>
         ))}
       </ol>
