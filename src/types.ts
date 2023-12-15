@@ -1,10 +1,10 @@
 type TItem = {
   id: string;
   size: Size;
-  location: Location;
+  location: TLocation;
 };
 
-type Location = {
+type TLocation = {
   x: number;
   y: number;
 };
@@ -59,12 +59,8 @@ type TPresentation = {
   currentSlideId: number;
 };
 
-type Action = {
-  presentationCopy: TPresentation;
-};
-
 type History = {
-  actions: Action[];
+  actions: TPresentation[];
   actionNumber: number;
 };
 
@@ -74,4 +70,4 @@ type TEditor = {
 };
 
 export { ShapeType };
-export type { TItem, TText, TImage, TShape, TSlide, Action, History, TPresentation, TChar, TEditor };
+export type { TItem, TText, TImage, TShape, TSlide, History, TPresentation, TChar, TEditor, TLocation };

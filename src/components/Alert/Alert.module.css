@@ -1,0 +1,32 @@
+.error {
+  color: #f00;
+  border-color: #f00;
+}
+
+.box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  padding: 20px;
+  text-align: center;
+  background: white;
+  border: 2px solid;
+  border-radius: 4px;
+  transform: translate(-50%, -50%);
+}
+
+.success {
+  color: #000;
+  border-color: #018001;
+}
+
+.primary {
+  color: #000;
+  border-color: #2525d3;
+}
+
+.title {
+}
+
+.message {
+}

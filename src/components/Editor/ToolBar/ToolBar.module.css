@@ -22,3 +22,88 @@
   background-color: #fff;
   border-radius: 15px;
 }
+
+.input-file {
+  position: relative;
+  display: inline-block;
+}
+
+.input-file span {
+  position: relative;
+  box-sizing: border-box;
+  display: inline-block;
+  height: 20px;
+  margin: 0;
+  font-size: 14px;
+  line-height: 22px;
+  color: rgb(255 255 255);
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  cursor: pointer;
+  background-color: #768088;
+  border: none;
+  border-radius: 4px;
+  outline: none;
+  transition: background-color 0.2s;
+}
+
+.item {
+}
+
+.input-file input[type="file"] {
+  display: none;
+}
+
+/* Focus */
+.input-file input[type="file"]:focus + span {
+  box-shadow: 0 0 0 0.2rem rgb(0 123 255 / 25%);
+}
+
+/* Hover/active */
+.input-file:hover span {
+  background-color: #768099;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropbtn {
+  font-size: 16px;
+  border: none;
+}
+
+.primitives {
+  position: absolute;
+  z-index: 1;
+  display: none;
+  min-width: 160px;
+  background-color: #f1f1f1;
+  box-shadow: 0 8px 16px 0 rgb(0 0 0 / 20%);
+}
+
+/* Links inside the dropdown */
+.primitives a {
+  display: block;
+  padding: 12px 16px;
+  color: black;
+  text-decoration: none;
+}
+
+/* Change color of dropdown links on hover */
+.primitives a:hover {
+  background-color: #ddd;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .primitives {
+  display: block;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+  color: #fff;
+  background-color: #768088;
+}
