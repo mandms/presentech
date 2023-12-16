@@ -63,11 +63,15 @@ function ToolBar({
           <div className={styles.dropdown}>
             <button className={styles.dropbtn}>Примитивы</button>
             <div className={styles.primitives}>
-              <a href="#" onClick={() => addPrimitive(ShapeType.Triangle, { x: 40, y: 50 }, 1)}>
+              <a href="#" onClick={() => addPrimitive(ShapeType.Square, { x: 40, y: 50 }, 1)}>
                 Квадрат
               </a>
-              <a href="#">Круг</a>
-              <a href="#">Треугольник</a>
+              <a href="#" onClick={() => addPrimitive(ShapeType.Triangle, {x: 40, y: 50}, 1)}>
+                Треугольник
+              </a>
+              <a href="#" onClick={() => addPrimitive(ShapeType.Circle, {x: 40, y: 50}, 1)}>
+                Круг
+              </a>
             </div>
           </div>
         </li>
