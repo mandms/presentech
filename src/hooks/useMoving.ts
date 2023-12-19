@@ -21,6 +21,7 @@ function useMoving(itemRef: RefObject<HTMLDivElement>) {
     };
 
     const onMouseDown = (e: MouseEvent) => {
+      onMouseUp();
       moving.current = true;
       position.current.startX = e.clientX;
       position.current.startY = e.clientY;
@@ -32,9 +33,6 @@ function useMoving(itemRef: RefObject<HTMLDivElement>) {
       const y = e.clientY - position.current.startY + position.current.lastY;
       item.style.left = `${x}px`;
       item.style.top = `${y}px`;
-      console.log(x, " - ", y);
-      console.log(item.style.left, " + ", item.style.top);
-      console.log(e.clientX - position.current.startX, " = ", e.clientY - position.current.startY);
     };
 
     item.addEventListener("mousedown", e => onMouseDown(e as unknown as MouseEvent));

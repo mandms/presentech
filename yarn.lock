@@ -3340,34 +3340,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lab3-boilerplate@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "lab3-boilerplate@workspace:."
-  dependencies:
-    "@types/react": ^18.2.15
-    "@types/react-dom": ^18.2.7
-    "@typescript-eslint/eslint-plugin": ^6.0.0
-    "@typescript-eslint/parser": ^6.0.0
-    "@vitejs/plugin-react": ^4.0.3
-    cspell: ^6.31.1
-    eslint: ^8.45.0
-    eslint-config-prettier: ^8.8.0
-    eslint-plugin-react-hooks: ^4.6.0
-    eslint-plugin-react-refresh: ^0.4.3
-    npm-run-all: ^4.1.5
-    prettier: ^3.0.0
-    react: ^18.2.0
-    react-dom: ^18.2.0
-    react-redux: ^9.0.4
-    redux: ^5.0.0
-    stylelint: ^15.10.1
-    stylelint-config-recess-order: ^4.3.0
-    stylelint-config-standard: ^34.0.0
-    typescript: ^5.0.2
-    vite: ^4.4.5
-  languageName: unknown
-  linkType: soft
-
 "levn@npm:^0.4.1":
   version: 0.4.1
   resolution: "levn@npm:0.4.1"
@@ -4099,6 +4071,34 @@ __metadata:
   checksum: cd192ec0d0a8e4c6da3bb80e4f62afe336df3f76271ac6deb0e6a36187133b6073a19e9727a1ff108cd8b9982e4768850d413baa71214dd80c7979617dca827a
   languageName: node
   linkType: hard
+
+"presentech@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "presentech@workspace:."
+  dependencies:
+    "@types/react": ^18.2.15
+    "@types/react-dom": ^18.2.7
+    "@typescript-eslint/eslint-plugin": ^6.0.0
+    "@typescript-eslint/parser": ^6.0.0
+    "@vitejs/plugin-react": ^4.0.3
+    cspell: ^6.31.1
+    eslint: ^8.45.0
+    eslint-config-prettier: ^8.8.0
+    eslint-plugin-react-hooks: ^4.6.0
+    eslint-plugin-react-refresh: ^0.4.3
+    npm-run-all: ^4.1.5
+    prettier: ^3.0.0
+    react: ^18.2.0
+    react-dom: ^18.2.0
+    react-redux: ^9.0.4
+    redux: ^5.0.0
+    stylelint: ^15.10.1
+    stylelint-config-recess-order: ^4.3.0
+    stylelint-config-standard: ^34.0.0
+    typescript: ^5.0.2
+    vite: ^4.4.5
+  languageName: unknown
+  linkType: soft
 
 "prettier@npm:^3.0.0":
   version: 3.0.0

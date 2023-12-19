@@ -48,7 +48,7 @@ type TShape = TItem & {
 };
 
 type TSlide = {
-  id: number;
+  id: string;
   background: IBackgroundImage | string;
   items?: TItem[];
 };
@@ -56,7 +56,7 @@ type TSlide = {
 type TPresentation = {
   name: string;
   slides: TSlide[];
-  currentSlideId: number;
+  currentSlideId: string;
 };
 
 type History = {

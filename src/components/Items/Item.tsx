@@ -8,6 +8,7 @@ import useMoving from "../../hooks/useMoving.ts";
 interface IItemProps {
   item: TItem;
   isMovable: boolean;
+  coefficient: number;
 }
 
 function isImage(item: TItem): item is TImage {
@@ -22,7 +23,7 @@ function isShape(item: TItem): item is TShape {
   return (item as TShape).type !== undefined;
 }
 
-function Item({ item, isMovable }: IItemProps): JSX.Element {
+function Item({ item, isMovable, coefficient }: IItemProps): JSX.Element {
   const itemRef = useRef<HTMLDivElement>(null);
   isMovable && useMoving(itemRef);
   return (
@@ -30,13 +31,13 @@ function Item({ item, isMovable }: IItemProps): JSX.Element {
       ref={itemRef}
       style={{
         position: "absolute",
-        left: item.location.x,
-        top: item.location.y,
+        left: item.location.x * coefficient,
+        top: item.location.y * coefficient,
       }}
     >
-      {isText(item) && <Text text={item} />}
+      {isText(item) && <Text coefficient={coefficient} text={item} />}
       {isImage(item) && <Image image={item} />}
-      {isShape(item) && <Shape shape={item} />}
+      {isShape(item) && <Shape coefficient={coefficient} shape={item} />}
     </div>
   );
 }

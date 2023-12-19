@@ -2,9 +2,10 @@ import { presentationReducer } from "./presentationReducer.ts";
 import { TEditor, TPresentation, TSlide } from "../types.ts";
 import { TAction } from "./actionType.ts";
 import { store } from "./store.ts";
+import { uid } from "../utils/uid.ts";
 
 const initSlide: TSlide = {
-  id: 1,
+  id: uid(),
   background: "#fff",
   items: [],
 };

@@ -2,13 +2,18 @@ import { TText } from "../../types";
 
 interface ITextProps {
   text: TText;
+  coefficient: number;
 }
 
-function Text(props: ITextProps): JSX.Element {
-  const text = props.text;
+function Text({ text, coefficient }: ITextProps): JSX.Element {
   return (
     <>
-      <foreignObject x={text.location.x} y={text.location.y} width={text.size.width} height={text.size.height}>
+      <foreignObject
+        x={text.location.x}
+        y={text.location.y}
+        width={text.size.width * coefficient}
+        height={text.size.height * coefficient}
+      >
         <div contentEditable="true" suppressContentEditableWarning={true}>
           <p>
             {text.content.map(char => (

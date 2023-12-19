@@ -3,14 +3,15 @@ import styles from "./Shape.module.css";
 
 interface IShapeProps {
   shape: TShape;
+  coefficient: number;
 }
 
-function Shape({ shape }: IShapeProps): JSX.Element {
+function Shape({ shape, coefficient }: IShapeProps): JSX.Element {
   return (
     <svg
       version="1.1"
-      width={shape.size.width}
-      height={shape.size.height}
+      width={shape.size.width * coefficient}
+      height={shape.size.height * coefficient}
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
       xmlSpace="preserve"

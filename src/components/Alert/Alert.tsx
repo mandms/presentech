@@ -1,11 +1,13 @@
 import styles from "./Alert.module.css";
 import { Status } from "./Alert.types.ts";
+
 interface IErrorProps {
   title: string;
   message: string;
   status: Status;
   onClose: () => void;
 }
+
 function Alert({ title, message, status, onClose }: IErrorProps): JSX.Element {
   const errorStyle = () => {
     switch (status) {
