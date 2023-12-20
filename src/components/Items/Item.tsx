@@ -25,7 +25,7 @@ function isShape(item: TItem): item is TShape {
 
 function Item({ item, isMovable, coefficient }: IItemProps): JSX.Element {
   const itemRef = useRef<HTMLDivElement>(null);
-  isMovable && useMoving(itemRef);
+  useMoving(itemRef, isMovable);
   return (
     <div
       ref={itemRef}

@@ -22,26 +22,29 @@ function addPrimitive(
   location: TLocation,
   slideId: string,
 ): TPresentation {
-  let shape: TShape = {
+  const typeShape = () => {
+    switch (shapeType) {
+      case ShapeType.Circle:
+        return ShapeType.Circle;
+      case ShapeType.Triangle:
+        return ShapeType.Triangle;
+      case ShapeType.Square:
+        return ShapeType.Square;
+    }
+  };
+
+  const shape: TShape = {
     backgroundColor: "#fff",
     borderColor: "#000",
     id: uid(),
-    location,
+    location: location,
     size: {
       width: 90,
       height: 90,
     },
-    type: ShapeType.Square,
+    type: typeShape(),
   };
 
-  switch (shapeType) {
-    case ShapeType.Circle:
-      shape.type = ShapeType.Circle;
-      break;
-    case ShapeType.Triangle:
-      shape.type = ShapeType.Triangle;
-      break;
-  }
   const slide = presentation.slides.find(slide => slide.id === slideId);
   slide?.items?.push(shape);
   return {
