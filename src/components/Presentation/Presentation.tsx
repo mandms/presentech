@@ -44,6 +44,7 @@ const mapDispatchToProps = (dispatch: AppDispatch) => {
         payload: { slideId: id },
       });
     },
+
   };
 };
 

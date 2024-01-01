@@ -1,11 +1,16 @@
-import styles from "./ToolBar.module.css";
-import { saveJsonObjToFile } from "../../../utils/save";
+import styles from "./Menu.module.css";
+import { saveJsonObjToFile } from "../../../utils/save.ts";
 import React, { useContext } from "react";
 import { readJsonFile } from "../../../utils/readJson.ts";
-import { TPresentation } from "../../../types";
+import { TPresentation } from "../../../types.ts";
 import { connect } from "react-redux";
 import { AppDispatch, RootState } from "../../../redux/rootReducer.ts";
 import { CollapseToolBarContext } from "../../../context/collapseToolBar.ts";
+import logo from "../../../assets/logo.png";
+import addSlide from "../../../assets/addSlide.png";
+import download from "../../../assets/downloadFile.png";
+import open from "../../../assets/openFile.png";
+import Title from "../Title/Title.tsx";
 
 type ToolBarProps = {
   changePresentation: (data: TPresentation) => void;
@@ -14,7 +19,7 @@ type ToolBarProps = {
   createSlide: () => void;
 };
 
-function ToolBar({ changePresentation, presentation, setError, createSlide }: ToolBarProps): JSX.Element {
+function Menu({ changePresentation, presentation, setError, createSlide }: ToolBarProps): JSX.Element {
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       try {
@@ -36,30 +41,43 @@ function ToolBar({ changePresentation, presentation, setError, createSlide }: To
   const { hidden, setHidden } = useContext(CollapseToolBarContext);
 
   return (
-    <div>
-      <ul className={styles.toolbar}>
-        <p>{presentation.name}</p>
-        <p className={styles.link}>Текущий слайд: {findSlideById() + 1}</p>
-        <a className={styles.link} href="#" onClick={() => createSlide()}>
-          + Добавить слайд
-        </a>
-        <a className={styles.link} onClick={GetJSONFile} href="#">
-          Сохранить презентацию в JSON
-        </a>
-        <label className={styles["input-file"]}>
-          <input type="file" accept="application/json" name="file" onChange={handleFileChange} />
-          <span>Выберите файл</span>
-        </label>
-        <button
-          className={[styles.link, styles.collapse].join(" ")}
-          onClick={() => (setHidden ? setHidden(!hidden) : null)}
-        >
-          Editor Menu
-        </button>
-      </ul>
-    </div>
+      <div>
+        <ul className={styles.toolbar}>
+          <div className={styles.left}>
+            <div className={styles.about}>
+              <a href="#">
+                <img className={styles.logo} src={logo}/>
+              </a>
+              < Title />
+            </div>
+            <div className={styles.current}>
+              <p className={styles.link}>Текущий слайд: {findSlideById() + 1}</p>
+              <a href="#" onClick={() => createSlide()}>
+                <img className={styles.add} src={addSlide}/>
+              </a>
+            </div>
+          </div>
+          <div className={styles.right}>
+            <div className={styles.file}>
+              <a className={styles.link} onClick={GetJSONFile} href="#">
+              <img className={styles.download} src={download}/>
+              </a>
+              <label className={styles["input-file"]}>
+                <input type="image" src={open} className={styles.open} accept="application/json" name="file" onChange={handleFileChange}/>
+              </label>
+            </div>
+            <button
+                className={[styles.input, styles.collapse].join(" ")}
+                onClick={() => (setHidden ? setHidden(!hidden) : null)}
+            >
+              Editor
+            </button>
+          </div>
+        </ul>
+      </div>
   );
 }
+
 const mapStateToProps = (state: RootState) => {
   return {
     presentation: state.presentation,
@@ -88,4 +106,5 @@ const mapDispatchToProps = (dispatch: AppDispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ToolBar);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Menu);

@@ -1,5 +1,5 @@
 import Presentation from "../Presentation/Presentation";
-import ToolBar from "./ToolBar/ToolBar";
+import ToolBar from "../Header/Menu/Menu.tsx";
 import { useMemo, useState } from "react";
 import Alert from "../Alert/Alert.tsx";
 import { Status } from "../Alert/Alert.types.ts";
@@ -19,12 +19,9 @@ function Editor() {
 
   return (
     <>
-      {error && <Alert title={"Ошибка"} message={error.message} status={Status.ERROR} onClose={() => setError(null)} />}
       <CollapseToolBarContext.Provider value={collapseToolBarValue}>
         <ToolBar />
-        <Presentation />
       </CollapseToolBarContext.Provider>
-      <Footer />
     </>
   );
 }

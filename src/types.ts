@@ -59,6 +59,8 @@ type TPresentation = {
   currentSlideId: string;
 };
 
+
+
 type History = {
   actions: TPresentation[];
   actionNumber: number;

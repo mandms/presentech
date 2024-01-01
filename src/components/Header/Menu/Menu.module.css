@@ -3,44 +3,101 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
   width: auto;
-  height: 40px;
+  height: 60px;
   padding: 0 60px;
-  background-color: #edf2fa;
+  margin-right: 20px;
+  margin-left: 20px;
+  background-color: rgb(183 255 206 / 55%);
   border-radius: 20px;
+}
+
+.left, .right {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-right: 20px;
+  margin-left: 20px;
+}
+
+.about, .current, .file {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-right: 20px;
+  margin-left: 20px;
+}
+
+.name {
+  height: 30px;
+  font-family: Tahoma;
+  background: #fff;
+  border-radius: 80px;
+  border: 2px solid #348d40;
+  outline: none;
+}
+
+.name:hover {
+  border-color: #e2e2e2;
+  transition: 250ms;
+}
+
+.name:focus {
+  border-color: #9c15a4;
+  transition: 250ms;
+}
+
+
+.logo {
+  width: auto;
+  height: 55px;
+  vertical-align: middle;
+}
+
+.current {
+  height: 30px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  background-color: #fff;
+  border-radius: 80px;
+  border: 2px solid #348d40;
 }
 
 .link {
   padding: 5px 20px;
-  margin-inline: 20px;
   font: normal 400 14px/20px serif;
   color: #768088;
   text-align: center;
 }
 
-.link:first-child {
-  display: block;
-  background-color: #fff;
-  border-radius: 15px;
+.add, .download, .open {
+  width: auto;
+  height: 30px;
+  margin-left: 10px;
+  vertical-align: middle;
 }
 
-.input-file {
+.add {
+  padding-right: 10px;
+}
+
+.input {
   position: relative;
   display: inline-block;
 }
 
-.input-file span {
+.input {
   position: relative;
   box-sizing: border-box;
-  height: 20px;
+  height: 30px;
   padding: 5px 20px;
   color: #fff;
   text-align: center;
   text-decoration: none;
   vertical-align: middle;
   cursor: pointer;
-  background-color: #768088;
+  background-color: #4b984a;
   border: none;
   border-radius: 4px;
   outline: none;
@@ -51,9 +108,11 @@
 }
 
 .input-file:hover span {
-  background-color: #768099;
+  background-color: #4b984a;
 }
 
-.collapse {
-  margin-left: auto;
+.file {
+  background-color: #fff;
+  border-radius: 80px;
+  border: 2px solid #348d40;
 }
