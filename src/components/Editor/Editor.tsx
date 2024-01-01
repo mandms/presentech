@@ -21,6 +21,7 @@ function Editor() {
     <>
       <CollapseToolBarContext.Provider value={collapseToolBarValue}>
         <ToolBar />
+        <Presentation />
       </CollapseToolBarContext.Provider>
     </>
   );
