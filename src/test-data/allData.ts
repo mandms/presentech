@@ -64,7 +64,7 @@ const charA: TChar = {
   bold: false,
   symbol: "A",
   color: "#000",
-  fonSize: 0,
+  fontSize: 0,
   fontFamily: "sans-serif",
   italic: true,
 };
@@ -74,7 +74,7 @@ const charB: TChar = {
   bold: true,
   symbol: "B",
   color: "#000",
-  fonSize: 0,
+  fontSize: 0,
   fontFamily: "sans-serif",
   italic: false,
 };
@@ -84,7 +84,7 @@ const charC: TChar = {
   bold: true,
   symbol: "C",
   color: "#ff0000",
-  fonSize: 0,
+  fontSize: 0,
   fontFamily: "sans-serif",
   italic: false,
 };

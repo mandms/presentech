@@ -1,5 +1,5 @@
 import { TAction } from "./actionType.ts";
-import { ShapeType, TLocation, TPresentation, TShape, TSlide, TText, TChar } from "../types.ts";
+import { ShapeType, TLocation, TPresentation, TShape, TSlide, TText, TChar, TImage } from "../types.ts";
 import { uid } from "../utils/uid.ts";
 
 function createSlide(presentation: TPresentation): TPresentation {
@@ -58,7 +58,10 @@ function addText(presentation: TPresentation, text: string, location: TLocation,
   const slide = presentation.slides.find(slide => slide.id === slideId);
   const textItems: TText = {
     id: uid(),
-    size: { width: 50, height: 20 },
+    size: {
+      width: 50,
+      height: 20
+    },
     location: { x: location.x, y: location.y },
     content: [],
   };
@@ -84,14 +87,35 @@ function addText(presentation: TPresentation, text: string, location: TLocation,
   };
 }
 
-function addBackground(presentation: TPresentation, imageUrl: string, slideId: string): TPresentation {
+function addImage(presentation: TPresentation, path: string, location: TLocation, dimensions: { width:number, height:number }, slideId: string): TPresentation {
+  const slide = presentation.slides.find(slide => slide.id === slideId);
+  if (dimensions.width > 600 || dimensions.height > 600) {
+    dimensions.width = dimensions.width - 400
+    dimensions.height = dimensions.height - 400
+  }
+  const imageItems: TImage = {
+    id: uid(),
+    size: {
+      width: dimensions.width,
+      height: dimensions.height
+    },
+    location: { x: location.x, y: location.y },
+    path: path,
+  };
+
+
+  slide?.items?.push(imageItems);
+  return {
+    ...presentation,
+    slides: [...presentation.slides],
+    currentSlideId: presentation.currentSlideId,
+  };
+}
+
+function addBackground(presentation: TPresentation, path: string, slideId: string): TPresentation {
   const slide = presentation.slides.find(slide => slide.id === slideId);
   if (slide) {
-    if (typeof slide.background === "string") {
-      slide.background = { path: imageUrl };
-    } else {
-      slide.background.path = imageUrl;
-    }
+    slide.background = { path: path };
   }
   return {
     ...presentation,
@@ -137,9 +161,13 @@ export const presentationReducer = (state: TPresentation = initState, action: TA
       const { text,location, slideId } = action.payload;
       return addText(state, text, location, slideId);
     }
+    case "ADD_IMAGE": {
+      const { path, location, dimensions, slideId } = action.payload;
+      return addImage(state, path, location, dimensions, slideId);
+    }
     case "ADD_BACKGROUND": {
-      const { imageUrl, slideId } = action.payload;
-      return addBackground(state, imageUrl, slideId);
+      const { path, slideId } = action.payload;
+      return addBackground(state, path, slideId);
     }
     default:
       return { ...state };

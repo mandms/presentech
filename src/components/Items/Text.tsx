@@ -1,4 +1,5 @@
 import { TText } from "../../types";
+import { minWidth } from "@material-ui/system";
 
 interface ITextProps {
   text: TText;
@@ -14,7 +15,7 @@ function Text({ text, coefficient }: ITextProps): JSX.Element {
         width={text.size.width * coefficient}
         height={text.size.height * coefficient}
       >
-        <div contentEditable="true" suppressContentEditableWarning={true}>
+        <div contentEditable="true" suppressContentEditableWarning={true} style={ {minWidth:100} }>
           <p>
             {text.content.map(char => (
               <span

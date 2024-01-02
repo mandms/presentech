@@ -10,24 +10,37 @@ type SideBarProps = {
   presentation: TPresentation;
   addPrimitive: (shapeType: ShapeType, location: TLocation, slideId: string) => void;
   addText: (text: string, location: TLocation, slideId: string) => void;
-  addBackground: (imageUrl: string, slideId: string) => void;
-  //addImage (path: string, location: TLocation, slideId: string) => void;
+  addBackground: (path: string, slideId: string) => void;
+  addImage: (path: string, location: TLocation, dimensions: { width:number, height:number }, slideId: string) => void;
 };
-function SideBar({ presentation, addPrimitive, addText, addBackground }: SideBarProps): JSX.Element {
+function SideBar({ presentation, addPrimitive, addText, addBackground, addImage }: SideBarProps): JSX.Element {
   const [showPrimitives, setShowPrimitives] = useState(false);
   const [showBack, setShowBack] = useState(false);
+  const [showImage, setShowImage] = useState(false);
   const { hidden } = useContext(CollapseToolBarContext);
-  //const [backgroundImage, setBackgroundImage] = useState("");
 
   const handleBackgroundImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      addBackground( imageUrl, presentation.currentSlideId);
+      const path = URL.createObjectURL(file);
+      addBackground( path, presentation.currentSlideId);
     }
   };
 
   const coords = {x: 10, y: 10};
+
+  const handleImage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const path = URL.createObjectURL(file);
+      const img = new Image();
+      img.onload = () => {
+        const dimensions = {width: img.width, height: img.height};
+        addImage( path, { x: coords.x, y: coords.y }, dimensions, presentation.currentSlideId);
+      }
+      img.src = path;
+    }
+  };
   const addFigure = (type: ShapeType) => {
     switch (type) {
       case ShapeType.Circle:
@@ -58,6 +71,15 @@ function SideBar({ presentation, addPrimitive, addText, addBackground }: SideBar
           <button className={styles.item} onClick={() => addFigure(ShapeType.Triangle)}>
             Triangle
           </button>
+        </div>
+        <button className={styles.item} onClick={() => setShowImage(!showImage)}>
+          Image
+        </button>
+        <div className={[styles.container, !showImage && styles["container-hidden"]].join(" ")}>
+          <label className={styles.item}>
+            <span>Choose an image</span>
+            <input type="file" accept="image/*" onChange={handleImage}/>
+          </label>
         </div>
         <button className={styles.item} onClick={() => setShowBack(!showBack)}>
           Background
@@ -92,10 +114,16 @@ const mapDispatchToProps = (dispatch: AppDispatch) => {
         payload: { text, location, slideId },
       });
     },
-    addBackground: (imageUrl: string, slideId: string) => {
+    addBackground: (path: string, slideId: string) => {
       dispatch({
         type: "ADD_BACKGROUND",
-        payload: { imageUrl, slideId },
+        payload: { path, slideId },
+      });
+    },
+    addImage: (path: string, location: TLocation, dimensions: { width:number, height:number }, slideId: string) => {
+      dispatch({
+        type: "ADD_IMAGE",
+        payload: { path, location, dimensions, slideId },
       });
     },
   };
