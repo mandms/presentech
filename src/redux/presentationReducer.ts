@@ -1,5 +1,5 @@
 import { TAction } from "./actionType.ts";
-import { ShapeType, TLocation, TPresentation, TShape, TSlide } from "../types.ts";
+import { ShapeType, TLocation, TPresentation, TShape, TSlide, TText, TChar } from "../types.ts";
 import { uid } from "../utils/uid.ts";
 
 function createSlide(presentation: TPresentation): TPresentation {
@@ -54,6 +54,52 @@ function addPrimitive(
   };
 }
 
+function addText(presentation: TPresentation, text: string, location: TLocation, slideId: string): TPresentation {
+  const slide = presentation.slides.find(slide => slide.id === slideId);
+  const textItems: TText = {
+    id: uid(),
+    size: { width: 50, height: 20 },
+    location: { x: location.x, y: location.y },
+    content: [],
+  };
+
+  for (let i = 0; i < text.length; i++) {
+    const char: TChar = {
+      id: i,
+      fontFamily: "Arial",
+      fontSize: 24,
+      color: "black",
+      bold: false,
+      italic: false,
+      symbol: text[i],
+    };
+    textItems.content.push(char);
+  }
+
+  slide?.items?.push(textItems);
+  return {
+    ...presentation,
+    slides: [...presentation.slides],
+    currentSlideId: presentation.currentSlideId,
+  };
+}
+
+function addBackground(presentation: TPresentation, imageUrl: string, slideId: string): TPresentation {
+  const slide = presentation.slides.find(slide => slide.id === slideId);
+  if (slide) {
+    if (typeof slide.background === "string") {
+      slide.background = { path: imageUrl };
+    } else {
+      slide.background.path = imageUrl;
+    }
+  }
+  return {
+    ...presentation,
+    slides: [...presentation.slides],
+    currentSlideId: presentation.currentSlideId,
+  };
+}
+
 function selectSlide(presentation: TPresentation, slideId: string) {
   const currentSlideId = presentation.slides.find(slide => slide.id === slideId)?.id as string;
   return {
@@ -86,6 +132,14 @@ export const presentationReducer = (state: TPresentation = initState, action: TA
     case "ADD_PRIMITIVE": {
       const { shapeType, location, slideId } = action.payload;
       return addPrimitive(state, shapeType, location, slideId);
+    }
+    case "ADD_TEXT": {
+      const { text,location, slideId } = action.payload;
+      return addText(state, text, location, slideId);
+    }
+    case "ADD_BACKGROUND": {
+      const { imageUrl, slideId } = action.payload;
+      return addBackground(state, imageUrl, slideId);
     }
     default:
       return { ...state };
