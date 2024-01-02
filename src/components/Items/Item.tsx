@@ -37,10 +37,12 @@ function Item({ item, isMovable, coefficient, selectItem, isSelected }: IItemPro
         top: item.location.y * coefficient,
         border: isSelected ? "2px solid #000" : "none",
       }}
-      onClick={() => selectItem()}
+      onDoubleClick={() => {
+        selectItem();
+      }}
     >
       {isText(item) && <Text coefficient={coefficient} text={item} />}
-      {isImage(item) && <Image image={item} />}
+      {isImage(item) && <Image image={item} coefficient={coefficient} />}
       {isShape(item) && <Shape coefficient={coefficient} shape={item} />}
     </div>
   );

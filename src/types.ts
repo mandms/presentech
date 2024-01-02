@@ -15,7 +15,7 @@ type Size = {
 };
 
 type TChar = {
-  id: number;
+  id: string;
   fontFamily: string;
   fontSize: number;
   color: string;

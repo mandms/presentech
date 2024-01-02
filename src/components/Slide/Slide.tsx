@@ -27,14 +27,14 @@ function Slide({ slide, isPreview, setCurrentSlideById, selectItem }: ISlideProp
       ref={slideRef}
       onClick={e => {
         if (setCurrentSlideById && isPreview) setCurrentSlideById(slide.id);
-        if (!isPreview && e.target === slideRef?.current?.children[0].children[0]) {
-          selectItem(slide.id, null);
+        if (!isPreview) {
+          const container = slideRef?.current?.children[typeof slide.background === "string" ? 0 : 1].children[0];
+          if (e.target === container) selectItem(slide.id, null);
         }
       }}
       id={!isPreview ? "current-slide" : `preview-slide-${slide.id}`}
     >
       {typeof slide.background !== "string" && <image className={styles.picture} xlinkHref={slide.background.path} />}
-
       <foreignObject x={0} y={0} width="100%" height="100%" style={{ position: "relative" }}>
         <div className={styles.container}>
           {slide.items?.map(item => (

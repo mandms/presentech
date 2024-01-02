@@ -25,7 +25,8 @@ export const presentationReducer = (state: TPresentation = initState, action: TA
       const { slideId } = action.payload;
       return selectSlide(state, slideId);
     }
-
+    case "IMPORT_PRESENTATION":
+      return;
     default:
       return {
         ...state,

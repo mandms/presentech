@@ -44,8 +44,8 @@ export function addText(slides: TSlide[], text: string, location: TPosition, sli
   const textItems: TText = {
     id: uid(),
     size: {
-      width: 50,
-      height: 20,
+      width: 200,
+      height: 100,
     },
     location: { x: location.x, y: location.y },
     content: [],
@@ -53,7 +53,7 @@ export function addText(slides: TSlide[], text: string, location: TPosition, sli
 
   for (let i = 0; i < text.length; i++) {
     const char: TChar = {
-      id: i,
+      id: uid(),
       fontFamily: "Arial",
       fontSize: 24,
       color: "black",
