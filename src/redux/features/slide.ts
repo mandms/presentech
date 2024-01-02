@@ -101,3 +101,18 @@ export function addBackground(slides: TSlide[], path: string, slideId: string): 
   }
   return [...slides];
 }
+
+export function setSelectedItem(slides: TSlide[], slideId: string, itemId: string | null) {
+  console.log(itemId);
+  const slide = slides.find(slide => slide.id === slideId);
+  if (!slide) return [...slides];
+  const item = slide.items?.find(item => item.id === itemId);
+  if (!item) {
+    slide.selectedItemId = null;
+    return [...slides];
+  }
+  if (item.id !== slide.selectedItemId) {
+    slide.selectedItemId = item.id;
+  }
+  return [...slides];
+}

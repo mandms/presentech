@@ -116,6 +116,7 @@ const text2: TText = {
 };
 
 const slide: TSlide = {
+  selectedItemId: null,
   background: {
     path: "./img.png",
   },
@@ -124,6 +125,7 @@ const slide: TSlide = {
 };
 
 const slide1: TSlide = {
+  selectedItemId: null,
   background: {
     path: "./img_1.png",
   },
@@ -132,6 +134,7 @@ const slide1: TSlide = {
 };
 
 const slide2: TSlide = {
+  selectedItemId: null,
   background: {
     path: "./img.png",
   },
@@ -140,6 +143,7 @@ const slide2: TSlide = {
 };
 
 const slide3: TSlide = {
+  selectedItemId: null,
   background: {
     path: "./img.png",
   },
@@ -148,6 +152,7 @@ const slide3: TSlide = {
 };
 
 const slide4: TSlide = {
+  selectedItemId: null,
   background: {
     path: "./img.png",
   },
@@ -156,6 +161,7 @@ const slide4: TSlide = {
 };
 
 const slide5: TSlide = {
+  selectedItemId: null,
   background: {
     path: "./img.png",
   },
@@ -164,6 +170,7 @@ const slide5: TSlide = {
 };
 
 const slide6: TSlide = {
+  selectedItemId: null,
   background: {
     path: "./img.png",
   },

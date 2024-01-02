@@ -3,7 +3,7 @@ import { uid } from "../../utils/uid.ts";
 
 export function createSlide(presentation: TPresentation): TPresentation {
   const newSlide: TSlide = {
-    selectedItem: undefined,
+    selectedItemId: null,
     id: uid(),
     background: "#fff",
     items: [],

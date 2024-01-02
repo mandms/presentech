@@ -5,7 +5,7 @@ import { slideReducer } from "./slideReducer.ts";
 import { createSlide, selectSlide } from "./features/presentation.ts";
 
 const initSlide: TSlide = {
-  selectedItem: undefined,
+  selectedItemId: null,
   id: uid(),
   background: "#fff",
   items: [],

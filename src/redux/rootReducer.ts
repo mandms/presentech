@@ -5,7 +5,7 @@ import { store } from "./store.ts";
 import { uid } from "../utils/uid.ts";
 
 const initSlide: TSlide = {
-  selectedItem: undefined,
+  selectedItemId: null,
   id: uid(),
   background: "#fff",
   items: [],
