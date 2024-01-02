@@ -20,8 +20,6 @@ function Shape({ shape, coefficient }: IShapeProps): JSX.Element {
       fill={shape.backgroundColor}
       stroke={shape.borderColor}
       vectorEffect="non-scaling-stroke"
-      x={shape.location.x}
-      y={shape.location.y}
       className={styles.svg}
     >
       {shape.type === ShapeType.Triangle && (

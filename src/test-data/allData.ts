@@ -1,4 +1,5 @@
 import { TChar, TEditor, History, TImage, TPresentation, ShapeType, TSlide, TText, TShape } from "../types";
+import { uid } from "../utils/uid.ts";
 
 const shapeCircle: TShape = {
   backgroundColor: "#fff",
@@ -63,7 +64,7 @@ const charA: TChar = {
   bold: false,
   symbol: "A",
   color: "#000",
-  fonSize: 0,
+  fontSize: 0,
   fontFamily: "sans-serif",
   italic: true,
 };
@@ -73,7 +74,7 @@ const charB: TChar = {
   bold: true,
   symbol: "B",
   color: "#000",
-  fonSize: 0,
+  fontSize: 0,
   fontFamily: "sans-serif",
   italic: false,
 };
@@ -83,7 +84,7 @@ const charC: TChar = {
   bold: true,
   symbol: "C",
   color: "#ff0000",
-  fonSize: 0,
+  fontSize: 0,
   fontFamily: "sans-serif",
   italic: false,
 };
@@ -118,7 +119,7 @@ const slide: TSlide = {
   background: {
     path: "./img.png",
   },
-  id: 1,
+  id: uid(),
   items: [text, img, shapeCircle, shapeSquare, shapeTriangle],
 };
 
@@ -126,7 +127,7 @@ const slide1: TSlide = {
   background: {
     path: "./img_1.png",
   },
-  id: 2,
+  id: uid(),
   items: [text2, img, shapeCircle, shapeSquare, shapeTriangle],
 };
 
@@ -134,7 +135,7 @@ const slide2: TSlide = {
   background: {
     path: "./img.png",
   },
-  id: 3,
+  id: uid(),
   items: [text, img, shapeCircle, shapeSquare, shapeTriangle],
 };
 
@@ -142,7 +143,7 @@ const slide3: TSlide = {
   background: {
     path: "./img.png",
   },
-  id: 4,
+  id: uid(),
   items: [text2, img, shapeCircle, shapeSquare, shapeTriangle],
 };
 
@@ -150,7 +151,7 @@ const slide4: TSlide = {
   background: {
     path: "./img.png",
   },
-  id: 5,
+  id: uid(),
   items: [text, img, shapeCircle, shapeSquare, shapeTriangle],
 };
 
@@ -158,7 +159,7 @@ const slide5: TSlide = {
   background: {
     path: "./img.png",
   },
-  id: 6,
+  id: uid(),
   items: [text2, img, shapeCircle, shapeSquare, shapeTriangle],
 };
 
@@ -166,14 +167,14 @@ const slide6: TSlide = {
   background: {
     path: "./img.png",
   },
-  id: 7,
+  id: uid(),
   items: [text, img, shapeCircle, shapeSquare, shapeTriangle],
 };
 
 export const presentation: TPresentation = {
   name: "Моя презинтация",
   slides: [slide, slide1, slide2, slide3, slide4, slide5, slide6],
-  currentSlideId: 1,
+  currentSlideId: slide.id,
 };
 
 const history: History = {
