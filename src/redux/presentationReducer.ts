@@ -1,10 +1,11 @@
 import { TAction } from "./actionType.ts";
 import { TPresentation, TSlide } from "../types.ts";
 import { uid } from "../utils/uid.ts";
-import {slideReducer} from "./slideReducer.ts";
-import {createSlide, selectSlide} from "./features/presentation.ts";
+import { slideReducer } from "./slideReducer.ts";
+import { createSlide, selectSlide } from "./features/presentation.ts";
 
 const initSlide: TSlide = {
+  selectedItem: undefined,
   id: uid(),
   background: "#fff",
   items: [],
@@ -28,7 +29,7 @@ export const presentationReducer = (state: TPresentation = initState, action: TA
     default:
       return {
         ...state,
-        slides: slideReducer(state.slides, action)
+        slides: slideReducer(state.slides, action),
       };
   }
 };

@@ -1,21 +1,16 @@
-import {ShapeType, TChar, TImage, TPosition, TShape, TSlide, TText} from "../../types.ts";
-import {uid} from "../../utils/uid.ts";
+import { ShapeType, TChar, TImage, TPosition, TShape, TSlide, TText } from "../../types.ts";
+import { uid } from "../../utils/uid.ts";
 
 export function movingItems(slides: TSlide[], slideId: string, itemId: string, position: TPosition): TSlide[] {
   const slide = slides.find(slide => slide.id === slideId);
-  if (!slide) return [...slides]
-  const item = slide.items?.find(item => item.id == itemId)
-  if (!item) return [...slides]
-  item.location = position
-  return [...slides]
+  if (!slide) return [...slides];
+  const item = slide.items?.find(item => item.id == itemId);
+  if (!item) return [...slides];
+  item.location = position;
+  return [...slides];
 }
 
-export function addPrimitive(
-  slides: TSlide[],
-  shapeType: ShapeType,
-  location: TPosition,
-  slideId: string,
-): TSlide[] {
+export function addPrimitive(slides: TSlide[], shapeType: ShapeType, location: TPosition, slideId: string): TSlide[] {
   const typeShape = () => {
     switch (shapeType) {
       case ShapeType.Circle:
@@ -50,7 +45,7 @@ export function addText(slides: TSlide[], text: string, location: TPosition, sli
     id: uid(),
     size: {
       width: 50,
-      height: 20
+      height: 20,
     },
     location: { x: location.x, y: location.y },
     content: [],
@@ -73,22 +68,27 @@ export function addText(slides: TSlide[], text: string, location: TPosition, sli
   return [...slides];
 }
 
-export function addImage(slides: TSlide[], path: string, location: TPosition, dimensions: { width:number, height:number }, slideId: string): TSlide[] {
+export function addImage(
+  slides: TSlide[],
+  path: string,
+  location: TPosition,
+  dimensions: { width: number; height: number },
+  slideId: string,
+): TSlide[] {
   const slide = slides.find(slide => slide.id === slideId);
   if (dimensions.width > 600 || dimensions.height > 600) {
-    dimensions.width = dimensions.width - 400
-    dimensions.height = dimensions.height - 400
+    dimensions.width = dimensions.width - 400;
+    dimensions.height = dimensions.height - 400;
   }
   const imageItems: TImage = {
     id: uid(),
     size: {
       width: dimensions.width,
-      height: dimensions.height
+      height: dimensions.height,
     },
     location: { x: location.x, y: location.y },
     path: path,
   };
-
 
   slide?.items?.push(imageItems);
   return [...slides];

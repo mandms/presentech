@@ -22,15 +22,15 @@ function Slide({ slide, isPreview, setCurrentSlideById }: ISlideProps): JSX.Elem
       fill="none"
       xmlnsXlink="http://www.w3.org/1999/xlink"
       ref={slideRef}
-      onClick={() => (setCurrentSlideById ? isPreview && setCurrentSlideById(slide.id) : null)}
-      id={!isPreview ? "current-slide" : undefined}
+      onClick={() => setCurrentSlideById && isPreview && setCurrentSlideById(slide.id)}
+      id={!isPreview ? "current-slide" : `preview-slide-${slide.id}`}
     >
       {typeof slide.background !== "string" && <image className={styles.picture} xlinkHref={slide.background.path} />}
 
       <foreignObject x={0} y={0} width="100%" height="100%" style={{ position: "relative" }}>
         <div className={styles.container}>
           {slide.items?.map(item => (
-            <Item coefficient={coefficient} item={item} key={item.id} isMovable={!isPreview}  />
+            <Item coefficient={coefficient} item={item} key={item.id} isMovable={!isPreview} />
           ))}
         </div>
       </foreignObject>

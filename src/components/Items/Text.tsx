@@ -14,7 +14,7 @@ function Text({ text, coefficient }: ITextProps): JSX.Element {
         width={text.size.width * coefficient}
         height={text.size.height * coefficient}
       >
-        <div contentEditable="true" suppressContentEditableWarning={true} style={ {minWidth:100} }>
+        <div contentEditable="true" suppressContentEditableWarning={true} style={{ minWidth: 100 }}>
           <p>
             {text.content.map(char => (
               <span

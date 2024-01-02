@@ -49,6 +49,7 @@ type TShape = TItem & {
 
 type TSlide = {
   id: string;
+  selectedItem: TItem | undefined;
   background: IBackgroundImage | string;
   items?: TItem[];
 };

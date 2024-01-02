@@ -10,7 +10,7 @@ type SideBarProps = {
   addPrimitive: (shapeType: ShapeType, location: TPosition, slideId: string) => void;
   addText: (text: string, location: TPosition, slideId: string) => void;
   addBackground: (path: string, slideId: string) => void;
-  addImage: (path: string, location: TPosition, dimensions: { width:number, height:number }, slideId: string) => void;
+  addImage: (path: string, location: TPosition, dimensions: { width: number; height: number }, slideId: string) => void;
 };
 function SideBar({ presentation, addPrimitive, addText, addBackground, addImage }: SideBarProps): JSX.Element {
   const [showPrimitives, setShowPrimitives] = useState(false);
@@ -22,11 +22,11 @@ function SideBar({ presentation, addPrimitive, addText, addBackground, addImage 
     const file = event.target.files?.[0];
     if (file) {
       const path = URL.createObjectURL(file);
-      addBackground( path, presentation.currentSlideId);
+      addBackground(path, presentation.currentSlideId);
     }
   };
 
-  const coords = {x: 10, y: 10};
+  const coords = { x: 10, y: 10 };
 
   const handleImage = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -34,9 +34,9 @@ function SideBar({ presentation, addPrimitive, addText, addBackground, addImage 
       const path = URL.createObjectURL(file);
       const img = new Image();
       img.onload = () => {
-        const dimensions = {width: img.width, height: img.height};
-        addImage( path, { x: coords.x, y: coords.y }, dimensions, presentation.currentSlideId);
-      }
+        const dimensions = { width: img.width, height: img.height };
+        addImage(path, { x: coords.x, y: coords.y }, dimensions, presentation.currentSlideId);
+      };
       img.src = path;
     }
   };
@@ -52,44 +52,46 @@ function SideBar({ presentation, addPrimitive, addText, addBackground, addImage 
   };
 
   return (
-      <div className={hidden ? [styles.sidebar, styles.hide].join(" ") : styles.sidebar}>
-        <button className={styles.item}
-                onClick={() => addText("Text", {x: coords.x, y: coords.y}, presentation.currentSlideId)}>
-          Text
+    <div className={hidden ? [styles.sidebar, styles.hide].join(" ") : styles.sidebar}>
+      <button
+        className={styles.item}
+        onClick={() => addText("Text", { x: coords.x, y: coords.y }, presentation.currentSlideId)}
+      >
+        Text
+      </button>
+      <button className={styles.item} onClick={() => setShowPrimitives(!showPrimitives)}>
+        Primitives
+      </button>
+      <div className={[styles.container, !showPrimitives && styles["container-hidden"]].join(" ")}>
+        <button className={styles.item} onClick={() => addFigure(ShapeType.Square)}>
+          Square
         </button>
-        <button className={styles.item} onClick={() => setShowPrimitives(!showPrimitives)}>
-          Primitives
+        <button className={styles.item} onClick={() => addFigure(ShapeType.Circle)}>
+          Circle
         </button>
-        <div className={[styles.container, !showPrimitives && styles["container-hidden"]].join(" ")}>
-          <button className={styles.item} onClick={() => addFigure(ShapeType.Square)}>
-            Square
-          </button>
-          <button className={styles.item} onClick={() => addFigure(ShapeType.Circle)}>
-            Circle
-          </button>
-          <button className={styles.item} onClick={() => addFigure(ShapeType.Triangle)}>
-            Triangle
-          </button>
-        </div>
-        <button className={styles.item} onClick={() => setShowImage(!showImage)}>
-          Image
+        <button className={styles.item} onClick={() => addFigure(ShapeType.Triangle)}>
+          Triangle
         </button>
-        <div className={[styles.container, !showImage && styles["container-hidden"]].join(" ")}>
-          <label className={styles.item}>
-            <span>Choose an image</span>
-            <input type="file" accept="image/*" onChange={handleImage}/>
-          </label>
-        </div>
-        <button className={styles.item} onClick={() => setShowBack(!showBack)}>
-          Background
-        </button>
-        <div className={[styles.container, !showBack && styles["container-hidden"]].join(" ")}>
-          <label className={styles.item}>
-            <span>Choose an image</span>
-            <input type="file" accept="image/*" onChange={handleBackgroundImageChange}/>
-          </label>
-        </div>
       </div>
+      <button className={styles.item} onClick={() => setShowImage(!showImage)}>
+        Image
+      </button>
+      <div className={[styles.container, !showImage && styles["container-hidden"]].join(" ")}>
+        <label className={styles.item}>
+          <span>Choose an image</span>
+          <input type="file" accept="image/*" onChange={handleImage} />
+        </label>
+      </div>
+      <button className={styles.item} onClick={() => setShowBack(!showBack)}>
+        Background
+      </button>
+      <div className={[styles.container, !showBack && styles["container-hidden"]].join(" ")}>
+        <label className={styles.item}>
+          <span>Choose an image</span>
+          <input type="file" accept="image/*" onChange={handleBackgroundImageChange} />
+        </label>
+      </div>
+    </div>
   );
 }
 
@@ -104,7 +106,7 @@ const mapDispatchToProps = (dispatch: AppDispatch) => {
     addPrimitive: (shapeType: ShapeType, location: TPosition, slideId: string) => {
       dispatch({
         type: "ADD_PRIMITIVE",
-        payload: {shapeType, location, slideId},
+        payload: { shapeType, location, slideId },
       });
     },
     addText: (text: string, location: TPosition, slideId: string) => {
@@ -119,7 +121,7 @@ const mapDispatchToProps = (dispatch: AppDispatch) => {
         payload: { path, slideId },
       });
     },
-    addImage: (path: string, location: TPosition, dimensions: { width:number, height:number }, slideId: string) => {
+    addImage: (path: string, location: TPosition, dimensions: { width: number; height: number }, slideId: string) => {
       dispatch({
         type: "ADD_IMAGE",
         payload: { path, location, dimensions, slideId },

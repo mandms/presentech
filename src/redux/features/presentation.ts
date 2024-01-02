@@ -1,8 +1,9 @@
-import {TPresentation, TSlide} from "../../types.ts";
-import {uid} from "../../utils/uid.ts";
+import { TPresentation, TSlide } from "../../types.ts";
+import { uid } from "../../utils/uid.ts";
 
 export function createSlide(presentation: TPresentation): TPresentation {
   const newSlide: TSlide = {
+    selectedItem: undefined,
     id: uid(),
     background: "#fff",
     items: [],

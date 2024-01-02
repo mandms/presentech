@@ -4,6 +4,7 @@ import Shape from "./Shape/Shape";
 import Image from "./Image/Image";
 import { useRef } from "react";
 import useMoving from "../../hooks/useMoving.ts";
+import useSelectedItem from "../../hooks/useSelecteditem.ts";
 
 interface IItemProps {
   item: TItem;
@@ -26,6 +27,7 @@ function isShape(item: TItem): item is TShape {
 function Item({ item, isMovable, coefficient }: IItemProps): JSX.Element {
   const itemRef = useRef<HTMLDivElement>(null);
   useMoving(itemRef, isMovable);
+  useSelectedItem(itemRef, isMovable);
   return (
     <div
       ref={itemRef}
