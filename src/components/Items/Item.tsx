@@ -8,7 +8,6 @@ import useMoving from "../../hooks/useMoving.ts";
 interface IItemProps {
   item: TItem;
   isMovable: boolean;
-  //isActive: boolean;
   coefficient: number;
 }
 
@@ -34,7 +33,6 @@ function Item({ item, isMovable, coefficient }: IItemProps): JSX.Element {
         position: "absolute",
         left: item.location.x * coefficient,
         top: item.location.y * coefficient,
-          //boxShadow: isActive ? '0 0 0 2px rgba(0, 0, 0, 0.2)' : 'none'
       }}
     >
       {isText(item) && <Text coefficient={coefficient} text={item} />}

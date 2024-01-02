@@ -36,7 +36,7 @@ function ToolBar({ changePresentation, presentation, setError, createSlide }: To
   const { hidden, setHidden } = useContext(CollapseToolBarContext);
 
   return (
-    <div>
+    <>
       <ul className={styles.toolbar}>
         <p>{presentation.name}</p>
         <p className={styles.link}>Текущий слайд: {findSlideById() + 1}</p>
@@ -57,7 +57,7 @@ function ToolBar({ changePresentation, presentation, setError, createSlide }: To
           Editor Menu
         </button>
       </ul>
-    </div>
+    </>
   );
 }
 const mapStateToProps = (state: RootState) => {

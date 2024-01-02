@@ -1,17 +1,16 @@
 import styles from "./SideBar.module.css";
-import { useContext, useState } from "react";
-import { ShapeType, TLocation, TPresentation } from "../../../types.ts";
+import React, { useContext, useState } from "react";
+import { ShapeType, TPosition, TPresentation } from "../../../types.ts";
 import { AppDispatch, RootState } from "../../../redux/rootReducer.ts";
 import { connect } from "react-redux";
 import { CollapseToolBarContext } from "../../../context/collapseToolBar.ts";
-//import useChoose from "../../../hooks/useChoose.ts";
 
 type SideBarProps = {
   presentation: TPresentation;
-  addPrimitive: (shapeType: ShapeType, location: TLocation, slideId: string) => void;
-  addText: (text: string, location: TLocation, slideId: string) => void;
+  addPrimitive: (shapeType: ShapeType, location: TPosition, slideId: string) => void;
+  addText: (text: string, location: TPosition, slideId: string) => void;
   addBackground: (path: string, slideId: string) => void;
-  addImage: (path: string, location: TLocation, dimensions: { width:number, height:number }, slideId: string) => void;
+  addImage: (path: string, location: TPosition, dimensions: { width:number, height:number }, slideId: string) => void;
 };
 function SideBar({ presentation, addPrimitive, addText, addBackground, addImage }: SideBarProps): JSX.Element {
   const [showPrimitives, setShowPrimitives] = useState(false);
@@ -102,13 +101,13 @@ const mapStateToProps = (state: RootState) => {
 
 const mapDispatchToProps = (dispatch: AppDispatch) => {
   return {
-    addPrimitive: (shapeType: ShapeType, location: TLocation, slideId: string) => {
+    addPrimitive: (shapeType: ShapeType, location: TPosition, slideId: string) => {
       dispatch({
         type: "ADD_PRIMITIVE",
         payload: {shapeType, location, slideId},
       });
     },
-    addText: (text: string, location: TLocation, slideId: string) => {
+    addText: (text: string, location: TPosition, slideId: string) => {
       dispatch({
         type: "ADD_TEXT",
         payload: { text, location, slideId },
@@ -120,7 +119,7 @@ const mapDispatchToProps = (dispatch: AppDispatch) => {
         payload: { path, slideId },
       });
     },
-    addImage: (path: string, location: TLocation, dimensions: { width:number, height:number }, slideId: string) => {
+    addImage: (path: string, location: TPosition, dimensions: { width:number, height:number }, slideId: string) => {
       dispatch({
         type: "ADD_IMAGE",
         payload: { path, location, dimensions, slideId },

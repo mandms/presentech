@@ -1,5 +1,4 @@
 import { TText } from "../../types";
-import { minWidth } from "@material-ui/system";
 
 interface ITextProps {
   text: TText;

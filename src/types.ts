@@ -1,10 +1,10 @@
 type TItem = {
   id: string;
   size: Size;
-  location: TLocation;
+  location: TPosition;
 };
 
-type TLocation = {
+type TPosition = {
   x: number;
   y: number;
 };
@@ -70,4 +70,4 @@ type TEditor = {
 };
 
 export { ShapeType };
-export type { TItem, TText, TImage, TShape, TSlide, History, TPresentation, TChar, TEditor, TLocation };
+export type { TItem, TText, TImage, TShape, TSlide, History, TPresentation, TChar, TEditor, TPosition };
