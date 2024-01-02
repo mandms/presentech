@@ -8,6 +8,7 @@ import { AppDispatch, RootState } from "../../../redux/rootReducer.ts";
 import { CollapseToolBarContext } from "../../../context/collapseToolBar.ts";
 import logo from "../../../assets/logo.png";
 import addSlide from "../../../assets/addSlide.png";
+import deleteSlideIcon from "../../../assets/deleteSlide.png";
 import download from "../../../assets/downloadFile.png";
 import open from "../../../assets/openFile.png";
 import Title from "../Title/Title.tsx";
@@ -17,9 +18,10 @@ type ToolBarProps = {
   presentation: TPresentation;
   setError: (message: string) => void;
   createSlide: () => void;
+  deleteSlide: () => void;
 };
 
-function Menu({ changePresentation, presentation, setError, createSlide }: ToolBarProps): JSX.Element {
+function Menu({ changePresentation, presentation, setError, createSlide, deleteSlide }: ToolBarProps): JSX.Element {
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       try {
@@ -55,6 +57,9 @@ function Menu({ changePresentation, presentation, setError, createSlide }: ToolB
               <a href="#" onClick={() => createSlide()}>
                 <img className={styles.add} src={addSlide}/>
               </a>
+              <a href="#" onClick={() => deleteSlide()}>
+                <img className={styles.delete} src={deleteSlideIcon}/>
+              </a>
             </div>
           </div>
           <div className={styles.right}>
@@ -89,6 +94,11 @@ const mapDispatchToProps = (dispatch: AppDispatch) => {
     createSlide: () => {
       dispatch({
         type: "CREATE_SLIDE",
+      });
+    },
+    deleteSlide: () => {
+      dispatch({
+        type: "DELETE_SLIDE",
       });
     },
     changePresentation: (data: TPresentation) => {

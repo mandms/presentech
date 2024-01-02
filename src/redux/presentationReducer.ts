@@ -16,6 +16,26 @@ function createSlide(presentation: TPresentation): TPresentation {
   };
 }
 
+function deleteSlide(presentation: TPresentation): TPresentation {
+  const { slides } = presentation;
+  const currentId = presentation.currentSlideId;
+
+  const newSlideList = slides.filter((slide) => slide.id !== currentId);
+
+  const newSelectedSlideId = newSlideList.length > 0 ? newSlideList[newSlideList.length - 1].id : null;
+
+  console.log(currentId);
+  //console.log(newSlideList);
+
+  const newPresentation: TPresentation = {
+    ...presentation,
+    slides: newSlideList,
+    currentSlideId: newSelectedSlideId !== null ? newSelectedSlideId : '1',
+  };
+
+  return newPresentation;
+}
+
 function addPrimitive(
   presentation: TPresentation,
   shapeType: ShapeType,
@@ -76,6 +96,8 @@ export const presentationReducer = (state: TPresentation = initState, action: TA
   switch (action.type) {
     case "CREATE_SLIDE":
       return createSlide(state);
+    case "DELETE_SLIDE":
+      return deleteSlide(state, state.currentSlideId);
     case "SELECT_SLIDE": {
       const { slideId } = action.payload;
       return selectSlide(state, slideId);

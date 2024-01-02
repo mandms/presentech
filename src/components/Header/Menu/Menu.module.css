@@ -71,7 +71,7 @@
   text-align: center;
 }
 
-.add, .download, .open {
+.add, .download, .open, .delete {
   width: auto;
   height: 30px;
   margin-left: 10px;
