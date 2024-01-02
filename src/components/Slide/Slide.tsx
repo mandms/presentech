@@ -13,6 +13,7 @@ interface ISlideProps {
 function Slide({ slide, isPreview, setCurrentSlideById }: ISlideProps): JSX.Element {
   const slideRef = useRef<SVGSVGElement>(null);
   const { size, coefficient } = useSlideResize(slideRef, isPreview);
+
   return (
     <svg
       className={styles.slide}
@@ -29,7 +30,7 @@ function Slide({ slide, isPreview, setCurrentSlideById }: ISlideProps): JSX.Elem
       <foreignObject x={0} y={0} width="100%" height="100%" style={{ position: "relative" }}>
         <div className={styles.container}>
           {slide.items?.map(item => (
-            <Item coefficient={coefficient} item={item} key={item.id} isMovable={!isPreview} />
+            <Item coefficient={coefficient} item={item} key={item.id} isMovable={!isPreview}  />
           ))}
         </div>
       </foreignObject>
