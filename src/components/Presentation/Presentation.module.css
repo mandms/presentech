@@ -52,6 +52,7 @@
   margin: 10px 0;
   counter-increment: item;
   background-color: #fff;
+  border-radius: 10px;
 }
 
 .wrap::before {
@@ -59,4 +60,9 @@
   margin-right: 10px;
   text-align: center;
   content: counter(item);
+}
+
+.active {
+  border: 2px solid #348d40;
+  border-radius: 10px;
 }

@@ -14,36 +14,39 @@ function Presentation({ presentation, setCurrentSlideById }: IPresentationProps)
   const currentSlide = presentation.slides.find(slide => slide.id === presentation.currentSlideId) as TSlide;
 
   return (
-    <div className={styles.container}>
-      <ol className={styles.preview}>
-        {presentation.slides.map(slide => (
-          <li className={styles.wrap} key={slide.id}>
-            <Slide setCurrentSlideById={id => setCurrentSlideById(id)} isPreview={true} slide={slide} />
-          </li>
-        ))}
-      </ol>
-      <div className={styles["container-current"]}>
-        <Slide isPreview={false} key={currentSlide.id} slide={currentSlide} />
+      <div className={styles.container}>
+          <ol className={styles.preview}>
+              {presentation.slides.map((slide, i) => (
+                  <li
+                      className={`${styles.wrap} ${presentation.currentSlideId === slide.id ? styles.active : ''}`}
+                      key={slide.id}
+                  >
+                      <Slide setCurrentSlideById={id => setCurrentSlideById(id)} isPreview={true} slide={slide}/>
+                  </li>
+              ))}
+          </ol>
+          <div className={styles["container-current"]}>
+              <Slide isPreview={false} key={currentSlide.id} slide={currentSlide}/>
+          </div>
+          <SideBar/>
       </div>
-      <SideBar />
-    </div>
   );
 }
 
 const mapStateToProps = (state: RootState) => {
-  return {
-    presentation: state.presentation,
-  };
+    return {
+        presentation: state.presentation,
+    };
 };
 
 const mapDispatchToProps = (dispatch: AppDispatch) => {
-  return {
-    setCurrentSlideById: (id: string) => {
-      dispatch({
-        type: "SELECT_SLIDE",
-        payload: { slideId: id },
-      });
-    },
+    return {
+        setCurrentSlideById: (id: string) => {
+            dispatch({
+                type: "SELECT_SLIDE",
+                payload: {slideId: id},
+            });
+        },
 
   };
 };
