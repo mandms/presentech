@@ -91,6 +91,16 @@ function SideBar({ presentation, addPrimitive, addText, addBackground, addImage 
           <input type="file" accept="image/*" onChange={handleBackgroundImageChange} />
         </label>
       </div>
+      <div className={styles.container}>
+        <label className={styles.item}>
+          <span>Width</span>
+          <input type="text" />
+        </label>
+        <label className={styles.item}>
+          <span>Height</span>
+          <input type="text" />
+        </label>
+      </div>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { TShape, TItem, TText, TImage } from "../../types";
+import { TShape, TItem, TText, TImage, TPosition } from "../../types";
 import Text from "./Text";
 import Shape from "./Shape/Shape";
 import Image from "./Image/Image";
@@ -11,6 +11,7 @@ interface IItemProps {
   coefficient: number;
   selectItem: () => void;
   isSelected: boolean;
+  onMove: (position: TPosition) => void;
 }
 
 function isImage(item: TItem): item is TImage {
@@ -25,9 +26,9 @@ function isShape(item: TItem): item is TShape {
   return (item as TShape).type !== undefined;
 }
 
-function Item({ item, isMovable, coefficient, selectItem, isSelected }: IItemProps): JSX.Element {
+function Item({ item, isMovable, coefficient, selectItem, onMove, isSelected }: IItemProps): JSX.Element {
   const itemRef = useRef<HTMLDivElement>(null);
-  useMoving(itemRef, isMovable);
+  useMoving(itemRef, isMovable, onMove, isSelected);
   return (
     <div
       ref={itemRef}
@@ -35,7 +36,9 @@ function Item({ item, isMovable, coefficient, selectItem, isSelected }: IItemPro
         position: "absolute",
         left: item.location.x * coefficient,
         top: item.location.y * coefficient,
-        border: isSelected ? "2px solid #000" : "none",
+        border: isSelected ? "2px solid red" : "none",
+        display: "flex",
+        boxSizing: "border-box",
       }}
       onDoubleClick={() => {
         selectItem();

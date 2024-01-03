@@ -1,4 +1,4 @@
-import { ShapeType, TChar, TImage, TPosition, TShape, TSlide, TText } from "../../types.ts";
+import { ShapeType, TChar, TImage, TItem, TPosition, TShape, TSlide, TText } from "../../types.ts";
 import { uid } from "../../utils/uid.ts";
 
 export function movingItems(slides: TSlide[], slideId: string, itemId: string, position: TPosition): TSlide[] {
@@ -102,17 +102,13 @@ export function addBackground(slides: TSlide[], path: string, slideId: string): 
   return [...slides];
 }
 
-export function setSelectedItem(slides: TSlide[], slideId: string, itemId: string | null) {
-  console.log(itemId);
-  const slide = slides.find(slide => slide.id === slideId);
-  if (!slide) return [...slides];
-  const item = slide.items?.find(item => item.id === itemId);
+export function setSelectedItem(slides: TSlide[], slide: TSlide, item: TItem | null) {
   if (!item) {
-    slide.selectedItemId = null;
+    slide.selectedItem = null;
     return [...slides];
   }
-  if (item.id !== slide.selectedItemId) {
-    slide.selectedItemId = item.id;
+  if (item !== slide.selectedItem) {
+    slide.selectedItem = item;
   }
   return [...slides];
 }

@@ -17,7 +17,7 @@ export const useSlideResize = (ref: RefObject<SVGSVGElement>, isPreview: boolean
     const slide = ref.current;
     if (!slide) return;
     myObserver.observe(slide);
-  });
+  }, [ref, myObserver]);
 
   if (isPreview) return { size: { w: 1000, h: 565.5 }, coefficient: 1 };
   return { size, coefficient: size.w / 1000 };

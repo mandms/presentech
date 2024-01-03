@@ -12,9 +12,10 @@ type ToolBarProps = {
   presentation: TPresentation;
   setError: (message: string) => void;
   createSlide: () => void;
+  deleteSlide: () => void;
 };
 
-function ToolBar({ changePresentation, presentation, setError, createSlide }: ToolBarProps): JSX.Element {
+function ToolBar({ changePresentation, presentation, setError, createSlide, deleteSlide }: ToolBarProps): JSX.Element {
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       try {
@@ -42,6 +43,9 @@ function ToolBar({ changePresentation, presentation, setError, createSlide }: To
         <p className={styles.link}>Текущий слайд: {findSlideById() + 1}</p>
         <a className={styles.link} href="#" onClick={() => createSlide()}>
           + Добавить слайд
+        </a>
+        <a className={styles.link} href="#" onClick={() => deleteSlide()}>
+          - Удалить слайд
         </a>
         <a className={styles.link} onClick={GetJSONFile} href="#">
           Сохранить презентацию в JSON
@@ -71,6 +75,11 @@ const mapDispatchToProps = (dispatch: AppDispatch) => {
     createSlide: () => {
       dispatch({
         type: "CREATE_SLIDE",
+      });
+    },
+    deleteSlide: () => {
+      dispatch({
+        type: "DELETE_SLIDE",
       });
     },
     changePresentation: (data: TPresentation) => {

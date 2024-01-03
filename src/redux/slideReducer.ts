@@ -25,8 +25,8 @@ export const slideReducer = (state: TSlide[], action: TAction): TSlide[] => {
       return addBackground(state, path, slideId);
     }
     case "SELECT_ITEM": {
-      const { itemId, slideId } = action.payload;
-      return setSelectedItem(state, slideId, itemId);
+      const { item, slide } = action.payload;
+      return setSelectedItem(state, slide, item);
     }
   }
   return state;

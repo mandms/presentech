@@ -3,7 +3,7 @@ import { uid } from "../../utils/uid.ts";
 
 export function createSlide(presentation: TPresentation): TPresentation {
   const newSlide: TSlide = {
-    selectedItemId: null,
+    selectedItem: null,
     id: uid(),
     background: "#fff",
     items: [],
@@ -13,6 +13,19 @@ export function createSlide(presentation: TPresentation): TPresentation {
     ...presentation,
     slides: [...presentation.slides, newSlide],
     currentSlideId: newSlide.id,
+  };
+}
+
+/* deleteSlide NEED FIX */
+export function deleteSlide(presentation: TPresentation): TPresentation {
+  presentation.slides = presentation.slides.filter(slide => slide.id !== presentation.currentSlideId);
+  if (!presentation.slides.length) createSlide(presentation);
+  presentation.currentSlideId = presentation.slides[0].id;
+
+  return {
+    ...presentation,
+    slides: [...presentation.slides],
+    currentSlideId: presentation.currentSlideId,
   };
 }
 

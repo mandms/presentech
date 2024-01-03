@@ -49,7 +49,7 @@ type TShape = TItem & {
 
 type TSlide = {
   id: string;
-  selectedItemId: string | null;
+  selectedItem: TItem | null;
   background: IBackgroundImage | string;
   items?: TItem[];
 };

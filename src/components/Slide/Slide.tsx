@@ -1,4 +1,4 @@
-import { TSlide } from "../../types";
+import { TItem, TPosition, TSlide } from "../../types";
 import Item from "../Items/Item";
 import styles from "./Slide.module.css";
 import useSlideResize from "../../hooks/useSlideResize.ts";
@@ -10,10 +10,11 @@ interface ISlideProps {
   slide: TSlide;
   isPreview: boolean;
   setCurrentSlideById?: (id: string) => void;
-  selectItem: (slideId: string, itemId: string | null) => void;
+  selectItem: (slide: TSlide, item: TItem | null) => void;
+  onMove: (slideId: string, itemId: string, position: TPosition) => void;
 }
 
-function Slide({ slide, isPreview, setCurrentSlideById, selectItem }: ISlideProps): JSX.Element {
+function Slide({ slide, isPreview, setCurrentSlideById, selectItem, onMove }: ISlideProps): JSX.Element {
   const slideRef = useRef<SVGSVGElement>(null);
   const { size, coefficient } = useSlideResize(slideRef, isPreview);
 
@@ -29,7 +30,7 @@ function Slide({ slide, isPreview, setCurrentSlideById, selectItem }: ISlideProp
         if (setCurrentSlideById && isPreview) setCurrentSlideById(slide.id);
         if (!isPreview) {
           const container = slideRef?.current?.children[typeof slide.background === "string" ? 0 : 1].children[0];
-          if (e.target === container) selectItem(slide.id, null);
+          if (e.target === container) selectItem(slide, null);
         }
       }}
       id={!isPreview ? "current-slide" : `preview-slide-${slide.id}`}
@@ -39,8 +40,9 @@ function Slide({ slide, isPreview, setCurrentSlideById, selectItem }: ISlideProp
         <div className={styles.container}>
           {slide.items?.map(item => (
             <Item
-              isSelected={slide.selectedItemId === item.id}
-              selectItem={() => selectItem(slide.id, item.id)}
+              onMove={position => onMove(slide.id, item.id, position)}
+              isSelected={slide.selectedItem === item}
+              selectItem={() => selectItem(slide, item)}
               coefficient={coefficient}
               item={item}
               isMovable={!isPreview}
@@ -55,10 +57,16 @@ function Slide({ slide, isPreview, setCurrentSlideById, selectItem }: ISlideProp
 
 const mapDispatchToProps = (dispatch: AppDispatch) => {
   return {
-    selectItem: (slideId: string, itemId: string | null) => {
+    selectItem: (slide: TSlide, item: TItem | null) => {
       dispatch({
         type: "SELECT_ITEM",
-        payload: { slideId, itemId },
+        payload: { slide, item },
+      });
+    },
+    onMove: (slideId: string, itemId: string, position: TPosition) => {
+      dispatch({
+        type: "MOVING_ITEMS",
+        payload: { slideId, itemId, position },
       });
     },
   };

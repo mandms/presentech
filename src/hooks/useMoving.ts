@@ -1,6 +1,12 @@
 import { RefObject, useEffect, useRef } from "react";
+import { TPosition } from "../types.ts";
 
-function useMoving(itemRef: RefObject<HTMLDivElement>, isMovable: boolean) {
+function useMoving(
+  itemRef: RefObject<HTMLDivElement>,
+  isMovable: boolean,
+  onMove: (position: TPosition) => void,
+  isSelected: boolean,
+) {
   const moving = useRef<boolean>(false);
   const position = useRef<{
     startX: number;
@@ -9,6 +15,7 @@ function useMoving(itemRef: RefObject<HTMLDivElement>, isMovable: boolean) {
     lastY: number;
   }>({ startX: 0, startY: 0, lastX: 0, lastY: 0 });
   useEffect(() => {
+    if (!isSelected) return;
     if (!isMovable) return;
     const item = itemRef.current;
     if (!item) throw new Error("Item does not exists");
@@ -19,6 +26,10 @@ function useMoving(itemRef: RefObject<HTMLDivElement>, isMovable: boolean) {
       moving.current = false;
       position.current.lastX = item.offsetLeft;
       position.current.lastY = item.offsetTop;
+      onMove({
+        x: position.current.lastX,
+        y: position.current.lastY,
+      });
     };
 
     const onMouseDown = (e: MouseEvent) => {
@@ -30,6 +41,7 @@ function useMoving(itemRef: RefObject<HTMLDivElement>, isMovable: boolean) {
 
     const onMouseMove = (e: MouseEvent) => {
       if (!moving.current) return;
+      if (!isSelected) return;
       const x = e.clientX - position.current.startX + position.current.lastX;
       const y = e.clientY - position.current.startY + position.current.lastY;
       item.style.left = `${x}px`;
@@ -45,7 +57,7 @@ function useMoving(itemRef: RefObject<HTMLDivElement>, isMovable: boolean) {
       item.removeEventListener("mouseup", onMouseUp);
       item.removeEventListener("mousedown", e => onMouseDown(e as unknown as MouseEvent));
     };
-  }, [itemRef, isMovable]);
+  }, [itemRef, isMovable, isSelected]);
 }
 
 export default useMoving;
