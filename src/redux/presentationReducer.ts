@@ -165,12 +165,21 @@ const initState: TPresentation = {
   slides: [initSlide],
 };
 
+function renamePresentation(presentation: TPresentation, name: string): TPresentation {
+  const newPresentation: TPresentation = {
+    ...presentation,
+    name,
+  };
+
+  return newPresentation;
+}
+
 export const presentationReducer = (state: TPresentation = initState, action: TAction) => {
   switch (action.type) {
     case "CREATE_SLIDE":
       return createSlide(state);
     case "DELETE_SLIDE":
-      return deleteSlide(state, state.currentSlideId);
+      return deleteSlide(state);
     case "SELECT_SLIDE": {
       const { slideId } = action.payload;
       return selectSlide(state, slideId);
@@ -190,6 +199,9 @@ export const presentationReducer = (state: TPresentation = initState, action: TA
     case "ADD_BACKGROUND": {
       const { path, slideId } = action.payload;
       return addBackground(state, path, slideId);
+    }
+    case "RENAME_PRESENTATION": {
+      return renamePresentation(state, action.payload);
     }
     default:
       return { ...state };
