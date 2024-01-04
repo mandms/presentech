@@ -7,10 +7,10 @@ import { connect } from "react-redux";
 import { AppDispatch, RootState } from "../../../redux/rootReducer.ts";
 import { CollapseToolBarContext } from "../../../context/collapseToolBar.ts";
 import logo from "../../../assets/logo.png";
-import addSlide from "../../../assets/addSlide.png";
+import addSlide from "../../../assets/addSlideCustom.svg";
 import deleteSlideIcon from "../../../assets/deleteSlide.png";
 import download from "../../../assets/downloadFile.png";
-import open from "../../../assets/openFile.png";
+import open from "../../../assets/openFileCustom.svg";
 import Title from "../Title/Title.tsx";
 
 type ToolBarProps = {

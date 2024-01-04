@@ -15,16 +15,18 @@ function Presentation({ presentation, setCurrentSlideById }: IPresentationProps)
 
   return (
       <div className={styles.container}>
-          <ol className={styles.preview}>
-              {presentation.slides.map((slide, i) => (
-                  <li
-                      className={`${styles.wrap} ${presentation.currentSlideId === slide.id ? styles.active : ''}`}
-                      key={slide.id}
-                  >
-                      <Slide setCurrentSlideById={id => setCurrentSlideById(id)} isPreview={true} slide={slide}/>
-                  </li>
-              ))}
-          </ol>
+          <div className={styles.preview}>
+              <ol>
+                  {presentation.slides.map((slide, i) => (
+                      <li
+                          className={`${styles.wrap} ${presentation.currentSlideId === slide.id ? styles.active : ''}`}
+                          key={slide.id}
+                      >
+                          <Slide setCurrentSlideById={id => setCurrentSlideById(id)} isPreview={true} slide={slide}/>
+                      </li>
+                  ))}
+              </ol>
+          </div>
           <div className={styles["container-current"]}>
               <Slide isPreview={false} key={currentSlide.id} slide={currentSlide}/>
           </div>

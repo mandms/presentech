@@ -33,7 +33,7 @@
   height: 30px;
   font-family: Tahoma;
   background: #fff;
-  border-radius: 80px;
+  border-radius: 15px;
   border: 2px solid #348d40;
   outline: none;
 }
@@ -57,10 +57,8 @@
 
 .current {
   height: 30px;
-  margin-top: 50px;
-  margin-bottom: 50px;
   background-color: #fff;
-  border-radius: 80px;
+  border-radius: 15px;
   border: 2px solid #348d40;
 }
 
@@ -71,15 +69,19 @@
   text-align: center;
 }
 
-.add, .download, .open, .delete {
+.add {
   width: auto;
   height: 30px;
-  margin-left: 10px;
+  margin-right: 10px;
+  margin-left: 20px;
   vertical-align: middle;
 }
 
-.add {
-  padding-right: 10px;
+.add, .download, .open, .delete {
+  width: auto;
+  height: 30px;
+  margin-right: 10px;
+  vertical-align: middle;
 }
 
 .input {
@@ -114,5 +116,5 @@
 .file {
   background-color: #fff;
   border: 2px solid #348d40;
-  border-radius: 80px;
+  border-radius: 15px;
 }
