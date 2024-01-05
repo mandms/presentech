@@ -1,16 +1,12 @@
 import { ShapeType, TChar, TImage, TItem, TPosition, TShape, TSlide, TText } from "../../types.ts";
 import { uid } from "../../utils/uid.ts";
 
-export function movingItems(slides: TSlide[], slideId: string, itemId: string, position: TPosition): TSlide[] {
-  const slide = slides.find(slide => slide.id === slideId);
-  if (!slide) return [...slides];
-  const item = slide.items?.find(item => item.id == itemId);
-  if (!item) return [...slides];
+export function movingItems(slides: TSlide[], item: TItem, position: TPosition): TSlide[] {
   item.location = position;
   return [...slides];
 }
 
-export function addPrimitive(slides: TSlide[], shapeType: ShapeType, location: TPosition, slideId: string): TSlide[] {
+export function addPrimitive(slides: TSlide[], shapeType: ShapeType, location: TPosition, slide: TSlide): TSlide[] {
   const typeShape = () => {
     switch (shapeType) {
       case ShapeType.Circle:
@@ -34,13 +30,11 @@ export function addPrimitive(slides: TSlide[], shapeType: ShapeType, location: T
     type: typeShape(),
   };
 
-  const slide = slides.find(slide => slide.id === slideId);
-  slide?.items?.push(shape);
+  slide.items?.push(shape);
   return [...slides];
 }
 
-export function addText(slides: TSlide[], text: string, location: TPosition, slideId: string): TSlide[] {
-  const slide = slides.find(slide => slide.id === slideId);
+export function addText(slides: TSlide[], text: string, location: TPosition, slide: TSlide): TSlide[] {
   const textItems: TText = {
     id: uid(),
     size: {
@@ -64,7 +58,7 @@ export function addText(slides: TSlide[], text: string, location: TPosition, sli
     textItems.content.push(char);
   }
 
-  slide?.items?.push(textItems);
+  slide.items?.push(textItems);
   return [...slides];
 }
 
@@ -73,13 +67,13 @@ export function addImage(
   path: string,
   location: TPosition,
   dimensions: { width: number; height: number },
-  slideId: string,
+  slide: TSlide,
 ): TSlide[] {
-  const slide = slides.find(slide => slide.id === slideId);
   if (dimensions.width > 600 || dimensions.height > 600) {
     dimensions.width = dimensions.width - 400;
     dimensions.height = dimensions.height - 400;
   }
+
   const imageItems: TImage = {
     id: uid(),
     size: {
@@ -90,15 +84,12 @@ export function addImage(
     path: path,
   };
 
-  slide?.items?.push(imageItems);
+  slide.items?.push(imageItems);
   return [...slides];
 }
 
-export function addBackground(slides: TSlide[], path: string, slideId: string): TSlide[] {
-  const slide = slides.find(slide => slide.id === slideId);
-  if (slide) {
-    slide.background = { path: path };
-  }
+export function addBackground(slides: TSlide[], path: string, slide: TSlide): TSlide[] {
+  slide.background = { path: path };
   return [...slides];
 }
 
@@ -107,8 +98,10 @@ export function setSelectedItem(slides: TSlide[], slide: TSlide, item: TItem | n
     slide.selectedItem = null;
     return [...slides];
   }
+
   if (item !== slide.selectedItem) {
     slide.selectedItem = item;
   }
+
   return [...slides];
 }

@@ -7,23 +7,26 @@ import { connect } from "react-redux";
 
 interface IPresentationProps {
   presentation: TPresentation;
-  setCurrentSlideById: (id: string) => void;
+  setCurrentSlideById: (slide: TSlide) => void;
 }
 
 function Presentation({ presentation, setCurrentSlideById }: IPresentationProps): JSX.Element {
-  const currentSlide = presentation.slides.find(slide => slide.id === presentation.currentSlideId) as TSlide;
-
   return (
     <div className={styles.container}>
       <ol className={styles.preview}>
         {presentation.slides.map(slide => (
           <li className={styles.wrap} key={slide.id}>
-            <Slide setCurrentSlideById={id => setCurrentSlideById(id)} isPreview={true} slide={slide} />
+            <Slide
+              isCurrent={presentation.currentSlide === slide}
+              setCurrentSlideById={slide => setCurrentSlideById(slide)}
+              isPreview={true}
+              slide={slide}
+            />
           </li>
         ))}
       </ol>
       <div className={styles["container-current"]}>
-        <Slide isPreview={false} key={currentSlide.id} slide={currentSlide} />
+        <Slide isPreview={false} key={presentation.currentSlide.id} slide={presentation.currentSlide} />
       </div>
       <SideBar />
     </div>
@@ -38,10 +41,10 @@ const mapStateToProps = (state: RootState) => {
 
 const mapDispatchToProps = (dispatch: AppDispatch) => {
   return {
-    setCurrentSlideById: (id: string) => {
+    setCurrentSlideById: (slide: TSlide) => {
       dispatch({
         type: "SELECT_SLIDE",
-        payload: { slideId: id },
+        payload: { slide },
       });
     },
   };

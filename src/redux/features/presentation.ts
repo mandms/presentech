@@ -1,4 +1,4 @@
-import { TPresentation, TSlide } from "../../types.ts";
+import { TEditor, TPresentation, TSlide } from "../../types.ts";
 import { uid } from "../../utils/uid.ts";
 
 export function createSlide(presentation: TPresentation): TPresentation {
@@ -12,28 +12,38 @@ export function createSlide(presentation: TPresentation): TPresentation {
   return {
     ...presentation,
     slides: [...presentation.slides, newSlide],
-    currentSlideId: newSlide.id,
+    currentSlide: newSlide,
   };
 }
 
 /* deleteSlide NEED FIX */
 export function deleteSlide(presentation: TPresentation): TPresentation {
-  presentation.slides = presentation.slides.filter(slide => slide.id !== presentation.currentSlideId);
-  if (!presentation.slides.length) createSlide(presentation);
-  presentation.currentSlideId = presentation.slides[0].id;
+  presentation.slides = presentation.slides.filter(slide => slide !== presentation.currentSlide);
+  if (!presentation.slides.length) return createSlide(presentation);
+  presentation.currentSlide = presentation.slides[0];
 
   return {
     ...presentation,
     slides: [...presentation.slides],
-    currentSlideId: presentation.currentSlideId,
+    currentSlide: presentation.currentSlide,
   };
 }
 
-export function selectSlide(presentation: TPresentation, slideId: string) {
-  const currentSlideId = presentation.slides.find(slide => slide.id === slideId)?.id as string;
+export function selectSlide(presentation: TPresentation, slide: TSlide) {
   return {
     ...presentation,
     slides: [...presentation.slides],
-    currentSlideId: currentSlideId,
+    currentSlide: slide,
+  };
+}
+
+export function changePresentation(editor: TEditor, presentation: TPresentation): TEditor {
+  return {
+    ...editor,
+    history: {
+      actions: [presentation],
+      actionNumber: 1,
+    },
+    presentation: presentation,
   };
 }

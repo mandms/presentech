@@ -6,6 +6,7 @@ function useMoving(
   isMovable: boolean,
   onMove: (position: TPosition) => void,
   isSelected: boolean,
+  coefficient: number,
 ) {
   const moving = useRef<boolean>(false);
   const position = useRef<{
@@ -15,7 +16,7 @@ function useMoving(
     lastY: number;
   }>({ startX: 0, startY: 0, lastX: 0, lastY: 0 });
   useEffect(() => {
-    if (!isSelected) return;
+    if (!isSelected) return; //ТУТ НАДО ПОФИКСИТЬ
     if (!isMovable) return;
     const item = itemRef.current;
     if (!item) throw new Error("Item does not exists");
@@ -27,8 +28,8 @@ function useMoving(
       position.current.lastX = item.offsetLeft;
       position.current.lastY = item.offsetTop;
       onMove({
-        x: position.current.lastX,
-        y: position.current.lastY,
+        x: position.current.lastX / coefficient,
+        y: position.current.lastY / coefficient,
       });
     };
 
@@ -41,23 +42,22 @@ function useMoving(
 
     const onMouseMove = (e: MouseEvent) => {
       if (!moving.current) return;
-      if (!isSelected) return;
       const x = e.clientX - position.current.startX + position.current.lastX;
       const y = e.clientY - position.current.startY + position.current.lastY;
       item.style.left = `${x}px`;
       item.style.top = `${y}px`;
     };
 
-    item.addEventListener("mousedown", e => onMouseDown(e as unknown as MouseEvent));
+    item.addEventListener("mousedown", e => onMouseDown(e));
     item.addEventListener("mouseup", onMouseUp);
-    slide.addEventListener("mousemove", e => onMouseMove(e as unknown as MouseEvent));
+    slide.addEventListener("mousemove", e => onMouseMove(e));
 
     return () => {
-      slide.removeEventListener("mousemove", e => onMouseMove(e as unknown as MouseEvent));
+      slide.removeEventListener("mousemove", e => onMouseMove(e));
       item.removeEventListener("mouseup", onMouseUp);
-      item.removeEventListener("mousedown", e => onMouseDown(e as unknown as MouseEvent));
+      item.removeEventListener("mousedown", e => onMouseDown(e));
     };
-  }, [itemRef, isMovable, isSelected]);
+  }, [itemRef, isMovable, isSelected, coefficient]);
 }
 
 export default useMoving;

@@ -57,7 +57,7 @@ type TSlide = {
 type TPresentation = {
   name: string;
   slides: TSlide[];
-  currentSlideId: string;
+  currentSlide: TSlide;
 };
 
 type History = {

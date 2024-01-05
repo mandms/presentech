@@ -12,7 +12,7 @@ const initSlide: TSlide = {
 };
 
 const initState: TPresentation = {
-  currentSlideId: initSlide.id,
+  currentSlide: initSlide,
   name: "",
   slides: [initSlide],
 };
@@ -24,8 +24,8 @@ export const presentationReducer = (state: TPresentation = initState, action: TA
     case "DELETE_SLIDE":
       return deleteSlide(state);
     case "SELECT_SLIDE": {
-      const { slideId } = action.payload;
-      return selectSlide(state, slideId);
+      const { slide } = action.payload;
+      return selectSlide(state, slide);
     }
     case "IMPORT_PRESENTATION":
       return { ...state };

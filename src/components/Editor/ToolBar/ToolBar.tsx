@@ -29,7 +29,7 @@ function ToolBar({ changePresentation, presentation, setError, createSlide, dele
     }
   };
 
-  const findSlideById = () => presentation.slides.findIndex(slide => slide.id === presentation.currentSlideId);
+  const findSlideById = () => presentation.slides.findIndex(slide => slide === presentation.currentSlide);
 
   const GetJSONFile = () => {
     saveJsonObjToFile(presentation);
@@ -84,8 +84,8 @@ const mapDispatchToProps = (dispatch: AppDispatch) => {
     },
     changePresentation: (data: TPresentation) => {
       dispatch({
-        type: "",
-        data, //чисто чтобы убрать ошибки
+        type: "CHANGE_PRESENTATION",
+        payload: { data },
       });
     },
     setError: (message: string) => {

@@ -5,24 +5,24 @@ import { addBackground, addImage, addPrimitive, addText, movingItems, setSelecte
 export const slideReducer = (state: TSlide[], action: TAction): TSlide[] => {
   switch (action.type) {
     case "MOVING_ITEMS": {
-      const { slideId, itemId, position } = action.payload;
-      return movingItems(state, slideId, itemId, position);
+      const { item, position } = action.payload;
+      return movingItems(state, item, position);
     }
     case "ADD_PRIMITIVE": {
-      const { shapeType, location, slideId } = action.payload;
-      return addPrimitive(state, shapeType, location, slideId);
+      const { shapeType, location, slide } = action.payload;
+      return addPrimitive(state, shapeType, location, slide);
     }
     case "ADD_TEXT": {
-      const { text, location, slideId } = action.payload;
-      return addText(state, text, location, slideId);
+      const { text, location, slide } = action.payload;
+      return addText(state, text, location, slide);
     }
     case "ADD_IMAGE": {
-      const { path, location, dimensions, slideId } = action.payload;
-      return addImage(state, path, location, dimensions, slideId);
+      const { path, location, dimensions, slide } = action.payload;
+      return addImage(state, path, location, dimensions, slide);
     }
     case "ADD_BACKGROUND": {
-      const { path, slideId } = action.payload;
-      return addBackground(state, path, slideId);
+      const { path, slide } = action.payload;
+      return addBackground(state, path, slide);
     }
     case "SELECT_ITEM": {
       const { item, slide } = action.payload;

@@ -6,7 +6,7 @@ export const useSlideResize = (ref: RefObject<SVGSVGElement>, isPreview: boolean
     h: number;
   }>({ w: 1000, h: 500 });
 
-  const myObserver = new ResizeObserver(entries => {
+  const sizeObserver = new ResizeObserver(entries => {
     setSize({
       w: entries[0].target.getBoundingClientRect().width,
       h: entries[0].target.getBoundingClientRect().height,
@@ -16,8 +16,9 @@ export const useSlideResize = (ref: RefObject<SVGSVGElement>, isPreview: boolean
   useEffect(() => {
     const slide = ref.current;
     if (!slide) return;
-    myObserver.observe(slide);
-  }, [ref, myObserver]);
+    sizeObserver.observe(slide);
+    return () => sizeObserver.disconnect();
+  }, [ref, sizeObserver]);
 
   if (isPreview) return { size: { w: 1000, h: 565.5 }, coefficient: 1 };
   return { size, coefficient: size.w / 1000 };
