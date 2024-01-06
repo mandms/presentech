@@ -1,4 +1,4 @@
-import { TText } from "../../types";
+import { TText } from "../../../types.ts";
 
 interface ITextProps {
   text: TText;

@@ -1,6 +1,6 @@
 import styles from "./ToolBar.module.css";
 import { saveJsonObjToFile } from "../../../utils/save";
-import React, { useContext } from "react";
+import { ChangeEvent, useContext } from "react";
 import { readJsonFile } from "../../../utils/readJson.ts";
 import { TPresentation } from "../../../types";
 import { connect } from "react-redux";
@@ -8,7 +8,7 @@ import { AppDispatch, RootState } from "../../../redux/rootReducer.ts";
 import { CollapseToolBarContext } from "../../../context/collapseToolBar.ts";
 
 type ToolBarProps = {
-  changePresentation: (data: TPresentation) => void;
+  changePresentation: (presentation: TPresentation) => void;
   presentation: TPresentation;
   setError: (message: string) => void;
   createSlide: () => void;
@@ -16,7 +16,7 @@ type ToolBarProps = {
 };
 
 function ToolBar({ changePresentation, presentation, setError, createSlide, deleteSlide }: ToolBarProps): JSX.Element {
-  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       try {
         const fileData: TPresentation = (await readJsonFile(e.target.files[0])) as TPresentation;
@@ -29,12 +29,12 @@ function ToolBar({ changePresentation, presentation, setError, createSlide, dele
     }
   };
 
-  const findSlideById = () => presentation.slides.findIndex(slide => slide === presentation.currentSlide);
-
   const GetJSONFile = () => {
     saveJsonObjToFile(presentation);
   };
+
   const { hidden, setHidden } = useContext(CollapseToolBarContext);
+  const findSlideById = () => presentation.slides.findIndex(slide => slide === presentation.currentSlide);
 
   return (
     <>
@@ -82,10 +82,10 @@ const mapDispatchToProps = (dispatch: AppDispatch) => {
         type: "DELETE_SLIDE",
       });
     },
-    changePresentation: (data: TPresentation) => {
+    changePresentation: (presentation: TPresentation) => {
       dispatch({
         type: "CHANGE_PRESENTATION",
-        payload: { data },
+        payload: { presentation },
       });
     },
     setError: (message: string) => {

@@ -16,7 +16,6 @@ export function createSlide(presentation: TPresentation): TPresentation {
   };
 }
 
-/* deleteSlide NEED FIX */
 export function deleteSlide(presentation: TPresentation): TPresentation {
   presentation.slides = presentation.slides.filter(slide => slide !== presentation.currentSlide);
   if (!presentation.slides.length) return createSlide(presentation);
@@ -37,9 +36,9 @@ export function selectSlide(presentation: TPresentation, slide: TSlide) {
   };
 }
 
-export function changePresentation(editor: TEditor, presentation: TPresentation): TEditor {
+export function changePresentation(presentation: TPresentation): TEditor {
+  presentation.currentSlide = presentation.slides[0];
   return {
-    ...editor,
     history: {
       actions: [presentation],
       actionNumber: 1,

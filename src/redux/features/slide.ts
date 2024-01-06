@@ -105,3 +105,13 @@ export function setSelectedItem(slides: TSlide[], slide: TSlide, item: TItem | n
 
   return [...slides];
 }
+
+export function deleteItem(slides: TSlide[], slide: TSlide) {
+  const currentSlide = slides.find(value => value === slide);
+  if (currentSlide && currentSlide.items) {
+    currentSlide.items = currentSlide.items.filter(item => item !== slide.selectedItem);
+    currentSlide.selectedItem = null;
+  }
+
+  return [...slides];
+}

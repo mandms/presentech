@@ -1,6 +1,14 @@
 import { TSlide } from "../types.ts";
 import { TAction } from "./actionType.ts";
-import { addBackground, addImage, addPrimitive, addText, movingItems, setSelectedItem } from "./features/slide.ts";
+import {
+  addBackground,
+  addImage,
+  addPrimitive,
+  addText,
+  deleteItem,
+  movingItems,
+  setSelectedItem,
+} from "./features/slide.ts";
 
 export const slideReducer = (state: TSlide[], action: TAction): TSlide[] => {
   switch (action.type) {
@@ -27,6 +35,10 @@ export const slideReducer = (state: TSlide[], action: TAction): TSlide[] => {
     case "SELECT_ITEM": {
       const { item, slide } = action.payload;
       return setSelectedItem(state, slide, item);
+    }
+    case "DELETE_ITEM": {
+      const { slide } = action.payload;
+      return deleteItem(state, slide);
     }
   }
   return state;

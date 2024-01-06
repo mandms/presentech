@@ -1,6 +1,6 @@
 import { RefObject, useEffect, useState } from "react";
 
-export const useSlideResize = (ref: RefObject<SVGSVGElement>, isPreview: boolean) => {
+export const useSlideResize = (slideRef: RefObject<SVGSVGElement>, isPreview: boolean) => {
   const [size, setSize] = useState<{
     w: number;
     h: number;
@@ -14,11 +14,11 @@ export const useSlideResize = (ref: RefObject<SVGSVGElement>, isPreview: boolean
   });
 
   useEffect(() => {
-    const slide = ref.current;
+    const slide = slideRef.current;
     if (!slide) return;
     sizeObserver.observe(slide);
     return () => sizeObserver.disconnect();
-  }, [ref, sizeObserver]);
+  }, [slideRef, sizeObserver]);
 
   if (isPreview) return { size: { w: 1000, h: 565.5 }, coefficient: 1 };
   return { size, coefficient: size.w / 1000 };

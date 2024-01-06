@@ -1,5 +1,5 @@
 import { TItem, TPosition, TSlide } from "../../types";
-import Item from "../Items/Item";
+import Item from "../Items/Item/Item.tsx";
 import styles from "./Slide.module.css";
 import useSlideResize from "../../hooks/useSlideResize.ts";
 import { useRef } from "react";
@@ -31,7 +31,9 @@ function Slide({ slide, isPreview, setCurrentSlideById, selectItem, onMove, isCu
         if (setCurrentSlideById && isPreview) setCurrentSlideById(slide);
         if (!isPreview) {
           const container = slideRef?.current?.children[typeof slide.background === "string" ? 0 : 1].children[0];
-          if (e.target === container) selectItem(slide, null);
+          if (e.target === container) {
+            selectItem(slide, null);
+          }
         }
       }}
       id={!isPreview ? "current-slide" : `preview-slide-${slide.id}`}

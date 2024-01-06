@@ -11,9 +11,17 @@ type SideBarProps = {
   addText: (text: string, location: TPosition, slide: TSlide) => void;
   addBackground: (path: string, slide: TSlide) => void;
   addImage: (path: string, location: TPosition, dimensions: { width: number; height: number }, slide: TSlide) => void;
+  deleteItem: (slide: TSlide) => void;
 };
 
-function SideBar({ presentation, addPrimitive, addText, addBackground, addImage }: SideBarProps): JSX.Element {
+function SideBar({
+  presentation,
+  addPrimitive,
+  addText,
+  addBackground,
+  addImage,
+  deleteItem,
+}: SideBarProps): JSX.Element {
   const { hidden } = useContext(CollapseToolBarContext);
   const [sidebar, setSidebar] = useState({
     showPrimitives: false,
@@ -33,9 +41,9 @@ function SideBar({ presentation, addPrimitive, addText, addBackground, addImage 
   const coords = { x: 10, y: 10 };
 
   const handleImage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      const path = URL.createObjectURL(file);
+    const files = event.target.files;
+    if (files) {
+      const path = URL.createObjectURL(files[0]);
       const img = new Image();
       img.onload = () => {
         const dimensions = { width: img.width, height: img.height };
@@ -59,6 +67,11 @@ function SideBar({ presentation, addPrimitive, addText, addBackground, addImage 
 
   return (
     <div className={hidden ? [styles.sidebar, styles.hide].join(" ") : styles.sidebar}>
+      {presentation.currentSlide.selectedItem && (
+        <button className={styles.item} onClick={() => deleteItem(presentation.currentSlide)}>
+          Удалить выбранный элемент
+        </button>
+      )}
       <button
         className={styles.item}
         onClick={() => addText("Text", { x: coords.x, y: coords.y }, presentation.currentSlide)}
@@ -165,6 +178,12 @@ const mapDispatchToProps = (dispatch: AppDispatch) => {
       dispatch({
         type: "ADD_IMAGE",
         payload: { path, location, dimensions, slide },
+      });
+    },
+    deleteItem: (slide: TSlide) => {
+      dispatch({
+        type: "DELETE_ITEM",
+        payload: { slide },
       });
     },
   };

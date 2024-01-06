@@ -30,7 +30,7 @@ export const rootReducer = (state: TEditor = initState, action: TAction): TEdito
   switch (action.type) {
     case "CHANGE_PRESENTATION": {
       const { presentation } = action.payload;
-      return changePresentation(state, presentation);
+      return changePresentation(presentation);
     }
     default:
       return {
