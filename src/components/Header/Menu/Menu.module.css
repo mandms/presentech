@@ -33,8 +33,8 @@
   height: 30px;
   font-family: Tahoma;
   background: #fff;
-  border-radius: 15px;
   border: 2px solid #348d40;
+  border-radius: 15px;
   outline: none;
 }
 
@@ -58,8 +58,8 @@
 .current {
   height: 30px;
   background-color: #fff;
-  border-radius: 15px;
   border: 2px solid #348d40;
+  border-radius: 15px;
 }
 
 .link {
@@ -77,11 +77,16 @@
   vertical-align: middle;
 }
 
-.add, .download, .open, .delete {
+.add, .download, .open-icon, .delete {
   width: auto;
   height: 30px;
   margin-right: 10px;
   vertical-align: middle;
+}
+
+.open {
+  display: none;
+  visibility: hidden;
 }
 
 .input {

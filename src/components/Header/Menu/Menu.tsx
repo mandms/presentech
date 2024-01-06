@@ -14,27 +14,26 @@ import open from "../../../assets/openFileCustom.svg";
 import Title from "../Title/Title.tsx";
 
 type ToolBarProps = {
-  changePresentation: (data: TPresentation) => void;
+  openPresentation: (data: TPresentation) => void;
   presentation: TPresentation;
   setError: (message: string) => void;
   createSlide: () => void;
   deleteSlide: () => void;
 };
 
-function Menu({ changePresentation, presentation, setError, createSlide, deleteSlide }: ToolBarProps): JSX.Element {
+function Menu({ presentation, setError, createSlide, deleteSlide, openPresentation }: ToolBarProps): JSX.Element {
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       try {
-        const fileData: TPresentation = (await readJsonFile(e.target.files[0])) as TPresentation;
-        changePresentation(fileData);
-        if (e.target.nextElementSibling) e.target.nextElementSibling.innerHTML = e.target.files[0].name;
+        const file: TPresentation = (await readJsonFile(e.target.files[0])) as TPresentation;
+        //console.log(file);
+        openPresentation(file)
       } catch (err) {
         e.target.value = "";
         setError("Ошибка чтения JSON");
       }
     }
   };
-
   const findSlideById = () => presentation.slides.findIndex(slide => slide.id === presentation.currentSlideId);
 
   const GetJSONFile = () => {
@@ -65,11 +64,20 @@ function Menu({ changePresentation, presentation, setError, createSlide, deleteS
           <div className={styles.right}>
             <div className={styles.file}>
               <a className={styles.link} onClick={GetJSONFile} href="#">
-              <img className={styles.download} src={download}/>
+                <img className={styles.download} src={download}/>
               </a>
-              <label className={styles["input-file"]}>
-                <input type="image" src={open} className={styles.open} accept="application/json" name="file" onChange={handleFileChange}/>
-              </label>
+              <div className="upload">
+                <label htmlFor="openFile">
+                  <img src={open} className={styles["open-icon"]} alt="Upload Icon"/>
+                </label>
+                <input
+                    className={styles.open}
+                    id="openFile"
+                    type="file"
+                    accept="application/json"
+                    onChange={handleFileChange}
+                />
+              </div>
             </div>
             <button
                 className={[styles.input, styles.collapse].join(" ")}
@@ -101,10 +109,10 @@ const mapDispatchToProps = (dispatch: AppDispatch) => {
         type: "DELETE_SLIDE",
       });
     },
-    changePresentation: (data: TPresentation) => {
+    openPresentation: (data: TPresentation) => {
       dispatch({
-        type: "",
-        data, //чисто чтобы убрать ошибки
+        type: "OPEN_PRESENTATION",
+        payload: data,
       });
     },
     setError: (message: string) => {
