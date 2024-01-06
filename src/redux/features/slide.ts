@@ -84,6 +84,7 @@ export function addImage(
     path: path,
   };
 
+  console.log(imageItems);
   slide.items?.push(imageItems);
   return [...slides];
 }

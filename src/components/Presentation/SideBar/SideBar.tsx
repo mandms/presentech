@@ -43,14 +43,20 @@ function SideBar({
   const handleImage = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
     if (files) {
-      const path = URL.createObjectURL(files[0]);
-      console.log(path)
+      let path = URL.createObjectURL(files[0]);
       const img = new Image();
       img.onload = () => {
         const dimensions = { width: img.width, height: img.height };
+        const canvas = document.createElement("canvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0);
+        path = canvas.toDataURL("image/jpeg");
         addImage(path, { x: coords.x, y: coords.y }, dimensions, presentation.currentSlide);
       };
       img.src = path;
+
     }
   };
 
@@ -147,7 +153,6 @@ function SideBar({
     </div>
   );
 }
-
 const mapStateToProps = (state: RootState) => {
   return {
     presentation: state.presentation,

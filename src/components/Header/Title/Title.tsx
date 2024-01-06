@@ -4,16 +4,16 @@ import { AppDispatch, RootState } from "../../../redux/store.ts";
 import styles from "../Menu/Menu.module.css";
 
 type Props = {
-    presentationName: string;
+    title: string;
     renamePresentation: (name: string) => void;
 };
 
-export function Title({ presentationName, renamePresentation }: Props) {
-    const [name, setName] = useState(presentationName);
+export function Title({ title, renamePresentation }: Props) {
+    const [name, setName] = useState(title);
 
     useEffect(() => {
-        setName(presentationName);
-    }, [presentationName]);
+        setName(title);
+    }, [title]);
 
     const setTitle = () => {
         renamePresentation(name);
@@ -28,7 +28,7 @@ export function Title({ presentationName, renamePresentation }: Props) {
             }}
             onBlur={setTitle}
             onChange={(e) => setName(e.target.value)}
-            placeholder="Новая презентация"
+            placeholder="Презентация"
         />
     );
 }
@@ -44,7 +44,7 @@ const mapDispatchToProps = (dispatch: AppDispatch) => {
 };
 
 const mapStateToProps = (state: RootState) => {
-    return { presentationName: state.presentation.name };
+    return { title: state.presentation.name };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Title);
