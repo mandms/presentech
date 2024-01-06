@@ -29,7 +29,7 @@
   overflow-y: scroll;
   list-style: none;
   counter-reset: item;
-  background-color: rgb(183 255 206 / 55%);
+  background-color: rgba(214, 252, 211, 0.39);
   border-radius: 20px;
 }
 
