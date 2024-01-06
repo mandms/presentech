@@ -2,7 +2,12 @@ import { TAction } from "./actionType.ts";
 import { TPresentation, TSlide } from "../types.ts";
 import { uid } from "../utils/uid.ts";
 import { slideReducer } from "./slideReducer.ts";
-import { createSlide, deleteSlide, selectSlide } from "./features/presentation.ts";
+import {
+  createSlide,
+  deleteSlide,
+  selectSlide,
+  renamePresentation,
+} from "./features/presentation.ts";
 
 const initSlide: TSlide = {
   selectedItem: null,
@@ -27,8 +32,9 @@ export const presentationReducer = (state: TPresentation = initState, action: TA
       const { slide } = action.payload;
       return selectSlide(state, slide);
     }
-    case "IMPORT_PRESENTATION":
-      return { ...state };
+    case "RENAME_PRESENTATION": {
+      return renamePresentation(state, action.payload);
+    }
     default:
       return {
         ...state,

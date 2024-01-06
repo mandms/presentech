@@ -60,8 +60,6 @@ type TPresentation = {
   currentSlide: TSlide;
 };
 
-
-
 type History = {
   actions: TPresentation[];
   actionNumber: number;

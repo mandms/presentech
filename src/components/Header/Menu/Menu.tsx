@@ -34,7 +34,7 @@ function Menu({ presentation, setError, createSlide, deleteSlide, openPresentati
       }
     }
   };
-  const findSlideById = () => presentation.slides.findIndex(slide => slide.id === presentation.currentSlideId);
+  const findSlideById = () => presentation.slides.findIndex(slide => slide.id === presentation.currentSlide.id);
 
   const GetJSONFile = () => {
     saveJsonObjToFile(presentation);
@@ -49,7 +49,7 @@ function Menu({ presentation, setError, createSlide, deleteSlide, openPresentati
               <a href="#">
                 <img className={styles.logo} src={logo}/>
               </a>
-              < Title />
+              < Title presentationName={presentation.name} />
             </div>
             <div className={styles.current}>
               <p className={styles.link}>Текущий слайд: {findSlideById() + 1}</p>

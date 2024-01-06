@@ -36,13 +36,25 @@ export function selectSlide(presentation: TPresentation, slide: TSlide) {
   };
 }
 
-export function changePresentation(presentation: TPresentation): TEditor {
+export function renamePresentation(presentation: TPresentation, name: string): TPresentation {
+  const newPresentation: TPresentation = {
+    ...presentation,
+    name,
+  };
+
+  return newPresentation;
+}
+
+export function openPresentation(presentation: TPresentation): TEditor {
   presentation.currentSlide = presentation.slides[0];
-  return {
+
+  const newEditor: TEditor = {
     history: {
       actions: [presentation],
       actionNumber: 1,
     },
     presentation: presentation,
   };
+
+  return  newEditor;
 }

@@ -3,7 +3,7 @@ import { TEditor, TPresentation, TSlide } from "../types.ts";
 import { TAction } from "./actionType.ts";
 import { store } from "./store.ts";
 import { uid } from "../utils/uid.ts";
-import { changePresentation } from "./features/presentation.ts";
+import {openPresentation} from "./features/presentation.ts";
 
 const initSlide: TSlide = {
   selectedItem: null,
@@ -28,9 +28,8 @@ const initState: TEditor = {
 
 export const rootReducer = (state: TEditor = initState, action: TAction): TEditor => {
   switch (action.type) {
-    case "CHANGE_PRESENTATION": {
-      const { presentation } = action.payload;
-      return changePresentation(presentation);
+    case "OPEN_PRESENTATION": {
+      return openPresentation(action.payload);
     }
     default:
       return {
