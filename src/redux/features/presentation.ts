@@ -42,6 +42,7 @@ export function renamePresentation(presentation: TPresentation, name: string): T
     name,
   };
 
+
   return newPresentation;
 }
 
@@ -56,5 +57,6 @@ export function openPresentation(presentation: TPresentation): TEditor {
     presentation: presentation,
   };
 
+  console.log(newEditor);
   return  newEditor;
 }
