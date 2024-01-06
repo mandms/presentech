@@ -49,10 +49,10 @@ function Menu({ presentation, setError, createSlide, deleteSlide, openPresentati
               <a href="#">
                 <img className={styles.logo} src={logo}/>
               </a>
-              < Title presentationName={presentation.name} />
+              < Title />
             </div>
             <div className={styles.current}>
-              <p className={styles.link}>Текущий слайд: {findSlideById() + 1}</p>
+              <p className={styles.link}>Current: {findSlideById() + 1}</p>
               <a href="#" onClick={() => createSlide()}>
                 <img className={styles.add} src={addSlide}/>
               </a>

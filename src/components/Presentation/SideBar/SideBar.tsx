@@ -43,7 +43,7 @@ function SideBar({
   const handleImage = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
     if (files) {
-      const path = URL.createObjectURL(files[0]);
+      const path = event.target.value;
       const img = new Image();
       img.onload = () => {
         const dimensions = { width: img.width, height: img.height };
