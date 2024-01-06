@@ -16,6 +16,10 @@
   object-fit: cover;
 }
 
+.current {
+  border: 1px solid #768088;
+}
+
 .container {
   position: relative;
   width: 100%;

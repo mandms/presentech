@@ -3,15 +3,15 @@ import styles from "./Image.module.css";
 
 interface IImageProps {
   image: TImage;
+  coefficient: number;
 }
 
-function Image({ image }: IImageProps): JSX.Element {
+function Image({ image, coefficient }: IImageProps): JSX.Element {
   return (
     <svg
-      x={image.location.x}
-      y={image.location.y}
-      width={image.size.width}
-      height={image.size.height}
+      width={image.size.width * coefficient}
+      height={image.size.height * coefficient}
+      viewBox={`0 0 ${image.size.width * coefficient} ${image.size.height * coefficient}`}
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
     >

@@ -60,7 +60,7 @@ const img: TImage = {
 };
 
 const charA: TChar = {
-  id: 1,
+  id: uid(),
   bold: false,
   symbol: "A",
   color: "#000",
@@ -70,7 +70,7 @@ const charA: TChar = {
 };
 
 const charB: TChar = {
-  id: 2,
+  id: uid(),
   bold: true,
   symbol: "B",
   color: "#000",
@@ -80,7 +80,7 @@ const charB: TChar = {
 };
 
 const charC: TChar = {
-  id: 3,
+  id: uid(),
   bold: true,
   symbol: "C",
   color: "#ff0000",
@@ -90,7 +90,7 @@ const charC: TChar = {
 };
 
 const text: TText = {
-  id: "5",
+  id: uid(),
   content: [charA, charB],
   location: {
     x: 200,
@@ -103,7 +103,7 @@ const text: TText = {
 };
 
 const text2: TText = {
-  id: "5",
+  id: uid(),
   content: [charC, charB, charA],
   location: {
     x: 200,
@@ -116,6 +116,7 @@ const text2: TText = {
 };
 
 const slide: TSlide = {
+  selectedItem: null,
   background: {
     path: "./img.png",
   },
@@ -124,6 +125,7 @@ const slide: TSlide = {
 };
 
 const slide1: TSlide = {
+  selectedItem: null,
   background: {
     path: "./img_1.png",
   },
@@ -132,6 +134,7 @@ const slide1: TSlide = {
 };
 
 const slide2: TSlide = {
+  selectedItem: null,
   background: {
     path: "./img.png",
   },
@@ -140,6 +143,7 @@ const slide2: TSlide = {
 };
 
 const slide3: TSlide = {
+  selectedItem: null,
   background: {
     path: "./img.png",
   },
@@ -148,6 +152,7 @@ const slide3: TSlide = {
 };
 
 const slide4: TSlide = {
+  selectedItem: null,
   background: {
     path: "./img.png",
   },
@@ -156,6 +161,7 @@ const slide4: TSlide = {
 };
 
 const slide5: TSlide = {
+  selectedItem: null,
   background: {
     path: "./img.png",
   },
@@ -164,6 +170,7 @@ const slide5: TSlide = {
 };
 
 const slide6: TSlide = {
+  selectedItem: null,
   background: {
     path: "./img.png",
   },
@@ -174,7 +181,7 @@ const slide6: TSlide = {
 export const presentation: TPresentation = {
   name: "Моя презинтация",
   slides: [slide, slide1, slide2, slide3, slide4, slide5, slide6],
-  currentSlideId: slide.id,
+  currentSlide: slide,
 };
 
 const history: History = {

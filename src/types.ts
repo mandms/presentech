@@ -1,10 +1,10 @@
 type TItem = {
   id: string;
   size: Size;
-  location: TLocation;
+  location: TPosition;
 };
 
-type TLocation = {
+type TPosition = {
   x: number;
   y: number;
 };
@@ -15,7 +15,7 @@ type Size = {
 };
 
 type TChar = {
-  id: number;
+  id: string;
   fontFamily: string;
   fontSize: number;
   color: string;
@@ -49,6 +49,7 @@ type TShape = TItem & {
 
 type TSlide = {
   id: string;
+  selectedItem: TItem | null;
   background: IBackgroundImage | string;
   items?: TItem[];
 };
@@ -56,7 +57,7 @@ type TSlide = {
 type TPresentation = {
   name: string;
   slides: TSlide[];
-  currentSlideId: string;
+  currentSlide: TSlide;
 };
 
 
@@ -72,4 +73,4 @@ type TEditor = {
 };
 
 export { ShapeType };
-export type { TItem, TText, TImage, TShape, TSlide, History, TPresentation, TChar, TEditor, TLocation };
+export type { TItem, TText, TImage, TShape, TSlide, History, TPresentation, TChar, TEditor, TPosition };
