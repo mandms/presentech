@@ -2,11 +2,11 @@ import { RefObject, useEffect, useRef } from "react";
 import { TPosition } from "../types.ts";
 
 function useMoving(
-  itemRef: RefObject<HTMLDivElement>,
-  isMovable: boolean,
-  onMove: (position: TPosition) => void,
-  coefficient: number,
-  isSelected: boolean,
+    itemRef: RefObject<HTMLDivElement>,
+    isMovable: boolean,
+    onMove: (position: TPosition) => void,
+    coefficient: number,
+    isSelected: boolean,
 ) {
   const moving = useRef<boolean>(false);
   const position = useRef<{
@@ -16,13 +16,13 @@ function useMoving(
     lastY: number;
   }>({ startX: 0, startY: 0, lastX: 0, lastY: 0 });
 
-  useEffect(() => {
-    if (!isSelected) return; //СРОЧНО ПОФИКСИТЬ ЕПТА!
-    if (!isMovable) return;
+  const registerListeners = () => {
     const item = itemRef.current;
-    if (!item) throw new Error("Item does not exists");
+    if (!item) throw new Error("Item does not exist");
+
     const slide = item.parentElement;
-    if (!slide) throw new Error("Slide does not exists");
+    if (!slide) throw new Error("Slide does not exist");
+
     const onMouseUp = () => {
       moving.current = false;
       position.current.lastX = item.offsetLeft;
@@ -48,16 +48,23 @@ function useMoving(
       item.style.top = `${y}px`;
     };
 
-    item.addEventListener("mousedown", e => onMouseDown(e));
+    item.addEventListener("mousedown", onMouseDown);
     item.addEventListener("mouseup", onMouseUp);
-    slide.addEventListener("mousemove", e => onMouseMove(e));
+    slide.addEventListener("mousemove", onMouseMove);
 
     return () => {
-      slide.removeEventListener("mousemove", e => onMouseMove(e));
+      slide.removeEventListener("mousemove", onMouseMove);
       item.removeEventListener("mouseup", onMouseUp);
-      item.removeEventListener("mousedown", e => onMouseDown(e));
+      item.removeEventListener("mousedown", onMouseDown);
     };
-  }, [itemRef, isSelected, isMovable, coefficient]);
+  };
+
+  useEffect(() => {
+    if (isSelected && isMovable) {
+      return registerListeners();
+    }
+  }, [isSelected, isMovable, coefficient]);
+
 }
 
 export default useMoving;
