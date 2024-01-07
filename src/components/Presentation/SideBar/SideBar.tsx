@@ -1,6 +1,6 @@
 import styles from "./SideBar.module.css";
 import React, { useContext, useState } from "react";
-import { ShapeType, TPosition, TPresentation, TSlide } from "../../../types.ts";
+import {ShapeType, TItem, TPosition, TPresentation, TShape, TSlide, TText} from "../../../types.ts";
 import { AppDispatch, RootState } from "../../../redux/rootReducer.ts";
 import { connect } from "react-redux";
 import { CollapseToolBarContext } from "../../../context/collapseToolBar.ts";
@@ -12,6 +12,8 @@ type SideBarProps = {
   addBackground: (path: string, slide: TSlide) => void;
   addImage: (path: string, location: TPosition, dimensions: { width: number; height: number }, slide: TSlide) => void;
   deleteItem: (slide: TSlide) => void;
+  updateBackgroundColor: (item: TShape | null, color: string) => void;
+  updateBorderColor: (item: TShape | null, color: string) => void;
 };
 
 function SideBar({
@@ -21,7 +23,10 @@ function SideBar({
   addBackground,
   addImage,
   deleteItem,
+  updateBackgroundColor,
+  updateBorderColor,
 }: SideBarProps): JSX.Element {
+  const selectedItem = presentation.currentSlide.selectedItem;
   const { hidden } = useContext(CollapseToolBarContext);
   const [sidebar, setSidebar] = useState({
     showPrimitives: false,
@@ -36,6 +41,15 @@ function SideBar({
       addBackground(path, presentation.currentSlide);
     }
     event.target.value = "";
+  };
+
+  const handleBackgroundColorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const color = event.target.value;
+    updateBackgroundColor( selectedItem  as TShape, color);
+  };
+  const handleBorderColorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const color = event.target.value;
+    updateBorderColor( selectedItem  as TShape, color);
   };
 
   const coords = { x: 10, y: 10 };
@@ -64,6 +78,14 @@ function SideBar({
         return addPrimitive(ShapeType.Square, { x: coords.x, y: coords.y }, presentation.currentSlide);
     }
   };
+
+  function isText(item: TItem): item is TText {
+    return (item as TText).content !== undefined;
+  }
+
+  function isShape(item: TItem): item is TShape {
+    return (item as TShape).type !== undefined;
+  }
 
   return (
     <div className={hidden ? [styles.sidebar, styles.hide].join(" ") : styles.sidebar}>
@@ -134,16 +156,31 @@ function SideBar({
           <input type="file" accept="image/*" onChange={handleBackgroundImageChange} />
         </label>
       </div>
-      <div className={styles.container}>
-        <label className={styles.item}>
-          <span>Width</span>
-          <input type="text" />
-        </label>
-        <label className={styles.item}>
-          <span>Height</span>
-          <input type="text" />
-        </label>
-      </div>
+      {selectedItem && isText(selectedItem) && (
+          <div className={styles.container}>
+            <label className={styles.item}>
+              <span>Width</span>
+              <input type="text"/>
+            </label>
+            <label className={styles.item}>
+              <span>Height</span>
+              <input type="text"/>
+            </label>
+          </div>
+      )}
+      {selectedItem && isShape(selectedItem) && (
+          <div className={styles.container}>
+            <label className={styles.item}>
+              <span>Color</span>
+              <input type="color" value={selectedItem.backgroundColor} onChange={handleBackgroundColorChange}/>
+            </label>
+            <label className={styles.item}>
+              <span>Border Color</span>
+              <input type="color" value={selectedItem.borderColor} onChange={handleBorderColorChange}/>
+            </label>
+          </div>
+      )}
+
     </div>
   );
 }
@@ -184,6 +221,19 @@ const mapDispatchToProps = (dispatch: AppDispatch) => {
       dispatch({
         type: "DELETE_ITEM",
         payload: { slide },
+      });
+
+    },
+    updateBackgroundColor: (item: TShape | null, color: string) => {
+      dispatch({
+        type: "UPDATE_BACKGROUND_COLOR",
+        payload: {item, color},
+      });
+    },
+    updateBorderColor: (item: TShape | null, color: string) => {
+      dispatch({
+        type: "UPDATE_BORDER_COLOR",
+        payload: {item, color},
       });
     },
   };

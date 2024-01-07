@@ -8,6 +8,8 @@ import {
   deleteItem,
   movingItems,
   setSelectedItem,
+  updateBackgroundColor,
+  updateBorderColor,
 } from "./features/slide.ts";
 
 export const slideReducer = (state: TSlide[], action: TAction): TSlide[] => {
@@ -39,6 +41,14 @@ export const slideReducer = (state: TSlide[], action: TAction): TSlide[] => {
     case "DELETE_ITEM": {
       const { slide } = action.payload;
       return deleteItem(state, slide);
+    }
+    case "UPDATE_BACKGROUND_COLOR": {
+      const { item, color } = action.payload;
+      return updateBackgroundColor(state, item, color);
+    }
+    case "UPDATE_BORDER_COLOR": {
+      const { item, color } = action.payload;
+      return updateBorderColor(state, item, color);
     }
   }
   return state;
