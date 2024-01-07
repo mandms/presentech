@@ -18,7 +18,6 @@ interface ISlideProps {
 function Slide({ slide, isPreview, setCurrentSlideById, selectItem, onMove, isCurrent }: ISlideProps): JSX.Element {
   const slideRef = useRef<SVGSVGElement>(null);
   const { size, coefficient } = useSlideResize(slideRef, isPreview);
-
   return (
     <svg
       className={isCurrent ? [styles.current, styles.slide].join(" ") : styles.slide}
@@ -38,10 +37,12 @@ function Slide({ slide, isPreview, setCurrentSlideById, selectItem, onMove, isCu
       }}
       id={!isPreview ? "current-slide" : `preview-slide-${slide.id}`}
     >
-      {typeof slide.background !== "string" && <image className={styles.picture} xlinkHref={slide.background.path} />}
+      {typeof slide.background !== "string" && <image className={styles.picture} xlinkHref={slide.background.path} style={{position: "absolute"}}/>}
       {slide.items && (
         <foreignObject x={0} y={0} width="100%" height="100%" style={{ position: "relative" }}>
-          <div className={styles.container}>
+          <div
+              className={styles.container}
+              style={{backgroundColor: typeof slide.background === "string" ? slide.background : "transparent"}}>
             {slide.items.map(item => (
               <Item
                 onMove={position => onMove(item, position)}

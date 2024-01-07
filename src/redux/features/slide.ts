@@ -19,8 +19,8 @@ export function addPrimitive(slides: TSlide[], shapeType: ShapeType, location: T
   };
 
   const shape: TShape = {
-    backgroundColor: "#fff",
-    borderColor: "#000",
+    backgroundColor: "#ffffff",
+    borderColor: "#000000",
     id: uid(),
     location: location,
     size: {
@@ -50,7 +50,7 @@ export function addText(slides: TSlide[], text: string, location: TPosition, sli
       id: uid(),
       fontFamily: "Arial",
       fontSize: 24,
-      color: "black",
+      color: "#000000",
       bold: false,
       italic: false,
       symbol: text[i],
@@ -90,6 +90,14 @@ export function addImage(
 
 export function addBackground(slides: TSlide[], path: string, slide: TSlide): TSlide[] {
   slide.background = { path: path };
+  console.log(slide.background);
+  return [...slides];
+}
+
+export function updateBackgroundColorSlide(slides: TSlide[], slide: TSlide, color: string): TSlide[] {
+  console.log("we are here");
+  slide.background = color;
+  console.log(slide.background);
   return [...slides];
 }
 

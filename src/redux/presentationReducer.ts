@@ -7,7 +7,7 @@ import { createSlide, deleteSlide, selectSlide } from "./features/presentation.t
 const initSlide: TSlide = {
   selectedItem: null,
   id: uid(),
-  background: "#fff",
+  background: "#ffffff",
   items: [],
 };
 

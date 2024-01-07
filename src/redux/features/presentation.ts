@@ -5,7 +5,7 @@ export function createSlide(presentation: TPresentation): TPresentation {
   const newSlide: TSlide = {
     selectedItem: null,
     id: uid(),
-    background: "#fff",
+    background: "#ffffff",
     items: [],
   };
 
