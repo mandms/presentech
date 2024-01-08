@@ -2,7 +2,7 @@ import { TChar, TEditor, History, TImage, TPresentation, ShapeType, TSlide, TTex
 import { uid } from "../utils/uid.ts";
 
 const shapeCircle: TShape = {
-  backgroundColor: "#fff",
+  backgroundColor: "#ffffff",
   borderColor: "#000",
   id: "1",
   location: {

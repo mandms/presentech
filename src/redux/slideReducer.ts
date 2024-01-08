@@ -2,6 +2,7 @@ import { TSlide } from "../types.ts";
 import { TAction } from "./actionType.ts";
 import {
   addBackground,
+  updateBackgroundColorSlide,
   addImage,
   addPrimitive,
   addText,
@@ -33,6 +34,10 @@ export const slideReducer = (state: TSlide[], action: TAction): TSlide[] => {
     case "ADD_BACKGROUND": {
       const { path, slide } = action.payload;
       return addBackground(state, path, slide);
+    }
+    case "UPDATE_BACKGROUND_COLOR_SLIDE": {
+      const { slide, color } = action.payload;
+      return updateBackgroundColorSlide(state, slide, color);
     }
     case "SELECT_ITEM": {
       const { item, slide } = action.payload;

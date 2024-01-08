@@ -32,11 +32,13 @@ function Item({ item, isMovable, coefficient, selectItem, onMove, isSelected }: 
   const itemRef = useRef<HTMLDivElement>(null);
   const resizeRef = useRef<HTMLDivElement>(null);
   useItemResize(resizeRef, isSelected);
-  useMoving(itemRef, isMovable, onMove, coefficient, isSelected);
+  useMoving(itemRef, resizeRef, isMovable, onMove, coefficient, isSelected);
 
   const style: CSSProperties = {
     left: item.location.x * coefficient,
     top: item.location.y * coefficient,
+    width: item.size.width * coefficient,
+    height: item.size.height * coefficient,
     border: isSelected && isMovable ? "2px solid red" : "none",
   };
 
@@ -44,7 +46,7 @@ function Item({ item, isMovable, coefficient, selectItem, onMove, isSelected }: 
     <div ref={itemRef} style={style} className={styles.wrapper} onDoubleClick={() => isMovable && selectItem()}>
       {isText(item) && <Text coefficient={coefficient} text={item} />}
       {isImage(item) && <Image image={item} coefficient={coefficient} />}
-      {isShape(item) && <Shape coefficient={coefficient} shape={item} />}
+      {isShape(item) && <Shape shape={item} />}
       {isSelected && isMovable && <div ref={resizeRef} className={styles.resize}></div>}
     </div>
   );

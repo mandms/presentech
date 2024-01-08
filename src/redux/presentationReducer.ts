@@ -12,7 +12,7 @@ import {
 const initSlide: TSlide = {
   selectedItem: null,
   id: uid(),
-  background: "#fff",
+  background: "#ffffff",
   items: [],
 };
 

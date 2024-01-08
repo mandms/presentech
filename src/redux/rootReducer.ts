@@ -8,7 +8,7 @@ import {openPresentation} from "./features/presentation.ts";
 const initSlide: TSlide = {
   selectedItem: null,
   id: uid(),
-  background: "#fff",
+  background: "#ffffff",
   items: [],
 };
 

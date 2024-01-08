@@ -10,6 +10,7 @@ type SideBarProps = {
   addPrimitive: (shapeType: ShapeType, location: TPosition, slide: TSlide) => void;
   addText: (text: string, location: TPosition, slide: TSlide) => void;
   addBackground: (path: string, slide: TSlide) => void;
+  updateBackgroundColorSlide: (slide: TSlide, color: string) => void;
   addImage: (path: string, location: TPosition, dimensions: { width: number; height: number }, slide: TSlide) => void;
   deleteItem: (slide: TSlide) => void;
   updateBackgroundColor: (item: TShape | null, color: string) => void;
@@ -21,6 +22,7 @@ function SideBar({
   addPrimitive,
   addText,
   addBackground,
+  updateBackgroundColorSlide,
   addImage,
   deleteItem,
   updateBackgroundColor,
@@ -41,6 +43,13 @@ function SideBar({
       addBackground(path, presentation.currentSlide);
     }
     event.target.value = "";
+  };
+
+  const handleBackgroundColorSlide = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log("we are here");
+    const color = event.target.value;
+    console.log(color);
+    updateBackgroundColorSlide( presentation.currentSlide, color);
   };
 
   const handleBackgroundColorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -95,7 +104,7 @@ function SideBar({
 
   return (
     <div className={hidden ? [styles.sidebar, styles.hide].join(" ") : styles.sidebar}>
-      {presentation.currentSlide.selectedItem && (
+      {selectedItem && (
         <button className={styles.item} onClick={() => deleteItem(presentation.currentSlide)}>
           Удалить выбранный элемент
         </button>
@@ -159,7 +168,11 @@ function SideBar({
       <div className={[styles.container, !sidebar.showBack && styles["container-hidden"]].join(" ")}>
         <label className={styles.item}>
           <span>Choose an image</span>
-          <input type="file" accept="image/*" onChange={handleBackgroundImageChange} />
+          <input type="file" accept="image/*" onChange={handleBackgroundImageChange}/>
+        </label>
+        <label className={styles.item}>
+          <span>Color</span>
+          <input type="color" value={typeof presentation.currentSlide.background === "string" ? presentation.currentSlide.background : "#ffffff"} onChange={handleBackgroundColorSlide}/>
         </label>
       </div>
       {selectedItem && isText(selectedItem) && (
@@ -214,6 +227,12 @@ const mapDispatchToProps = (dispatch: AppDispatch) => {
       dispatch({
         type: "ADD_BACKGROUND",
         payload: { path, slide },
+      });
+    },
+    updateBackgroundColorSlide: (slide: TSlide, color: string) => {
+      dispatch({
+        type: "UPDATE_BACKGROUND_COLOR_SLIDE",
+        payload: {slide, color},
       });
     },
     addImage: (path: string, location: TPosition, dimensions: { width: number; height: number }, slide: TSlide) => {
