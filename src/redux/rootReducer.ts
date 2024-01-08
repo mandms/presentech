@@ -14,7 +14,7 @@ const initSlide: TSlide = {
 
 const initPresentation: TPresentation = {
   currentSlide: initSlide,
-  name: "Презентация без названия",
+  name: "New",
   slides: [initSlide],
 };
 

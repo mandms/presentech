@@ -1,6 +1,7 @@
 import { TEditor, TPresentation, TSlide } from "../../types.ts";
 import { uid } from "../../utils/uid.ts";
 
+
 export function createSlide(presentation: TPresentation): TPresentation {
   const newSlide: TSlide = {
     selectedItem: null,

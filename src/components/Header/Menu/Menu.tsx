@@ -11,7 +11,10 @@ import addSlide from "../../../assets/addSlideCustom.svg";
 import deleteSlideIcon from "../../../assets/deleteSlide.png";
 import download from "../../../assets/downloadFile.png";
 import open from "../../../assets/openFileCustom.svg";
+import editor from "../../../assets/editor.svg";
+import themeIcon from "../../../assets/theme.png";
 import Title from "../Title/Title.tsx";
+import {useTheme} from "../../ThemeProvider/Theme.tsx";
 
 type ToolBarProps = {
   openPresentation: (data: TPresentation) => void;
@@ -21,7 +24,8 @@ type ToolBarProps = {
   deleteSlide: () => void;
 };
 
-function Menu({ presentation, setError, createSlide, deleteSlide, openPresentation }: ToolBarProps): JSX.Element {
+function Menu({ presentation, setError, createSlide, deleteSlide, openPresentation}: ToolBarProps): JSX.Element {
+
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       try {
@@ -40,6 +44,14 @@ function Menu({ presentation, setError, createSlide, deleteSlide, openPresentati
     saveJsonObjToFile(presentation);
   };
   const { hidden, setHidden } = useContext(CollapseToolBarContext);
+  const { setTheme } = useTheme();
+
+  const handleThemeChange = () => {
+    const currentTheme = localStorage.getItem('theme');
+    console.log(currentTheme);
+    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+    setTheme(newTheme);
+  };
 
   return (
       <div>
@@ -80,10 +92,16 @@ function Menu({ presentation, setError, createSlide, deleteSlide, openPresentati
               </div>
             </div>
             <button
-                className={[styles.input, styles.collapse].join(" ")}
+                className={styles.input}
                 onClick={() => (setHidden ? setHidden(!hidden) : null)}
             >
-              Editor
+              <img src={editor} className={styles["open-icon"]} alt="Editor"/>
+            </button>
+            <button
+                className={styles.theme}
+                onClick={handleThemeChange}
+            >
+              <img src={themeIcon} className={styles["open-icon"]} alt="Theme"/>
             </button>
           </div>
         </ul>

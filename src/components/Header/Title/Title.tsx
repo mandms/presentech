@@ -28,7 +28,7 @@ export function Title({ title, renamePresentation }: Props) {
             }}
             onBlur={setTitle}
             onChange={(e) => setName(e.target.value)}
-            placeholder="Презентация"
+            placeholder="New"
         />
     );
 }
