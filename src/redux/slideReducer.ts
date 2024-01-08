@@ -1,8 +1,8 @@
 import { TSlide } from "../types.ts";
 import { TAction } from "./actionType.ts";
 import {
-  addBackground,
-  updateBackgroundColorSlide,
+  setBackgroundImageSlide,
+  setBackgroundColorSlide,
   addImage,
   addPrimitive,
   addText,
@@ -11,6 +11,7 @@ import {
   setSelectedItem,
   updateBackgroundColor,
   updateBorderColor,
+  setItemSize,
 } from "./features/slide.ts";
 
 export const slideReducer = (state: TSlide[], action: TAction): TSlide[] => {
@@ -33,11 +34,11 @@ export const slideReducer = (state: TSlide[], action: TAction): TSlide[] => {
     }
     case "ADD_BACKGROUND": {
       const { path, slide } = action.payload;
-      return addBackground(state, path, slide);
+      return setBackgroundImageSlide(state, path, slide);
     }
     case "UPDATE_BACKGROUND_COLOR_SLIDE": {
       const { slide, color } = action.payload;
-      return updateBackgroundColorSlide(state, slide, color);
+      return setBackgroundColorSlide(state, slide, color);
     }
     case "SELECT_ITEM": {
       const { item, slide } = action.payload;
@@ -54,6 +55,10 @@ export const slideReducer = (state: TSlide[], action: TAction): TSlide[] => {
     case "UPDATE_BORDER_COLOR": {
       const { item, color } = action.payload;
       return updateBorderColor(state, item, color);
+    }
+    case "SET_ITEM_SIZE": {
+      const { item, size } = action.payload;
+      return setItemSize(state, item, size);
     }
   }
   return state;

@@ -13,9 +13,17 @@ type ToolBarProps = {
   setError: (message: string) => void;
   createSlide: () => void;
   deleteSlide: () => void;
+  deletePresentation: () => void;
 };
 
-function ToolBar({ changePresentation, presentation, setError, createSlide, deleteSlide }: ToolBarProps): JSX.Element {
+function ToolBar({
+  changePresentation,
+  presentation,
+  setError,
+  createSlide,
+  deleteSlide,
+  deletePresentation,
+}: ToolBarProps): JSX.Element {
   const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       try {
@@ -49,6 +57,9 @@ function ToolBar({ changePresentation, presentation, setError, createSlide, dele
         </a>
         <a className={styles.link} onClick={GetJSONFile} href="#">
           Сохранить презентацию в JSON
+        </a>
+        <a className={styles.link} onClick={deletePresentation} href="#">
+          Удалить презентацию
         </a>
         <label className={styles["input-file"]}>
           <input type="file" accept="application/json" name="file" onChange={handleFileChange} />
@@ -92,6 +103,11 @@ const mapDispatchToProps = (dispatch: AppDispatch) => {
       dispatch({
         type: "",
         message, //чисто чтобы убрать ошибки
+      });
+    },
+    deletePresentation: () => {
+      dispatch({
+        type: "DELETE_PRESENTATION",
       });
     },
   };

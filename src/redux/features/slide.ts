@@ -1,4 +1,4 @@
-import { ShapeType, TChar, TImage, TItem, TPosition, TShape, TSlide, TText } from "../../types.ts";
+import { ShapeType, TChar, TImage, TItem, TPosition, TShape, TSize, TSlide, TText } from "../../types.ts";
 import { uid } from "../../utils/uid.ts";
 
 export function movingItems(slides: TSlide[], item: TItem, position: TPosition): TSlide[] {
@@ -88,16 +88,13 @@ export function addImage(
   return [...slides];
 }
 
-export function addBackground(slides: TSlide[], path: string, slide: TSlide): TSlide[] {
+export function setBackgroundImageSlide(slides: TSlide[], path: string, slide: TSlide): TSlide[] {
   slide.background = { path: path };
-  console.log(slide.background);
   return [...slides];
 }
 
-export function updateBackgroundColorSlide(slides: TSlide[], slide: TSlide, color: string): TSlide[] {
-  console.log("we are here");
+export function setBackgroundColorSlide(slides: TSlide[], slide: TSlide, color: string): TSlide[] {
   slide.background = color;
-  console.log(slide.background);
   return [...slides];
 }
 
@@ -125,15 +122,21 @@ export function deleteItem(slides: TSlide[], slide: TSlide) {
 }
 
 export function updateBackgroundColor(slides: TSlide[], item: TShape, color: string) {
-  if(!item) return [...slides];
+  if (!item) return [...slides];
   item.backgroundColor = color;
 
   return [...slides];
 }
 
 export function updateBorderColor(slides: TSlide[], item: TShape, color: string) {
-  if(!item) return [...slides];
+  if (!item) return [...slides];
   item.borderColor = color;
 
+  return [...slides];
+}
+
+export function setItemSize(slides: TSlide[], item: TItem, size: TSize) {
+  if (!item) return [...slides];
+  item.size = size;
   return [...slides];
 }

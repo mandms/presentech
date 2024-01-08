@@ -37,12 +37,15 @@ function Slide({ slide, isPreview, setCurrentSlideById, selectItem, onMove, isCu
       }}
       id={!isPreview ? "current-slide" : `preview-slide-${slide.id}`}
     >
-      {typeof slide.background !== "string" && <image className={styles.picture} xlinkHref={slide.background.path} style={{position: "absolute"}}/>}
+      {typeof slide.background !== "string" && (
+        <image className={styles.picture} xlinkHref={slide.background.path} style={{ position: "absolute" }} />
+      )}
       {slide.items && (
         <foreignObject x={0} y={0} width="100%" height="100%" style={{ position: "relative" }}>
           <div
-              className={styles.container}
-              style={{backgroundColor: typeof slide.background === "string" ? slide.background : "transparent"}}>
+            className={styles.container}
+            style={{ backgroundColor: typeof slide.background === "string" ? slide.background : "transparent" }}
+          >
             {slide.items.map(item => (
               <Item
                 onMove={position => onMove(item, position)}

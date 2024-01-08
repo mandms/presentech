@@ -32,6 +32,8 @@ export const rootReducer = (state: TEditor = initState, action: TAction): TEdito
       const { presentation } = action.payload;
       return changePresentation(presentation);
     }
+    case "DELETE_PRESENTATION":
+      return { ...initState };
     default:
       return {
         history: { actions: [], actionNumber: 1 },

@@ -6,8 +6,8 @@
 
 .resize {
   position: absolute;
-  right: 0;
-  bottom: 0;
+  right: -15px;
+  bottom: -15px;
   width: 10px;
   height: 10px;
   cursor: se-resize;

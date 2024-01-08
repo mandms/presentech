@@ -1,32 +1,33 @@
 import styles from "./SideBar.module.css";
 import React, { useContext, useState } from "react";
-import {ShapeType, TItem, TPosition, TPresentation, TShape, TSlide, TText} from "../../../types.ts";
+import { ShapeType, TItem, TPosition, TPresentation, TShape, TSlide, TText } from "../../../types.ts";
 import { AppDispatch, RootState } from "../../../redux/rootReducer.ts";
 import { connect } from "react-redux";
 import { CollapseToolBarContext } from "../../../context/collapseToolBar.ts";
+import { toBase64 } from "../../../utils/image.ts";
 
 type SideBarProps = {
   presentation: TPresentation;
   addPrimitive: (shapeType: ShapeType, location: TPosition, slide: TSlide) => void;
   addText: (text: string, location: TPosition, slide: TSlide) => void;
-  addBackground: (path: string, slide: TSlide) => void;
-  updateBackgroundColorSlide: (slide: TSlide, color: string) => void;
+  setBackgroundImageSlide: (path: string, slide: TSlide) => void;
+  setBackgroundColorSlide: (slide: TSlide, color: string) => void;
   addImage: (path: string, location: TPosition, dimensions: { width: number; height: number }, slide: TSlide) => void;
   deleteItem: (slide: TSlide) => void;
-  updateBackgroundColor: (item: TShape | null, color: string) => void;
-  updateBorderColor: (item: TShape | null, color: string) => void;
+  setBackgroundColor: (item: TShape | null, color: string) => void;
+  setBorderColor: (item: TShape | null, color: string) => void;
 };
 
 function SideBar({
   presentation,
   addPrimitive,
   addText,
-  addBackground,
-  updateBackgroundColorSlide,
+  setBackgroundImageSlide,
+  setBackgroundColorSlide,
   addImage,
   deleteItem,
-  updateBackgroundColor,
-  updateBorderColor,
+  setBackgroundColor,
+  setBorderColor,
 }: SideBarProps): JSX.Element {
   const selectedItem = presentation.currentSlide.selectedItem;
   const { hidden } = useContext(CollapseToolBarContext);
@@ -36,46 +37,46 @@ function SideBar({
     showImage: false,
   });
 
-  const handleBackgroundImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleBackgroundImageChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
     if (files) {
-      const path = URL.createObjectURL(files[0]);
-      addBackground(path, presentation.currentSlide);
+      const base64 = await toBase64(files[0]);
+      const img = new Image();
+      img.src = URL.createObjectURL(files[0]);
+      setBackgroundImageSlide(base64, presentation.currentSlide);
+    }
+    event.target.value = "";
+  };
+
+  const handleImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (files) {
+      const base64 = await toBase64(files[0]);
+      const img = new Image();
+      img.onload = () => {
+        const dimensions = { width: img.width, height: img.height };
+        addImage(base64, { x: coords.x, y: coords.y }, dimensions, presentation.currentSlide);
+      };
+      img.src = URL.createObjectURL(files[0]);
     }
     event.target.value = "";
   };
 
   const handleBackgroundColorSlide = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log("we are here");
     const color = event.target.value;
-    console.log(color);
-    updateBackgroundColorSlide( presentation.currentSlide, color);
+    setBackgroundColorSlide(presentation.currentSlide, color);
   };
 
   const handleBackgroundColorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const color = event.target.value;
-    updateBackgroundColor( selectedItem  as TShape, color);
+    setBackgroundColor(selectedItem as TShape, color);
   };
   const handleBorderColorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const color = event.target.value;
-    updateBorderColor( selectedItem  as TShape, color);
+    setBorderColor(selectedItem as TShape, color);
   };
 
   const coords = { x: 10, y: 10 };
-
-  const handleImage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files;
-    if (files) {
-      const path = URL.createObjectURL(files[0]);
-      const img = new Image();
-      img.onload = () => {
-        const dimensions = { width: img.width, height: img.height };
-        addImage(path, { x: coords.x, y: coords.y }, dimensions, presentation.currentSlide);
-      };
-      img.src = path;
-    }
-    event.target.value = "";
-  };
 
   const addFigure = (type: ShapeType) => {
     switch (type) {
@@ -162,38 +163,45 @@ function SideBar({
       <div className={[styles.container, !sidebar.showBack && styles["container-hidden"]].join(" ")}>
         <label className={styles.item}>
           <span>Choose an image</span>
-          <input type="file" accept="image/*" onChange={handleBackgroundImageChange}/>
+          <input type="file" accept="image/*" onChange={handleBackgroundImageChange} />
         </label>
         <label className={styles.item}>
           <span>Color</span>
-          <input type="color" value={typeof presentation.currentSlide.background === "string" ? presentation.currentSlide.background : "#ffffff"} onChange={handleBackgroundColorSlide}/>
+          <input
+            type="color"
+            value={
+              typeof presentation.currentSlide.background === "string"
+                ? presentation.currentSlide.background
+                : "#ffffff"
+            }
+            onChange={handleBackgroundColorSlide}
+          />
         </label>
       </div>
       {selectedItem && isText(selectedItem) && (
-          <div className={styles.container}>
-            <label className={styles.item}>
-              <span>Width</span>
-              <input type="text"/>
-            </label>
-            <label className={styles.item}>
-              <span>Height</span>
-              <input type="text"/>
-            </label>
-          </div>
+        <div className={styles.container}>
+          <label className={styles.item}>
+            <span>Width</span>
+            <input type="text" />
+          </label>
+          <label className={styles.item}>
+            <span>Height</span>
+            <input type="text" />
+          </label>
+        </div>
       )}
       {selectedItem && isShape(selectedItem) && (
-          <div className={styles.container}>
-            <label className={styles.item}>
-              <span>Color</span>
-              <input type="color" value={selectedItem.backgroundColor} onChange={handleBackgroundColorChange}/>
-            </label>
-            <label className={styles.item}>
-              <span>Border Color</span>
-              <input type="color" value={selectedItem.borderColor} onChange={handleBorderColorChange}/>
-            </label>
-          </div>
+        <div className={styles.container}>
+          <label className={styles.item}>
+            <span>Color</span>
+            <input type="color" value={selectedItem.backgroundColor} onChange={handleBackgroundColorChange} />
+          </label>
+          <label className={styles.item}>
+            <span>Border Color</span>
+            <input type="color" value={selectedItem.borderColor} onChange={handleBorderColorChange} />
+          </label>
+        </div>
       )}
-
     </div>
   );
 }
@@ -218,16 +226,16 @@ const mapDispatchToProps = (dispatch: AppDispatch) => {
         payload: { text, location, slide },
       });
     },
-    addBackground: (path: string, slide: TSlide) => {
+    setBackgroundImageSlide: (path: string, slide: TSlide) => {
       dispatch({
         type: "ADD_BACKGROUND",
         payload: { path, slide },
       });
     },
-    updateBackgroundColorSlide: (slide: TSlide, color: string) => {
+    setBackgroundColorSlide: (slide: TSlide, color: string) => {
       dispatch({
         type: "UPDATE_BACKGROUND_COLOR_SLIDE",
-        payload: {slide, color},
+        payload: { slide, color },
       });
     },
     addImage: (path: string, location: TPosition, dimensions: { width: number; height: number }, slide: TSlide) => {
@@ -241,18 +249,17 @@ const mapDispatchToProps = (dispatch: AppDispatch) => {
         type: "DELETE_ITEM",
         payload: { slide },
       });
-
     },
-    updateBackgroundColor: (item: TShape | null, color: string) => {
+    setBackgroundColor: (item: TShape | null, color: string) => {
       dispatch({
-        type: "UPDATE_BACKGROUND_COLOR",
-        payload: {item, color},
+        type: "SET_BACKGROUND_COLOR",
+        payload: { item, color },
       });
     },
-    updateBorderColor: (item: TShape | null, color: string) => {
+    setBorderColor: (item: TShape | null, color: string) => {
       dispatch({
-        type: "UPDATE_BORDER_COLOR",
-        payload: {item, color},
+        type: "SET_BORDER_COLOR",
+        payload: { item, color },
       });
     },
   };
