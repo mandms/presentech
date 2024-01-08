@@ -138,3 +138,19 @@ export function updateBorderColor(slides: TSlide[], item: TShape, color: string)
 
   return [...slides];
 }
+
+export function updateItemHeight(slides: TSlide[], item: TShape, height: number) {
+  if(!item) return [...slides];
+  item.size.height = height;
+
+  console.log(height, item.size.height )
+  return [...slides];
+}
+
+export function updateItemWidth(slides: TSlide[], item: TShape, width: number) {
+  if(!item) return [...slides];
+  item.size.width = width;
+
+  console.log(width);
+  return [...slides];
+}

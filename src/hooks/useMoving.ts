@@ -101,8 +101,8 @@ function useMoving(
   };
 
   useEffect(() => {
-    console.log(resizing);
-    console.log(moving);
+    //console.log(resizing);
+    //console.log(moving);
     if (isSelected && isMovable && !resizing) {
       return registerMovingListeners()
     }

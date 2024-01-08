@@ -102,3 +102,17 @@
   border: 2px solid transparent;
   border-radius: 5px;
 }
+
+.size {
+  display: flex;
+  flex-direction: row;
+}
+
+.size > .item{
+  height: 15px;
+  margin-left: 10px;
+}
+
+.size > .item > input{
+ width: 30px;
+}
