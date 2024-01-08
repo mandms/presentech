@@ -124,7 +124,6 @@ export function deleteItem(slides: TSlide[], slide: TSlide) {
 export function updateBackgroundColor(slides: TSlide[], item: TShape, color: string) {
   if (!item) return [...slides];
   item.backgroundColor = color;
-
   return [...slides];
 }
 

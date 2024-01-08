@@ -36,7 +36,7 @@ export const slideReducer = (state: TSlide[], action: TAction): TSlide[] => {
       const { path, slide } = action.payload;
       return setBackgroundImageSlide(state, path, slide);
     }
-    case "UPDATE_BACKGROUND_COLOR_SLIDE": {
+    case "SET_BACKGROUND_COLOR_SLIDE": {
       const { slide, color } = action.payload;
       return setBackgroundColorSlide(state, slide, color);
     }
@@ -48,11 +48,11 @@ export const slideReducer = (state: TSlide[], action: TAction): TSlide[] => {
       const { slide } = action.payload;
       return deleteItem(state, slide);
     }
-    case "UPDATE_BACKGROUND_COLOR": {
+    case "SET_BACKGROUND_COLOR_ITEM": {
       const { item, color } = action.payload;
       return updateBackgroundColor(state, item, color);
     }
-    case "UPDATE_BORDER_COLOR": {
+    case "SET_BORDER_COLOR_ITEM": {
       const { item, color } = action.payload;
       return updateBorderColor(state, item, color);
     }

@@ -234,7 +234,7 @@ const mapDispatchToProps = (dispatch: AppDispatch) => {
     },
     setBackgroundColorSlide: (slide: TSlide, color: string) => {
       dispatch({
-        type: "UPDATE_BACKGROUND_COLOR_SLIDE",
+        type: "SET_BACKGROUND_COLOR_SLIDE",
         payload: { slide, color },
       });
     },
@@ -252,13 +252,13 @@ const mapDispatchToProps = (dispatch: AppDispatch) => {
     },
     setBackgroundColor: (item: TShape | null, color: string) => {
       dispatch({
-        type: "SET_BACKGROUND_COLOR",
+        type: "SET_BACKGROUND_COLOR_ITEM",
         payload: { item, color },
       });
     },
     setBorderColor: (item: TShape | null, color: string) => {
       dispatch({
-        type: "SET_BORDER_COLOR",
+        type: "SET_BORDER_COLOR_ITEM",
         payload: { item, color },
       });
     },
