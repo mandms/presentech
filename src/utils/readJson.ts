@@ -1,3 +1,16 @@
+import {TPresentation} from "../types.ts";
+
+function validatePresentation(jsonData: any): jsonData is TPresentation {
+    if (
+        jsonData &&
+        typeof jsonData.name === 'string' &&
+        Array.isArray(jsonData.slides)
+    ) {
+        return true;
+    }
+    return false;
+}
+
 export const readJsonFile = (file: Blob) =>
   new Promise((resolve, reject) => {
     const fileReader = new FileReader();
@@ -5,7 +18,12 @@ export const readJsonFile = (file: Blob) =>
     fileReader.onload = event => {
       if (event.target) {
         try {
-          resolve(JSON.parse(event.target.result as string));
+            const jsonData = JSON.parse(event.target.result as string);
+            if (validatePresentation(jsonData)) {
+                resolve(jsonData);
+            } else {
+                reject(new Error('JSON does not match the expected TPresentation type.'));
+            }
         } catch (e) {
           reject(e);
         }

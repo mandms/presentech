@@ -30,10 +30,11 @@ function Menu({ presentation, setError, createSlide, deleteSlide, openPresentati
     if (e.target.files) {
       try {
         const file: TPresentation = (await readJsonFile(e.target.files[0])) as TPresentation;
-        //console.log(file);
+
         openPresentation(file)
       } catch (err) {
         e.target.value = "";
+        alert("Не корректный JSON");
         setError("Ошибка чтения JSON");
       }
     }
