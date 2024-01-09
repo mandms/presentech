@@ -26,7 +26,13 @@ type TChar = {
 };
 
 type TText = TItem & {
-  content: TChar[];
+  content: string;
+  fontFamily: string;
+  fontSize: number;
+  color: string;
+  backgroundColor?: string;
+  bold: boolean;
+  italic: boolean;
 };
 
 type IBackgroundImage = {

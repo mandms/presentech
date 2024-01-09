@@ -16,6 +16,11 @@ type SideBarProps = {
   deleteItem: (slide: TSlide) => void;
   setBackgroundColor: (item: TShape | null, color: string) => void;
   setBorderColor: (item: TShape | null, color: string) => void;
+  setTextColor: (item: TText | null, color: string) => void;
+  setFontFamily: (item: TText | null, fontFamily: string) => void;
+  setFontSize: (item: TText | null, fontSize: number) => void;
+  setTextBold: (item: TText | null) => void;
+  setTextItalic: (item: TText | null) => void;
 };
 
 function SideBar({
@@ -28,6 +33,11 @@ function SideBar({
   deleteItem,
   setBackgroundColor,
   setBorderColor,
+  setTextColor,
+  setFontFamily,
+  setFontSize,
+  setTextBold,
+  setTextItalic,
 }: SideBarProps): JSX.Element {
   const selectedItem = presentation.currentSlide.selectedItem;
   const { hidden } = useContext(CollapseToolBarContext);
@@ -74,6 +84,25 @@ function SideBar({
   const handleBorderColorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const color = event.target.value;
     setBorderColor(selectedItem as TShape, color);
+  };
+
+  const handleTextColor = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const color = event.target.value;
+    setTextColor(selectedItem as TText, color);
+  };
+  const handleFontFamily = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const fontFamily = event.target.value;
+    setFontFamily(selectedItem as TText, fontFamily);
+  };
+  const handleFontSize = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const fontSize = +event.target.value;
+    setFontSize(selectedItem as TText, fontSize);
+  };
+  const handleTextBold = () => {
+    setTextBold(selectedItem as TText);
+  };
+  const handleTextItalic = () => {
+    setTextItalic(selectedItem as TText);
   };
 
   const coords = { x: 10, y: 10 };
@@ -180,13 +209,42 @@ function SideBar({
       </div>
       {selectedItem && isText(selectedItem) && (
         <div className={styles.container}>
-          <label className={styles.item}>
-            <span>Width</span>
-            <input type="text" />
+          <label className={styles.itemText}>
+            <select value={selectedItem.fontFamily} className={styles.selectCustom} onChange={handleFontFamily}>
+              <option value="Arial" style={{ fontFamily: "Arial" }}>
+                Arial
+              </option>
+              <option value="Times New Roman" style={{ fontFamily: "Times New Roman" }}>
+                Times New Roman
+              </option>
+              <option value="Courier New" style={{ fontFamily: "Courier New" }}>
+                Courier New
+              </option>
+              <option value="Verdana" style={{ fontFamily: "Verdana" }}>
+                Verdana
+              </option>
+              <option value="Brush Script MT" style={{ fontFamily: "Brush Script MT" }}>
+                Brush Script MT
+              </option>
+            </select>
+            <input
+              type="number"
+              value={selectedItem.fontSize}
+              className={styles.numberInput}
+              onChange={handleFontSize}
+            />
           </label>
           <label className={styles.item}>
-            <span>Height</span>
-            <input type="text" />
+            Bold
+            <input type="checkbox" checked={selectedItem.bold} onChange={handleTextBold} />
+          </label>
+          <label className={styles.item}>
+            Italic
+            <input type="checkbox" checked={selectedItem.italic} onChange={handleTextItalic} />
+          </label>
+          <label className={styles.item}>
+            <span>Color</span>
+            <input type="color" value={selectedItem.color} onChange={handleTextColor} />
           </label>
         </div>
       )}
@@ -260,6 +318,36 @@ const mapDispatchToProps = (dispatch: AppDispatch) => {
       dispatch({
         type: "SET_BORDER_COLOR_ITEM",
         payload: { item, color },
+      });
+    },
+    setTextColor: (item: TText | null, color: string) => {
+      dispatch({
+        type: "SET_TEXT_COLOR",
+        payload: { item, color },
+      });
+    },
+    setFontFamily: (item: TText | null, fontFamily: string) => {
+      dispatch({
+        type: "SET_FONT_FAMILY",
+        payload: { item, fontFamily },
+      });
+    },
+    setFontSize: (item: TText | null, fontSize: number) => {
+      dispatch({
+        type: "SET_FONT_SIZE",
+        payload: { item, fontSize },
+      });
+    },
+    setTextBold: (item: TText | null) => {
+      dispatch({
+        type: "SET_TEXT_BOLD",
+        payload: { item },
+      });
+    },
+    setTextItalic: (item: TText | null) => {
+      dispatch({
+        type: "SET_TEXT_ITALIC",
+        payload: { item },
       });
     },
   };

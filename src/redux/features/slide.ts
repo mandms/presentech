@@ -1,4 +1,4 @@
-import { ShapeType, TChar, TImage, TItem, TPosition, TShape, TSize, TSlide, TText } from "../../types.ts";
+import { ShapeType, TImage, TItem, TPosition, TShape, TSlide, TText, TSize } from "../../types.ts";
 import { uid } from "../../utils/uid.ts";
 
 export function movingItems(slides: TSlide[], item: TItem, position: TPosition): TSlide[] {
@@ -42,21 +42,13 @@ export function addText(slides: TSlide[], text: string, location: TPosition, sli
       height: 100,
     },
     location: { x: location.x, y: location.y },
-    content: [],
+    content: text,
+    fontFamily: "Arial",
+    fontSize: 24,
+    color: "#000000",
+    bold: false,
+    italic: false,
   };
-
-  for (let i = 0; i < text.length; i++) {
-    const char: TChar = {
-      id: uid(),
-      fontFamily: "Arial",
-      fontSize: 24,
-      color: "#000000",
-      bold: false,
-      italic: false,
-      symbol: text[i],
-    };
-    textItems.content.push(char);
-  }
 
   slide.items?.push(textItems);
   return [...slides];
@@ -137,5 +129,37 @@ export function updateBorderColor(slides: TSlide[], item: TShape, color: string)
 export function setItemSize(slides: TSlide[], item: TItem, size: TSize) {
   if (!item) return [...slides];
   item.size = size;
+  return [...slides];
+}
+
+export function setTextColor(slides: TSlide[], item: TText, color: string) {
+  if (!item) return [...slides];
+  item.color = color;
+  return [...slides];
+}
+
+export function setFontFamily(slides: TSlide[], item: TText, fontFamily: string) {
+  if (!item) return [...slides];
+  item.fontFamily = fontFamily;
+  return [...slides];
+}
+export function setFontSize(slides: TSlide[], item: TText, fontSize: number) {
+  if (!item) return [...slides];
+  item.fontSize = fontSize;
+  return [...slides];
+}
+export function setTextBold(slides: TSlide[], item: TText) {
+  if (!item) return [...slides];
+  item.bold = !item.bold;
+  return [...slides];
+}
+export function setTextItalic(slides: TSlide[], item: TText) {
+  if (!item) return [...slides];
+  item.italic = !item.italic;
+  return [...slides];
+}
+export function setTextContent(slides: TSlide[], item: TText, content: string) {
+  if (!item) return [...slides];
+  item.content = content;
   return [...slides];
 }

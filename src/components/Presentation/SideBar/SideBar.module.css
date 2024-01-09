@@ -15,7 +15,7 @@
   padding: 10px 5px;
   margin-top: 10px;
   margin-bottom: 10px;
-  color: #ffffff;
+  color: #fff;
   text-align: center;
   background: #768088;
   border: 2px solid transparent;
@@ -74,6 +74,91 @@
   color: #000;
   text-align: center;
   background: #fff;
+  border: 2px solid transparent;
+  border-radius: 5px;
+}
+
+.itemText {
+  display: flex;
+}
+
+.selectCustom {
+  display: inline-block;
+  width: 8em;
+  padding: 0.675em 1em;
+  margin: 0;
+  line-height: 1.5;
+  color: #768088;
+  appearance: none;
+  cursor: pointer;
+  background-color: #edf2fa;
+  border: 1px solid #898a8e;
+  border-radius: 0.25rem;
+}
+
+.select-custom::after {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  pointer-events: none;
+  content: "\25BC";
+  transform: translateY(-50%);
+}
+
+.numberInput {
+  display: inline-block;
+  width: 4em;
+  padding: 0.675em 1em;
+  margin: 0;
+  line-height: 1.5;
+  color: #768088;
+  appearance: none;
+  cursor: pointer;
+  background-color: #edf2fa;
+  border: 1px solid #898a8e;
+  border-radius: 0.25rem;
+}
+
+.numberInput::before,
+.numberInput::after {
+  display: inline-block;
+  width: 0.75em;
+  height: 0.75em;
+  vertical-align: middle;
+  cursor: pointer;
+  content: "";
+  border: solid #333;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.numberInput::before {
+  margin-right: 0.25em;
+}
+
+.numberInput::after {
+  margin-left: 0.25em;
+}
+
+.numberInput::-webkit-outer-spin-button,
+.number-input::-webkit-inner-spin-button {
+  margin: 0;
+  appearance: none;
+}
+
+.numberInput:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #caced1;
+}
+
+input[type="checkbox"] {
+  box-sizing: border-box;
+  display: inline-block;
+  padding: 10px 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  color: #fff;
+  background: #768088;
   border: 2px solid transparent;
   border-radius: 5px;
 }

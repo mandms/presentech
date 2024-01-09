@@ -12,6 +12,12 @@ import {
   updateBackgroundColor,
   updateBorderColor,
   setItemSize,
+  setTextColor,
+  setFontFamily,
+  setFontSize,
+  setTextBold,
+  setTextItalic,
+  setTextContent,
 } from "./features/slide.ts";
 
 export const slideReducer = (state: TSlide[], action: TAction): TSlide[] => {
@@ -59,6 +65,30 @@ export const slideReducer = (state: TSlide[], action: TAction): TSlide[] => {
     case "SET_ITEM_SIZE": {
       const { item, size } = action.payload;
       return setItemSize(state, item, size);
+    }
+    case "SET_TEXT_COLOR": {
+      const { item, color } = action.payload;
+      return setTextColor(state, item, color);
+    }
+    case "SET_FONT_FAMILY": {
+      const { item, fontFamily } = action.payload;
+      return setFontFamily(state, item, fontFamily);
+    }
+    case "SET_FONT_SIZE": {
+      const { item, fontSize } = action.payload;
+      return setFontSize(state, item, fontSize);
+    }
+    case "SET_TEXT_BOLD": {
+      const { item } = action.payload;
+      return setTextBold(state, item);
+    }
+    case "SET_TEXT_ITALIC": {
+      const { item } = action.payload;
+      return setTextItalic(state, item);
+    }
+    case "SET_TEXT_CONTENT": {
+      const { item, content } = action.payload;
+      return setTextContent(state, item, content);
     }
   }
   return state;

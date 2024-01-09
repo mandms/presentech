@@ -30,14 +30,14 @@ function useMoving(
       if (itemRef.current) itemRef.current.removeEventListener("mousedown", onMouseDown);
       if (resizeRef.current) resizeRef.current.removeEventListener("mousedown", onResizeDown);
     };
-  }, [isSelected, isMovable, coefficient, moving, resizing]);
+  });
 
   const onResizeDown = (e: MouseEvent) => {
     if (!itemRef.current) return;
     if (!itemRef.current.parentElement) return;
     resizing.current = true;
-    position.current.startX = e.clientX;
-    position.current.startY = e.clientY;
+    position.current.startX = e.clientX - itemRef.current.offsetWidth - itemRef.current.offsetLeft;
+    position.current.startY = e.clientY - itemRef.current.offsetHeight - itemRef.current.offsetTop;
 
     itemRef.current.parentElement.addEventListener("mousemove", onResizeMove);
     itemRef.current.addEventListener("mouseup", onResizeUp);
@@ -46,8 +46,9 @@ function useMoving(
   const onResizeMove = (e: MouseEvent) => {
     if (!resizing.current) return;
     if (!itemRef.current) return;
-    const x = e.clientX - position.current.startX + position.current.lastX;
-    const y = e.clientY - position.current.startY + position.current.lastY;
+    const x = e.clientX - position.current.startX - itemRef.current.offsetLeft;
+    const y = e.clientY - position.current.startY - itemRef.current.offsetTop;
+    console.log(itemRef.current.offsetLeft, itemRef.current.offsetTop);
     itemRef.current.style.width = `${x}px`;
     itemRef.current.style.height = `${y}px`;
   };
@@ -56,11 +57,11 @@ function useMoving(
     const item = itemRef.current;
     if (!item) return;
     resizing.current = false;
-    position.current.lastX = parseInt(item.style.width) / 2;
-    position.current.lastY = parseInt(item.style.height);
+    /*position.current.lastX = item.offsetLeft - item.offsetWidth;
+    position.current.lastY = item.offsetTop - item.offsetHeight;*/
     setSize({
-      width: position.current.lastX,
-      height: position.current.lastY,
+      width: item.offsetWidth / coefficient,
+      height: item.offsetHeight / coefficient,
     });
     resizeRef.current?.removeEventListener("mousedown", onResizeDown);
     item.removeEventListener("mousemove", onResizeMove);
@@ -89,6 +90,7 @@ function useMoving(
     if (!item) return;
     const slide = itemRef.current?.parentElement;
     if (!slide) return;
+    if (resizeRef.current?.contains(e.target as Node)) return;
     moving.current = true;
     position.current.startX = e.clientX;
     position.current.startY = e.clientY;
