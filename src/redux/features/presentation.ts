@@ -61,3 +61,27 @@ export function openPresentation(presentation: TPresentation): TEditor {
   console.log(newEditor);
   return  newEditor;
 }
+
+export function deletePresentation() {
+  const initSlide: TSlide = {
+    selectedItem: null,
+    id: uid(),
+    background: "#ffffff",
+    items: [],
+  };
+
+  const initPresentation: TPresentation = {
+    currentSlide: initSlide,
+    name: "Презентация без названия",
+    slides: [initSlide],
+  };
+
+  const initState: TEditor = {
+    history: {
+      actions: [initPresentation],
+      actionNumber: 1,
+    },
+    presentation: initPresentation,
+  };
+  return { ...initState };
+}

@@ -9,8 +9,8 @@ function Shape({ shape }: IShapeProps): JSX.Element {
   return (
     <svg
       version="1.1"
-      width='100%'
-      height='100%'
+      width="100%"
+      height="100%"
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
       xmlSpace="preserve"
@@ -27,7 +27,9 @@ function Shape({ shape }: IShapeProps): JSX.Element {
       {shape.type === ShapeType.Square && (
         <polygon className={styles.shape} vectorEffect="non-scaling-stroke" points="0,100 0,0 100,0 100,100" />
       )}
-      {shape.type === ShapeType.Circle && <circle className={styles.shape} cx="50" cy="50" r="50" />}
+      {shape.type === ShapeType.Circle && (
+        <circle className={styles.shape} vectorEffect="non-scaling-stroke" cx="50" cy="50" r="50" />
+      )}
     </svg>
   );
 }
