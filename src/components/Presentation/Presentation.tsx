@@ -19,6 +19,7 @@ function Presentation({ presentation, setCurrentSlideById }: IPresentationProps)
                       <li
                           className={`${styles.wrap} ${presentation.currentSlide.id === slide.id ? styles.active : ''}`}
                           key={slide.id}
+
                       >
                           <Slide
                               isCurrent={presentation.currentSlide === slide}

@@ -16,9 +16,12 @@
     "stylelint:fix": "stylelint --fix src/**/*.css"
   },
   "dependencies": {
+    "html2pdf.js": "^0.10.1",
+    "jspdf-html2canvas": "^1.5.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^9.0.4",
+    "react-to-pdf": "^1.0.1",
     "redux": "^5.0.0"
   },
   "devDependencies": {

@@ -28,7 +28,7 @@ function isShape(item: TItem): item is TShape {
   return (item as TShape).type !== undefined;
 }
 
-function Item({ item, isMovable, coefficient, selectItem, onMove, isSelected }: IItemProps): JSX.Element {
+function Item({ item, isMovable, coefficient, selectItem, onMove, isSelected}: IItemProps): JSX.Element {
   const itemRef = useRef<HTMLDivElement>(null);
   const resizeRef = useRef<HTMLDivElement>(null);
   useItemResize(resizeRef, isSelected);

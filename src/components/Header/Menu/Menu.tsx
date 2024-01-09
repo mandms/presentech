@@ -13,8 +13,10 @@ import download from "../../../assets/downloadFile.png";
 import open from "../../../assets/openFileCustom.svg";
 import editor from "../../../assets/editor.svg";
 import themeIcon from "../../../assets/theme.png";
+import pdf from "../../../assets/toPdf.png";
 import Title from "../Title/Title.tsx";
 import {useTheme} from "../../ThemeProvider/Theme.tsx";
+import html2pdf from 'html2pdf.js/dist/html2pdf.js';
 
 type ToolBarProps = {
   openPresentation: (data: TPresentation) => void;
@@ -25,7 +27,6 @@ type ToolBarProps = {
 };
 
 function Menu({ presentation, setError, createSlide, deleteSlide, openPresentation}: ToolBarProps): JSX.Element {
-
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       try {
@@ -53,6 +54,30 @@ function Menu({ presentation, setError, createSlide, deleteSlide, openPresentati
     const newTheme = currentTheme === 'light' ? 'dark' : 'light';
     setTheme(newTheme);
   };
+
+  /*
+  const options = {
+    resolution: Resolution.HIGH,
+  };
+
+
+  const getTargetElement = () => document.getElementById('_container_1rsm1_19')
+  */
+  const toPDF = () => {
+    const slides = []
+    for (let i = 0; i < presentation.slides.length; i++) {
+      const doc = document.getElementById(presentation.slides[i].id)!;
+      slides.push(doc)
+    }
+    const opt = {
+      margin: 1,
+      filename: `${presentation.name}`,
+      image: {type: 'jpeg', quality: 0.98},
+      html2canvas: {scale: 2},
+      jsPDF: {unit: 'px', format: 'letter', orientation: 'landscape'}
+    };
+    html2pdf().from(slides).set(opt).save();
+  }
 
   return (
       <div>
@@ -91,6 +116,12 @@ function Menu({ presentation, setError, createSlide, deleteSlide, openPresentati
                     onChange={handleFileChange}
                 />
               </div>
+              <button
+                  className={styles.pdfButton}
+                  onClick={() => toPDF()}
+              >
+                <img src={pdf} className={styles["open-icon"]} alt="Pdf"/>
+              </button>
             </div>
             <button
                 className={styles.input}

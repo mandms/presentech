@@ -116,3 +116,7 @@
 .size > .item > input{
  width: 30px;
 }
+
+.size {
+  width: 270px;
+}

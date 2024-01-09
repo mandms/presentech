@@ -93,7 +93,7 @@
   vertical-align: middle;
 }
 
-.add, .download, .open-icon, .delete {
+.add, .download, .open-icon, .delete, .pdf {
   width: auto;
   height: 30px;
   vertical-align: middle;
@@ -112,6 +112,16 @@
   background-color: #fff;
   border: 1px solid #348d40;
   border-radius: 10px;
+}
+
+.pdfButton {
+  width: auto;
+  height: 44px;
+  margin-right: 11px;
+  vertical-align: middle;
+  cursor: pointer;
+  background-color: #fff;
+  border: none;
 }
 
 .theme {
