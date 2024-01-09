@@ -11,8 +11,6 @@ import {
   setSelectedItem,
   updateBackgroundColor,
   updateBorderColor,
-  updateItemHeight,
-  updateItemWidth,
 } from "./features/slide.ts";
 
 export const slideReducer = (state: TSlide[], action: TAction): TSlide[] => {
@@ -57,14 +55,14 @@ export const slideReducer = (state: TSlide[], action: TAction): TSlide[] => {
       const { item, color } = action.payload;
       return updateBorderColor(state, item, color);
     }
-    case "UPDATE_ITEM_HEIGHT": {
+   /* case "UPDATE_ITEM_HEIGHT": {
       const { item, height } = action.payload;
       return updateItemHeight(state, item, height);
     }
     case "UPDATE_ITEM_WIDTH": {
       const { item, width } = action.payload;
       return updateItemWidth(state, item, width);
-    }
+    }*/
   }
   return state;
 };

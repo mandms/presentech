@@ -1,5 +1,5 @@
 import styles from "./SideBar.module.css";
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useState} from "react";
 import {ShapeType, TItem, TPosition, TPresentation, TShape, TSlide, TText} from "../../../types.ts";
 import { AppDispatch, RootState } from "../../../redux/rootReducer.ts";
 import { connect } from "react-redux";
@@ -15,8 +15,6 @@ type SideBarProps = {
   deleteItem: (slide: TSlide) => void;
   updateBackgroundColor: (item: TShape | null, color: string) => void;
   updateBorderColor: (item: TShape | null, color: string) => void;
-  updateItemHeight: (item: TShape | null, height: number) => void;
-  updateItemWidth: (item: TShape | null, width: number) => void;
 };
 
 function SideBar({
@@ -29,8 +27,6 @@ function SideBar({
   deleteItem,
   updateBackgroundColor,
   updateBorderColor,
-                   updateItemHeight,
-                   updateItemWidth
 }: SideBarProps): JSX.Element {
   const selectedItem = presentation.currentSlide.selectedItem;
   const { hidden } = useContext(CollapseToolBarContext);
@@ -63,15 +59,6 @@ function SideBar({
   const handleBorderColorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const color = event.target.value;
     updateBorderColor( selectedItem  as TShape, color);
-  };
-
-  const handleItemHeightChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const height = Number(event.target.value);
-    updateItemHeight(selectedItem  as TShape, height);
-  };
-  const handleItemWidthChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const width = Number(event.target.value);
-    updateItemWidth(selectedItem  as TShape, width);
   };
 
   const coords = { x: 10, y: 10 };
@@ -210,22 +197,6 @@ function SideBar({
               <span>Border Color</span>
               <input type="color" value={selectedItem.borderColor} onChange={handleBorderColorChange}/>
             </label>
-            <div className={styles.size}>
-              <label className={styles.item}>
-                <span>Width</span>
-                <input type="text"
-                       value={selectedItem.size.width}
-                       onChange={handleItemWidthChange}
-                />
-              </label>
-              <label className={styles.item}>
-                <span>Height</span>
-                <input type="text"
-                       value={selectedItem.size.height}
-                       onChange={handleItemHeightChange}
-                />
-              </label>
-            </div>
           </div>
       )}
 
@@ -288,18 +259,6 @@ const mapDispatchToProps = (dispatch: AppDispatch) => {
       dispatch({
         type: "UPDATE_BORDER_COLOR",
         payload: {item, color},
-      });
-    },
-    updateItemHeight: (item: TShape | null, height: number) => {
-      dispatch({
-        type: "UPDATE_ITEM_HEIGHT",
-        payload: {item, height},
-      });
-    },
-    updateItemWidth: (item: TShape | null, width: number) => {
-      dispatch({
-        type: "UPDATE_ITEM_WIDTH",
-        payload: {item, width},
       });
     },
   };

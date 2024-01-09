@@ -1,5 +1,5 @@
-import { RefObject, useEffect, useState, useRef } from "react";
-import { TPosition } from "../types.ts";
+import { RefObject, useEffect, useRef } from "react";
+import { TPosition, TSize } from "../types.ts";
 
 function useMoving(
     itemRef: RefObject<HTMLDivElement>,
@@ -8,9 +8,10 @@ function useMoving(
     onMove: (position: TPosition) => void,
     coefficient: number,
     isSelected: boolean,
+    setSize: (size: TSize) => void,
 ) {
-  const [moving, setMoving] = useState(false);
-  const [resizing, setResizing] = useState(false);
+  const moving = useRef(false);
+  const resizing = useRef(false);
   const position = useRef<{
     startX: number;
     startY: number;
@@ -18,99 +19,86 @@ function useMoving(
     lastY: number;
   }>({ startX: 0, startY: 0, lastX: 0, lastY: 0 });
 
-  const registerMovingListeners = () => {
+  useEffect(() => {
+    if (!itemRef.current || !isSelected || !isMovable || !resizeRef.current) return;
+    itemRef.current.addEventListener("mousedown", onMouseDown);
+    resizeRef.current.addEventListener("mousedown", onResizeDown);
+    return () => {
+      if (itemRef.current) itemRef.current.removeEventListener("mousedown", onMouseDown);
+      if (resizeRef.current) resizeRef.current.removeEventListener("mousedown", onResizeDown);
+    };
+  }, [isSelected, isMovable, coefficient, moving, resizing]);
+
+  const onResizeDown = (e: MouseEvent) => {
+    if (!itemRef.current) return;
+    if (!itemRef.current.parentElement) return;
+    resizing.current = true;
+    position.current.startX = e.clientX - itemRef.current.offsetWidth - itemRef.current.offsetLeft;
+    position.current.startY = e.clientY - itemRef.current.offsetHeight - itemRef.current.offsetTop;
+    itemRef.current.parentElement.addEventListener("mousemove", onResizeMove);
+    itemRef.current.addEventListener("mouseup", onResizeUp);
+  };
+
+  const onResizeMove = (e: MouseEvent) => {
+    if (!resizing.current) return;
+    if (!itemRef.current) return;
+    const x = e.clientX - position.current.startX - itemRef.current.offsetLeft;
+    const y = e.clientY - position.current.startY - itemRef.current.offsetTop;
+    itemRef.current.style.width = `${x}px`;
+    itemRef.current.style.height = `${y}px`;
+  };
+
+  const onResizeUp = () => {
     const item = itemRef.current;
-    if (!item) throw new Error("Item does not exist");
-    const slide = item.parentElement;
-    if (!slide) throw new Error("Slide does not exist");
+    if (!item) return;
+    resizing.current = false;
+    setSize({
+      width: item.offsetWidth / coefficient,
+      height: item.offsetHeight / coefficient,
+    });
+    resizeRef.current?.removeEventListener("mousedown", onResizeDown);
+    item.removeEventListener("mousemove", onResizeMove);
+    item.removeEventListener("mouseup", onResizeUp);
+  };
 
-    const onMouseUp = () => {
-      setMoving(false);
-      position.current.lastX = item.offsetLeft;
-      position.current.lastY = item.offsetTop;
-      onMove({
-        x: position.current.lastX / coefficient,
-        y: position.current.lastY / coefficient,
-      });
-    };
+  const onMouseUp = () => {
+    const item = itemRef.current;
+    if (!item) return;
+    const slide = itemRef.current?.parentElement;
+    if (!slide) return;
+    moving.current = false;
+    position.current.lastX = item.offsetLeft;
+    position.current.lastY = item.offsetTop;
+    onMove({
+      x: position.current.lastX / coefficient,
+      y: position.current.lastY / coefficient,
+    });
+    itemRef.current.removeEventListener("mousedown", onMouseDown);
+    slide.removeEventListener("mousemove", onMouseMove);
+    item.removeEventListener("mouseup", onMouseUp);
+  };
 
-    const onMouseDown = (e: MouseEvent) => {
-      onMouseUp();
-      setMoving(true);
-      position.current.startX = e.clientX;
-      position.current.startY = e.clientY;
-    };
-
-    const onMouseMove = (e: MouseEvent) => {
-      if (!moving) return;
-      const x = e.clientX - position.current.startX + position.current.lastX;
-      const y = e.clientY - position.current.startY + position.current.lastY;
-      item.style.left = `${x}px`;
-      item.style.top = `${y}px`;
-    };
-
-    item.addEventListener("mousedown", onMouseDown);
+  const onMouseDown = (e: MouseEvent) => {
+    const item = itemRef.current;
+    if (!item) return;
+    const slide = itemRef.current?.parentElement;
+    if (!slide) return;
+    if (resizeRef.current?.contains(e.target as Node)) return;
+    moving.current = true;
+    position.current.startX = e.clientX;
+    position.current.startY = e.clientY;
     item.addEventListener("mouseup", onMouseUp);
     slide.addEventListener("mousemove", onMouseMove);
-
-    return () => {
-      slide.removeEventListener("mousemove", onMouseMove);
-      item.removeEventListener("mouseup", onMouseUp);
-      item.removeEventListener("mousedown", onMouseDown);
-    };
   };
 
-  const registerResizeListeners = () => {
-    const item = itemRef.current;
-    if (!item) throw new Error("Item does not exist");
-    const slide = item.parentElement;
-    if (!slide) throw new Error("Slide does not exist");
-    const resizeObj = resizeRef.current;
-    if (!resizeObj) throw new Error("Resize object does not exist");
-
-    const onResizeDown = (e: MouseEvent) => {
-      setResizing(true);
-      position.current.startX = e.clientX;
-      position.current.startY = e.clientY;
-      console.log(item.offsetWidth, item.offsetHeight);
-      slide.addEventListener("mousemove", onResizeMove);
-    };
-
-    const onResizeMove = (e: MouseEvent) => {
-      if (!resizing) return;
-      const x = e.clientX - position.current.startX + position.current.lastX;
-      const y = e.clientY - position.current.startY + position.current.lastY;
-      item.style.width = `${x}px`;
-      item.style.height = `${y}px`;
-    };
-
-    const onResizeUp = () => {
-      setResizing(false);
-      position.current.lastX = parseInt(item.style.width) / 2;
-      position.current.lastY = parseInt(item.style.height);
-    };
-
-    resizeObj.addEventListener("mousedown", onResizeDown);
-    resizeObj.addEventListener("mouseup", onResizeUp);
-
-    return () => {
-      resizeObj.removeEventListener("mousedown", onResizeDown);
-      resizeObj.removeEventListener("mouseup", onResizeUp);
-      slide.removeEventListener("mousemove", onResizeMove);
-    };
+  const onMouseMove = (e: MouseEvent) => {
+    if (!moving.current) return;
+    if (!itemRef.current) return;
+    const x = e.clientX - position.current.startX + position.current.lastX;
+    const y = e.clientY - position.current.startY + position.current.lastY;
+    itemRef.current.style.left = `${x}px`;
+    itemRef.current.style.top = `${y}px`;
   };
-
-  useEffect(() => {
-    //console.log(resizing);
-    //console.log(moving);
-    if (isSelected && isMovable && !resizing) {
-      return registerMovingListeners()
-    }
-    if (isSelected && isMovable && !moving) {
-      return registerResizeListeners();
-    }
-  }, [isSelected, isMovable, coefficient, resizing, moving]);
-
 }
 
 export default useMoving;

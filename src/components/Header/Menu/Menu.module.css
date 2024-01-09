@@ -104,7 +104,7 @@
   visibility: hidden;
 }
 
-.input, .theme {
+.input, .theme, .deleteSlide {
   width: auto;
   height: 44px;
   vertical-align: middle;
@@ -124,7 +124,7 @@
   border: none;
 }
 
-.theme {
+.theme, .deleteSlide {
   margin-left: 10px;
 }
 .file {

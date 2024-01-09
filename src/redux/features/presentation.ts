@@ -47,7 +47,7 @@ export function renamePresentation(presentation: TPresentation, name: string): T
   return newPresentation;
 }
 
-export function openPresentation(presentation: TPresentation): TEditor {
+export function changePresentation(presentation: TPresentation): TEditor {
   presentation.currentSlide = presentation.slides[0];
 
   const newEditor: TEditor = {
@@ -72,7 +72,7 @@ export function deletePresentation() {
 
   const initPresentation: TPresentation = {
     currentSlide: initSlide,
-    name: "Презентация без названия",
+    name: "New",
     slides: [initSlide],
   };
 

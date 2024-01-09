@@ -24,9 +24,17 @@ type ToolBarProps = {
   setError: (message: string) => void;
   createSlide: () => void;
   deleteSlide: () => void;
+  deletePresentation: () => void;
 };
 
-function Menu({ presentation, setError, createSlide, deleteSlide, openPresentation}: ToolBarProps): JSX.Element {
+function Menu({
+                presentation,
+                setError,
+                createSlide,
+                deleteSlide,
+                openPresentation,
+                deletePresentation,
+}: ToolBarProps): JSX.Element {
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       try {
@@ -137,6 +145,12 @@ function Menu({ presentation, setError, createSlide, deleteSlide, openPresentati
             >
               <img src={themeIcon} className={styles["open-icon"]} alt="Theme"/>
             </button>
+            <button
+                className={styles.deleteSlide}
+                onClick={deletePresentation}
+            >
+              <img src={deleteSlideIcon} className={styles["open-icon"]} alt="Delete Slide"/>
+            </button>
           </div>
         </ul>
       </div>
@@ -171,6 +185,11 @@ const mapDispatchToProps = (dispatch: AppDispatch) => {
       dispatch({
         type: "",
         message, //чисто чтобы убрать ошибки
+      });
+    },
+    deletePresentation: () => {
+      dispatch({
+        type: "DELETE_PRESENTATION",
       });
     },
   };
