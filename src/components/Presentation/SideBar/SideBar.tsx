@@ -105,7 +105,7 @@ function SideBar({
     setTextItalic(selectedItem as TText);
   };
 
-  const coords = { x: 10, y: 10 };
+  const coords = { x: 100, y: 100 };
 
   const addFigure = (type: ShapeType) => {
     switch (type) {
@@ -209,8 +209,8 @@ function SideBar({
       </div>
       {selectedItem && isText(selectedItem) && (
         <div className={styles.container}>
-          <label className={styles.itemText}>
-            <select value={selectedItem.fontFamily} className={styles.selectCustom} onChange={handleFontFamily}>
+          <label className={styles["item-text"]}>
+            <select value={selectedItem.fontFamily} className={styles["select-custom"]} onChange={handleFontFamily}>
               <option value="Arial" style={{ fontFamily: "Arial" }}>
                 Arial
               </option>
@@ -230,7 +230,7 @@ function SideBar({
             <input
               type="number"
               value={selectedItem.fontSize}
-              className={styles.numberInput}
+              className={styles["number-input"]}
               onChange={handleFontSize}
             />
           </label>

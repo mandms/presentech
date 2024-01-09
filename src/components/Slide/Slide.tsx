@@ -2,7 +2,7 @@ import { TItem, TPosition, TSlide } from "../../types";
 import Item from "../Items/Item/Item.tsx";
 import styles from "./Slide.module.css";
 import useSlideResize from "../../hooks/useSlideResize.ts";
-import { useRef } from "react";
+import { useRef, MouseEvent } from "react";
 import { AppDispatch } from "../../redux/rootReducer.ts";
 import { connect } from "react-redux";
 
@@ -17,32 +17,37 @@ interface ISlideProps {
 
 function Slide({ slide, isPreview, setCurrentSlideById, selectItem, onMove, isCurrent }: ISlideProps): JSX.Element {
   const slideRef = useRef<SVGSVGElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const { size, coefficient } = useSlideResize(slideRef, isPreview);
+  const onSlideClick = (e: MouseEvent) => {
+    if (setCurrentSlideById && isPreview) setCurrentSlideById(slide);
+    if (!isPreview) {
+      const container = containerRef.current;
+      if (e.target === container) {
+        selectItem(slide, null);
+      }
+    }
+  };
+
+  const setId = !isPreview ? "current-slide" : `preview-slide-${slide.id}`;
+
   return (
     <svg
       className={isCurrent ? [styles.current, styles.slide].join(" ") : styles.slide}
       xmlns="http://www.w3.org/2000/svg"
       viewBox={`0,0,${size.w},${size.h}`}
-      fill="none"
       xmlnsXlink="http://www.w3.org/1999/xlink"
       ref={slideRef}
-      onClick={e => {
-        if (setCurrentSlideById && isPreview) setCurrentSlideById(slide);
-        if (!isPreview) {
-          const container = slideRef?.current?.children[typeof slide.background === "string" ? 0 : 1].children[0];
-          if (e.target === container) {
-            selectItem(slide, null);
-          }
-        }
-      }}
-      id={!isPreview ? "current-slide" : `preview-slide-${slide.id}`}
+      onClick={e => onSlideClick(e)}
+      id={setId}
     >
       {typeof slide.background !== "string" && (
         <image className={styles.picture} xlinkHref={slide.background.path} style={{ position: "absolute" }} />
       )}
       {slide.items && (
-        <foreignObject x={0} y={0} width="100%" height="100%" style={{ position: "relative" }}>
+        <foreignObject className={styles.wrapper} x={0} y={0}>
           <div
+            ref={containerRef}
             className={styles.container}
             style={{ backgroundColor: typeof slide.background === "string" ? slide.background : "transparent" }}
           >

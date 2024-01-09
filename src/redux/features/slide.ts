@@ -129,7 +129,6 @@ export function updateBorderColor(slides: TSlide[], item: TShape, color: string)
 export function setItemSize(slides: TSlide[], item: TItem, size: TSize) {
   if (!item) return [...slides];
   item.size = size;
-  console.log(item);
   return [...slides];
 }
 

@@ -78,11 +78,11 @@
   border-radius: 5px;
 }
 
-.itemText {
+.item-text {
   display: flex;
 }
 
-.selectCustom {
+.select-custom {
   display: inline-block;
   width: 8em;
   padding: 0.675em 1em;
@@ -105,7 +105,7 @@
   transform: translateY(-50%);
 }
 
-.numberInput {
+.number-input {
   display: inline-block;
   width: 4em;
   padding: 0.675em 1em;
@@ -119,8 +119,8 @@
   border-radius: 0.25rem;
 }
 
-.numberInput::before,
-.numberInput::after {
+.number-input::before,
+.number-input::after {
   display: inline-block;
   width: 0.75em;
   height: 0.75em;
@@ -132,21 +132,21 @@
   transform: rotate(45deg);
 }
 
-.numberInput::before {
+.number-input::before {
   margin-right: 0.25em;
 }
 
-.numberInput::after {
+.number-input::after {
   margin-left: 0.25em;
 }
 
-.numberInput::-webkit-outer-spin-button,
+.number-input::-webkit-outer-spin-button,
 .number-input::-webkit-inner-spin-button {
   margin: 0;
   appearance: none;
 }
 
-.numberInput:focus {
+.number-input:focus {
   outline: none;
   box-shadow: 0 0 0 2px #caced1;
 }

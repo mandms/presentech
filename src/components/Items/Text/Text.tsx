@@ -1,55 +1,44 @@
 import { TText } from "../../../types.ts";
-import { AppDispatch } from "../../../redux/rootReducer.ts";
-import { connect } from "react-redux";
+
+import { CSSProperties, useEffect, useState } from "react";
 
 interface ITextProps {
   text: TText;
-  coefficient: number;
-  setTextContent: (item: TText, content: string) => void;
+  setTextContent: (content: string) => void;
 }
 
-function Text({ text, coefficient, setTextContent }: ITextProps): JSX.Element {
-  const handleTextContent = (event: React.FormEvent<HTMLSpanElement>) => {
-    const newContent = event.currentTarget.textContent || "";
-    setTextContent(text, newContent);
+function Text({ text, setTextContent }: ITextProps): JSX.Element {
+  const [content, setContent] = useState(text.content);
+
+  useEffect(() => {
+    setTextContent(content);
+  }, [content]);
+
+  const style: CSSProperties = {
+    left: text.location.x,
+    top: text.location.y,
+    width: "100%",
+    height: "100%",
+    overflow: "hidden",
+    color: text.color,
+    fontFamily: text.fontFamily,
+    fontSize: text.fontSize,
+    fontWeight: (text.bold && "bold") || undefined,
+    fontStyle: (text.italic && "italic") || undefined,
+    resize: "none",
+    border: "none",
+    boxSizing: "border-box",
+    outline: "none",
+    background: "transparent",
+    textAlign: "center",
+    whiteSpace: "pre-line",
+    /*paddingTop: `${text.size.height/2}px`, //ВОЗМОЖНО ПРИГОДИТСЯ, ТЕКСТ ПО ЦЕНТРУ
+    paddingBottom: `${text.size.height/2}px`,
+    paddingLeft: `${text.size.width/2}px`,
+    paddingRight: `${text.size.width/2}px`,*/
   };
-  return (
-    <div
-      style={{
-        left: text.location.x,
-        top: text.location.y,
-        width: text.size.width * coefficient,
-        height: text.size.height * coefficient,
-        overflow: "hidden",
-      }}
-      onInput={handleTextContent}
-      contentEditable="true"
-      suppressContentEditableWarning={true}
-    >
-      <span
-        style={{
-          color: text.color,
-          fontFamily: text.fontFamily,
-          fontSize: text.fontSize,
-          fontWeight: (text.bold && "bold") || undefined,
-          fontStyle: (text.italic && "italic") || undefined,
-        }}
-      >
-        {text.content}
-      </span>
-    </div>
-  );
+
+  return <textarea style={style} value={text.content} onChange={e => setContent(e.target.value)} />;
 }
 
-const mapDispatchToProps = (dispatch: AppDispatch) => {
-  return {
-    setTextContent: (item: TText, content: string) => {
-      dispatch({
-        type: "SET_TEXT_CONTENT",
-        payload: { item, content },
-      });
-    },
-  };
-};
-
-export default connect(null, mapDispatchToProps)(Text);
+export default Text;

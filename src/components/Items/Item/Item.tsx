@@ -16,6 +16,7 @@ interface IItemProps {
   isSelected: boolean;
   onMove: (position: TPosition) => void;
   setSize: (item: TItem, size: TSize) => void;
+  setTextContent: (item: TText, content: string) => void;
 }
 
 function isImage(item: TItem): item is TImage {
@@ -30,7 +31,16 @@ function isShape(item: TItem): item is TShape {
   return (item as TShape).type !== undefined;
 }
 
-function Item({ item, isMovable, coefficient, selectItem, onMove, isSelected, setSize }: IItemProps): JSX.Element {
+function Item({
+  item,
+  isMovable,
+  coefficient,
+  selectItem,
+  onMove,
+  isSelected,
+  setSize,
+  setTextContent,
+}: IItemProps): JSX.Element {
   const itemRef = useRef<HTMLDivElement>(null);
   const resizeRef = useRef<HTMLDivElement>(null);
 
@@ -42,11 +52,12 @@ function Item({ item, isMovable, coefficient, selectItem, onMove, isSelected, se
     width: item.size.width * coefficient,
     height: item.size.height * coefficient,
     border: isSelected && isMovable ? "2px solid #1A73E8FF" : "none",
+    cursor: isSelected ? "move" : "auto",
   };
 
   return (
     <div ref={itemRef} style={style} className={styles.wrapper} onClick={() => isMovable && selectItem()}>
-      {isText(item) && <Text coefficient={coefficient} text={item} />}
+      {isText(item) && <Text setTextContent={value => setTextContent(item, value)} text={item} />}
       {isImage(item) && <Image image={item} coefficient={coefficient} />}
       {isShape(item) && <Shape shape={item} />}
       {isSelected && isMovable && <div ref={resizeRef} className={styles.resize}></div>}
@@ -60,6 +71,12 @@ const mapDispatchToProps = (dispatch: AppDispatch) => {
       dispatch({
         type: "SET_ITEM_SIZE",
         payload: { item, size },
+      });
+    },
+    setTextContent: (item: TText, content: string) => {
+      dispatch({
+        type: "SET_TEXT_CONTENT",
+        payload: { item, content },
       });
     },
   };
