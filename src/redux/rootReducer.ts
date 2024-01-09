@@ -3,7 +3,7 @@ import { TEditor, TPresentation, TSlide } from "../types.ts";
 import { TAction } from "./actionType.ts";
 import { store } from "./store.ts";
 import { uid } from "../utils/uid.ts";
-import { changePresentation } from "./features/presentation.ts";
+import { changePresentation, deletePresentation } from "./features/presentation.ts";
 
 const initSlide: TSlide = {
   selectedItem: null,
@@ -32,8 +32,9 @@ export const rootReducer = (state: TEditor = initState, action: TAction): TEdito
       const { presentation } = action.payload;
       return changePresentation(presentation);
     }
-    case "DELETE_PRESENTATION":
-      return { ...initState };
+    case "DELETE_PRESENTATION": {
+      return deletePresentation();
+    }
     default:
       return {
         history: { actions: [], actionNumber: 1 },

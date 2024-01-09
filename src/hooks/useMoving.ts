@@ -20,12 +20,9 @@ function useMoving(
   }>({ startX: 0, startY: 0, lastX: 0, lastY: 0 });
 
   useEffect(() => {
-    if (itemRef.current && isSelected && isMovable && !resizing.current) {
-      itemRef.current.addEventListener("mousedown", onMouseDown);
-    }
-    if (resizeRef.current && isSelected && isMovable && !moving.current) {
-      resizeRef.current.addEventListener("mousedown", onResizeDown);
-    }
+    if (!itemRef.current || !isSelected || !isMovable || !resizeRef.current) return;
+    itemRef.current.addEventListener("mousedown", onMouseDown);
+    resizeRef.current.addEventListener("mousedown", onResizeDown);
     return () => {
       if (itemRef.current) itemRef.current.removeEventListener("mousedown", onMouseDown);
       if (resizeRef.current) resizeRef.current.removeEventListener("mousedown", onResizeDown);
@@ -38,7 +35,6 @@ function useMoving(
     resizing.current = true;
     position.current.startX = e.clientX - itemRef.current.offsetWidth - itemRef.current.offsetLeft;
     position.current.startY = e.clientY - itemRef.current.offsetHeight - itemRef.current.offsetTop;
-
     itemRef.current.parentElement.addEventListener("mousemove", onResizeMove);
     itemRef.current.addEventListener("mouseup", onResizeUp);
   };
@@ -48,7 +44,6 @@ function useMoving(
     if (!itemRef.current) return;
     const x = e.clientX - position.current.startX - itemRef.current.offsetLeft;
     const y = e.clientY - position.current.startY - itemRef.current.offsetTop;
-    console.log(itemRef.current.offsetLeft, itemRef.current.offsetTop);
     itemRef.current.style.width = `${x}px`;
     itemRef.current.style.height = `${y}px`;
   };
@@ -57,8 +52,6 @@ function useMoving(
     const item = itemRef.current;
     if (!item) return;
     resizing.current = false;
-    /*position.current.lastX = item.offsetLeft - item.offsetWidth;
-    position.current.lastY = item.offsetTop - item.offsetHeight;*/
     setSize({
       width: item.offsetWidth / coefficient,
       height: item.offsetHeight / coefficient,

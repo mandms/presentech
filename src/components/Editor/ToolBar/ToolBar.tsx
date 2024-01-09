@@ -37,10 +37,6 @@ function ToolBar({
     }
   };
 
-  const GetJSONFile = () => {
-    saveJsonObjToFile(presentation);
-  };
-
   const { hidden, setHidden } = useContext(CollapseToolBarContext);
   const findSlideById = () => presentation.slides.findIndex(slide => slide === presentation.currentSlide);
 
@@ -52,13 +48,13 @@ function ToolBar({
         <a className={styles.link} href="#" onClick={() => createSlide()}>
           + Добавить слайд
         </a>
-        <a className={styles.link} href="#" onClick={() => deleteSlide()}>
+        <a className={styles.link} href="#" onClick={() => presentation.slides.length > 1 && deleteSlide()}>
           - Удалить слайд
         </a>
-        <a className={styles.link} onClick={GetJSONFile} href="#">
+        <a className={styles.link} onClick={() => saveJsonObjToFile(presentation)} href="#">
           Сохранить презентацию в JSON
         </a>
-        <a className={styles.link} onClick={deletePresentation} href="#">
+        <a className={styles.link} onClick={() => deletePresentation()} href="#">
           Удалить презентацию
         </a>
         <label className={styles["input-file"]}>
