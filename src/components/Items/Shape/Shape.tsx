@@ -27,7 +27,9 @@ function Shape({ shape }: IShapeProps): JSX.Element {
       {shape.type === ShapeType.Square && (
         <polygon className={styles.shape} vectorEffect="non-scaling-stroke" points="0,100 0,0 100,0 100,100" />
       )}
-      {shape.type === ShapeType.Circle && <circle className={styles.shape} cx="50" cy="50" r="50" />}
+      {shape.type === ShapeType.Circle && (
+        <circle className={styles.shape} vectorEffect="non-scaling-stroke" cx="50" cy="50" r="50" />
+      )}
     </svg>
   );
 }

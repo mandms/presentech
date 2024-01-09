@@ -41,7 +41,7 @@ function Item({ item, isMovable, coefficient, selectItem, onMove, isSelected, se
     top: item.location.y * coefficient,
     width: item.size.width * coefficient,
     height: item.size.height * coefficient,
-    border: isSelected && isMovable ? "2px solid red" : "none",
+    border: isSelected && isMovable ? "2px solid #1A73E8FF" : "none",
   };
 
   return (
