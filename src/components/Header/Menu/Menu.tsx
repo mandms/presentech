@@ -16,7 +16,7 @@ import themeIcon from "../../../assets/theme.png";
 import pdf from "../../../assets/toPdf.png";
 import Title from "../Title/Title.tsx";
 import {useTheme} from "../../ThemeProvider/Theme.tsx";
-import html2pdf from 'html2pdf.js/dist/html2pdf.js';
+import html2PDF from "jspdf-html2canvas";
 
 type ToolBarProps = {
   openPresentation: (data: TPresentation) => void;
@@ -55,28 +55,30 @@ function Menu({ presentation, setError, createSlide, deleteSlide, openPresentati
     setTheme(newTheme);
   };
 
-  /*
-  const options = {
-    resolution: Resolution.HIGH,
-  };
-
-
-  const getTargetElement = () => document.getElementById('_container_1rsm1_19')
-  */
   const toPDF = () => {
     const slides = []
     for (let i = 0; i < presentation.slides.length; i++) {
       const doc = document.getElementById(presentation.slides[i].id)!;
       slides.push(doc)
     }
-    const opt = {
-      margin: 1,
-      filename: `${presentation.name}`,
-      image: {type: 'jpeg', quality: 0.98},
-      html2canvas: {scale: 2},
-      jsPDF: {unit: 'px', format: 'letter', orientation: 'landscape'}
-    };
-    html2pdf().from(slides).set(opt).save();
+    html2PDF(slides, {
+      jsPDF: {
+        unit: 'pt',
+        format: [100, 67],
+        orientation: "landscape",
+      },
+      margin: {
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0,
+      },
+      output: 'jspdf-generate.pdf',
+      init: function() {},
+      success: function(pdf) {
+        pdf.save(this.output);
+      }
+    })
   }
 
   return (
