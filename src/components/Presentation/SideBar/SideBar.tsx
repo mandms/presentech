@@ -1,6 +1,6 @@
 import styles from "./SideBar.module.css";
 import React, { useContext, useState } from "react";
-import { ShapeType, TItem, TPosition, TPresentation, TShape, TSlide, TText } from "../../../types.ts";
+import { TItem, TPresentation, TShape, TSlide, TText } from "../../../types.ts";
 import { AppDispatch, RootState } from "../../../redux/rootReducer.ts";
 import { connect } from "react-redux";
 import { CollapseSideBarContext } from "../../../context/collapseToolBar.ts";
@@ -8,11 +8,8 @@ import { toBase64 } from "../../../utils/image.ts";
 
 type SideBarProps = {
   presentation: TPresentation;
-  addPrimitive: (shapeType: ShapeType, location: TPosition, slide: TSlide) => void;
-  addText: (text: string, location: TPosition, slide: TSlide) => void;
   setBackgroundImageSlide: (path: string, slide: TSlide) => void;
   setBackgroundColorSlide: (slide: TSlide, color: string) => void;
-  addImage: (path: string, location: TPosition, dimensions: { width: number; height: number }, slide: TSlide) => void;
   deleteItem: (slide: TSlide) => void;
   setBackgroundColor: (item: TShape | null, color: string) => void;
   setBorderColor: (item: TShape | null, color: string) => void;
@@ -25,11 +22,8 @@ type SideBarProps = {
 
 function SideBar({
   presentation,
-  addPrimitive,
-  addText,
   setBackgroundImageSlide,
   setBackgroundColorSlide,
-  addImage,
   deleteItem,
   setBackgroundColor,
   setBorderColor,
@@ -42,9 +36,7 @@ function SideBar({
   const selectedItem = presentation.currentSlide.selectedItem;
   const { hidden } = useContext(CollapseSideBarContext);
   const [sidebar, setSidebar] = useState({
-    showPrimitives: false,
     showBack: false,
-    showImage: false,
   });
 
   const handleBackgroundImageChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -54,20 +46,6 @@ function SideBar({
       const img = new Image();
       img.src = URL.createObjectURL(files[0]);
       setBackgroundImageSlide(base64, presentation.currentSlide);
-    }
-    event.target.value = "";
-  };
-
-  const handleImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files;
-    if (files) {
-      const base64 = await toBase64(files[0]);
-      const img = new Image();
-      img.onload = () => {
-        const dimensions = { width: img.width, height: img.height };
-        addImage(base64, { x: coords.x, y: coords.y }, dimensions, presentation.currentSlide);
-      };
-      img.src = URL.createObjectURL(files[0]);
     }
     event.target.value = "";
   };
@@ -105,19 +83,6 @@ function SideBar({
     setTextItalic(selectedItem as TText);
   };
 
-  const coords = { x: 100, y: 100 };
-
-  const addFigure = (type: ShapeType) => {
-    switch (type) {
-      case ShapeType.Circle:
-        return addPrimitive(ShapeType.Circle, { x: coords.x, y: coords.y }, presentation.currentSlide);
-      case ShapeType.Triangle:
-        return addPrimitive(ShapeType.Triangle, { x: coords.x, y: coords.y }, presentation.currentSlide);
-      case ShapeType.Square:
-        return addPrimitive(ShapeType.Square, { x: coords.x, y: coords.y }, presentation.currentSlide);
-    }
-  };
-
   function isText(item: TItem): item is TText {
     return (item as TText).content !== undefined;
   }
@@ -133,51 +98,6 @@ function SideBar({
           Удалить выбранный элемент
         </button>
       )}
-      <button
-        className={styles.item}
-        onClick={() => addText("Text", { x: coords.x, y: coords.y }, presentation.currentSlide)}
-      >
-        Text
-      </button>
-      <button
-        className={styles.item}
-        onClick={() =>
-          setSidebar(prev => ({
-            ...prev,
-            showPrimitives: !sidebar.showPrimitives,
-          }))
-        }
-      >
-        Primitives
-      </button>
-      <div className={[styles.container, !sidebar.showPrimitives && styles["container-hidden"]].join(" ")}>
-        <button className={styles.item} onClick={() => addFigure(ShapeType.Square)}>
-          Square
-        </button>
-        <button className={styles.item} onClick={() => addFigure(ShapeType.Circle)}>
-          Circle
-        </button>
-        <button className={styles.item} onClick={() => addFigure(ShapeType.Triangle)}>
-          Triangle
-        </button>
-      </div>
-      <button
-        className={styles.item}
-        onClick={() =>
-          setSidebar(prev => ({
-            ...prev,
-            showImage: !sidebar.showImage,
-          }))
-        }
-      >
-        Image
-      </button>
-      <div className={[styles.container, !sidebar.showImage && styles["container-hidden"]].join(" ")}>
-        <label className={styles.item}>
-          <span>Choose an image</span>
-          <input type="file" accept="image/*" onChange={handleImage} />
-        </label>
-      </div>
       <button
         className={styles.item}
         onClick={() =>
@@ -272,18 +192,6 @@ const mapStateToProps = (state: RootState) => {
 
 const mapDispatchToProps = (dispatch: AppDispatch) => {
   return {
-    addPrimitive: (shapeType: ShapeType, location: TPosition, slide: TSlide) => {
-      dispatch({
-        type: "ADD_PRIMITIVE",
-        payload: { shapeType, location, slide },
-      });
-    },
-    addText: (text: string, location: TPosition, slide: TSlide) => {
-      dispatch({
-        type: "ADD_TEXT",
-        payload: { text, location, slide },
-      });
-    },
     setBackgroundImageSlide: (path: string, slide: TSlide) => {
       dispatch({
         type: "ADD_BACKGROUND",
@@ -294,12 +202,6 @@ const mapDispatchToProps = (dispatch: AppDispatch) => {
       dispatch({
         type: "SET_BACKGROUND_COLOR_SLIDE",
         payload: { slide, color },
-      });
-    },
-    addImage: (path: string, location: TPosition, dimensions: { width: number; height: number }, slide: TSlide) => {
-      dispatch({
-        type: "ADD_IMAGE",
-        payload: { path, location, dimensions, slide },
       });
     },
     deleteItem: (slide: TSlide) => {

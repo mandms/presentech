@@ -7,10 +7,10 @@ import { connect } from "react-redux";
 
 interface IPresentationProps {
   presentation: TPresentation;
-  setCurrentSlideById: (slide: TSlide) => void;
+  setCurrentSlide: (slide: TSlide) => void;
 }
 
-function Presentation({ presentation, setCurrentSlideById }: IPresentationProps): JSX.Element {
+function Presentation({ presentation, setCurrentSlide }: IPresentationProps): JSX.Element {
   return (
     <div className={styles.container}>
       <ol className={styles.preview}>
@@ -18,7 +18,7 @@ function Presentation({ presentation, setCurrentSlideById }: IPresentationProps)
           <li className={styles.wrap} key={slide.id}>
             <Slide
               isCurrent={presentation.currentSlide === slide}
-              setCurrentSlideById={slide => setCurrentSlideById(slide)}
+              setCurrentSlide={slide => setCurrentSlide(slide)}
               isPreview={true}
               slide={slide}
             />
@@ -41,7 +41,7 @@ const mapStateToProps = (state: RootState) => {
 
 const mapDispatchToProps = (dispatch: AppDispatch) => {
   return {
-    setCurrentSlideById: (slide: TSlide) => {
+    setCurrentSlide: (slide: TSlide) => {
       dispatch({
         type: "SELECT_SLIDE",
         payload: { slide },

@@ -8,7 +8,7 @@ type Props = {
   renamePresentation: (name: string) => void;
 };
 
-export function Title({ title, renamePresentation }: Props) {
+function Title({ title, renamePresentation }: Props): JSX.Element {
   const [name, setName] = useState(title);
 
   const setTitle = () => {
@@ -24,7 +24,6 @@ export function Title({ title, renamePresentation }: Props) {
       }}
       onBlur={setTitle}
       onChange={e => setName(e.target.value)}
-      placeholder="New"
     />
   );
 }

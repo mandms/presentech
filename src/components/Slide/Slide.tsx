@@ -10,17 +10,17 @@ interface ISlideProps {
   slide: TSlide;
   isPreview: boolean;
   isCurrent?: boolean;
-  setCurrentSlideById?: (slide: TSlide) => void;
+  setCurrentSlide?: (slide: TSlide) => void;
   selectItem: (slide: TSlide, item: TItem | null) => void;
   onMove: (item: TItem, position: TPosition) => void;
 }
 
-function Slide({ slide, isPreview, setCurrentSlideById, selectItem, onMove, isCurrent }: ISlideProps): JSX.Element {
+function Slide({ slide, isPreview, setCurrentSlide, selectItem, onMove, isCurrent }: ISlideProps): JSX.Element {
   const slideRef = useRef<SVGSVGElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const { size, coefficient } = useSlideResize(slideRef, isPreview);
   const onSlideClick = (e: MouseEvent) => {
-    if (setCurrentSlideById && isPreview) setCurrentSlideById(slide);
+    if (setCurrentSlide && isPreview) setCurrentSlide(slide);
     if (!isPreview) {
       const container = containerRef.current;
       if (e.target === container) {

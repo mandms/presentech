@@ -15,6 +15,7 @@
 }
 
 .link {
+  width: 120px;
   padding: 5px 20px;
   font:
     normal 400 14px/20px Oxygen,
@@ -129,8 +130,14 @@
   width: 100%;
 }
 
+.divider {
+  width: 2px;
+  height: 60%;
+  background: #acb2b7;
+}
+
 [data-theme="dark"] {
-  body {
+  & body {
     background-color: #2c2b2b;
   }
 
@@ -138,8 +145,8 @@
     background-color: #484848;
   }
 
-  label,
-  button,
+  & label,
+  .button,
   .info {
     color: white;
   }
