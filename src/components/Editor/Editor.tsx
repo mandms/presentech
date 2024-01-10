@@ -4,12 +4,12 @@ import { useMemo, useState } from "react";
 import Alert from "../Alert/Alert.tsx";
 import { Status } from "../Alert/Alert.types.ts";
 import Footer from "./Footer/Footer.tsx";
-import { CollapseToolBarContext } from "../../context/collapseToolBar.ts";
+import { CollapseSideBarContext } from "../../context/collapseToolBar.ts";
 
 function Editor() {
   const [error, setError] = useState<{ message: string } | null>(null);
   const [hidden, setHidden] = useState(false);
-  const collapseToolBarValue = useMemo(
+  const collapseSideBarValue = useMemo(
     () => ({
       hidden,
       setHidden,
@@ -20,10 +20,10 @@ function Editor() {
   return (
     <>
       {error && <Alert title={"Ошибка"} message={error.message} status={Status.ERROR} onClose={() => setError(null)} />}
-      <CollapseToolBarContext.Provider value={collapseToolBarValue}>
+      <CollapseSideBarContext.Provider value={collapseSideBarValue}>
         <ToolBar />
         <Presentation />
-      </CollapseToolBarContext.Provider>
+      </CollapseSideBarContext.Provider>
       <Footer />
     </>
   );

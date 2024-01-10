@@ -3,7 +3,7 @@ import React, { useContext, useState } from "react";
 import { ShapeType, TItem, TPosition, TPresentation, TShape, TSlide, TText } from "../../../types.ts";
 import { AppDispatch, RootState } from "../../../redux/rootReducer.ts";
 import { connect } from "react-redux";
-import { CollapseToolBarContext } from "../../../context/collapseToolBar.ts";
+import { CollapseSideBarContext } from "../../../context/collapseToolBar.ts";
 import { toBase64 } from "../../../utils/image.ts";
 
 type SideBarProps = {
@@ -40,7 +40,7 @@ function SideBar({
   setTextItalic,
 }: SideBarProps): JSX.Element {
   const selectedItem = presentation.currentSlide.selectedItem;
-  const { hidden } = useContext(CollapseToolBarContext);
+  const { hidden } = useContext(CollapseSideBarContext);
   const [sidebar, setSidebar] = useState({
     showPrimitives: false,
     showBack: false,

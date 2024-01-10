@@ -8,10 +8,11 @@ export function createSlide(presentation: TPresentation): TPresentation {
     background: "#ffffff",
     items: [],
   };
-
+  const currentSlideIdx = presentation.slides.findIndex(value => value === presentation.currentSlide);
+  presentation.slides.splice(currentSlideIdx + 1, 0, newSlide);
   return {
     ...presentation,
-    slides: [...presentation.slides, newSlide],
+    slides: [...presentation.slides],
     currentSlide: newSlide,
   };
 }

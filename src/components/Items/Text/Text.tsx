@@ -1,6 +1,6 @@
 import { TText } from "../../../types.ts";
 
-import { CSSProperties, useEffect, useState } from "react";
+import { CSSProperties, useEffect, useRef, useState } from "react";
 
 interface ITextProps {
   text: TText;
@@ -9,16 +9,19 @@ interface ITextProps {
 
 function Text({ text, setTextContent }: ITextProps): JSX.Element {
   const [content, setContent] = useState(text.content);
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
     setTextContent(content);
+    /* textAreaRef.current.style.paddingTop = `${height}px`
+    textAreaRef.current.style.paddingBottom = `${height}px`*/
   }, [content]);
 
   const style: CSSProperties = {
     left: text.location.x,
     top: text.location.y,
     width: "100%",
-    height: "100%",
+    height: "auto",
     overflow: "hidden",
     color: text.color,
     fontFamily: text.fontFamily,
@@ -27,18 +30,15 @@ function Text({ text, setTextContent }: ITextProps): JSX.Element {
     fontStyle: (text.italic && "italic") || undefined,
     resize: "none",
     border: "none",
-    boxSizing: "border-box",
     outline: "none",
     background: "transparent",
     textAlign: "center",
     whiteSpace: "pre-line",
-    /*paddingTop: `${text.size.height/2}px`, //ВОЗМОЖНО ПРИГОДИТСЯ, ТЕКСТ ПО ЦЕНТРУ
-    paddingBottom: `${text.size.height/2}px`,
-    paddingLeft: `${text.size.width/2}px`,
-    paddingRight: `${text.size.width/2}px`,*/
+    /*paddingTop: `${text.size.height/4 }px`, //ВОЗМОЖНО ПРИГОДИТСЯ, ТЕКСТ ПО ЦЕНТРУ
+    paddingBottom: `${text.size.height/3}px`,*/
   };
 
-  return <textarea style={style} value={text.content} onChange={e => setContent(e.target.value)} />;
+  return <textarea ref={textAreaRef} style={style} value={text.content} onChange={e => setContent(e.target.value)} />;
 }
 
 export default Text;

@@ -10,7 +10,7 @@ interface IImageProps {
 function Image({ image, coefficient }: IImageProps): JSX.Element {
   const style: CSSProperties = {
     width: image.size.width * coefficient,
-    height: image.size.height * coefficient,
+    height: "auto",
   };
 
   return (

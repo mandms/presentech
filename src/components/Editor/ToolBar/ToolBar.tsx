@@ -5,7 +5,8 @@ import { readJsonFile } from "../../../utils/readJson.ts";
 import { TPresentation } from "../../../types";
 import { connect } from "react-redux";
 import { AppDispatch, RootState } from "../../../redux/rootReducer.ts";
-import { CollapseToolBarContext } from "../../../context/collapseToolBar.ts";
+import { CollapseSideBarContext } from "../../../context/collapseToolBar.ts";
+import logo from "../../../assets/logo.png";
 
 type ToolBarProps = {
   changePresentation: (presentation: TPresentation) => void;
@@ -37,40 +38,50 @@ function ToolBar({
     }
   };
 
-  const { hidden, setHidden } = useContext(CollapseToolBarContext);
+  const { hidden, setHidden } = useContext(CollapseSideBarContext);
   const findSlideById = () => presentation.slides.findIndex(slide => slide === presentation.currentSlide);
 
   return (
     <>
-      <ul className={styles.toolbar}>
-        <p>{presentation.name}</p>
-        <p className={styles.link}>Текущий слайд: {findSlideById() + 1}</p>
-        <a className={styles.link} href="#" onClick={() => createSlide()}>
-          + Добавить слайд
-        </a>
-        <a className={styles.link} href="#" onClick={() => presentation.slides.length > 1 && deleteSlide()}>
-          - Удалить слайд
-        </a>
-        <a className={styles.link} onClick={() => saveJsonObjToFile(presentation)} href="#">
-          Сохранить презентацию в JSON
-        </a>
-        <a className={styles.link} onClick={() => deletePresentation()} href="#">
-          Удалить презентацию
-        </a>
-        <label className={styles["input-file"]}>
-          <input type="file" accept="application/json" name="file" onChange={handleFileChange} />
-          <span>Выберите файл</span>
-        </label>
-        <button
-          className={[styles.link, styles.collapse].join(" ")}
-          onClick={() => (setHidden ? setHidden(!hidden) : null)}
-        >
-          Editor Menu
-        </button>
-      </ul>
+      <header className={styles.header}>
+        <div className={styles["header-wrapper"]}>
+          <img className={styles.logo} src={String(logo)} alt="logo" />
+          <div className={styles.info}>
+            <p className={styles.name}>{presentation.name}</p>
+            <div className={styles.menu}>
+              <button className={styles.button} onClick={() => saveJsonObjToFile(presentation)}>
+                Download presentation
+              </button>
+              <button className={styles.button} onClick={() => deletePresentation()}>
+                Delete presentation
+              </button>
+              <label className={[styles.button].join(" ")}>
+                <input type="file" accept="application/json" name="file" onChange={handleFileChange} />
+                <span>Choose presentation</span>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div className={styles.toolbar}>
+          <p className={styles.link}>Current slide: {findSlideById() + 1}</p>
+          <button className={styles.button} onClick={() => createSlide()}>
+            + Add slide
+          </button>
+          <button className={styles.button} onClick={() => presentation.slides.length > 1 && deleteSlide()}>
+            - Remove slide
+          </button>
+          <button
+            className={[styles.button, styles.last].join(" ")}
+            onClick={() => (setHidden ? setHidden(!hidden) : null)}
+          >
+            Editor menu
+          </button>
+        </div>
+      </header>
     </>
   );
 }
+
 const mapStateToProps = (state: RootState) => {
   return {
     presentation: state.presentation,
