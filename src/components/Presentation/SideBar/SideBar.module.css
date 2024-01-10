@@ -162,3 +162,22 @@ input[type="checkbox"] {
   border: 2px solid transparent;
   border-radius: 5px;
 }
+
+[data-theme='dark'] {
+  .sidebar {
+    background-color: #484848;
+  }
+
+  .item {
+    background-color: #404244;
+  }
+
+  .item:hover {
+    border: 2px solid #8181a6;
+  }
+
+  .container {
+    background-color: #3f3f3f;
+    border: none;
+  }
+}
