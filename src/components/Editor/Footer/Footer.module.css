@@ -19,4 +19,8 @@
   .footer {
     background-color: #484848;
   }
+
+  p {
+    color: white;
+  }
 }

@@ -46,7 +46,6 @@ function ToolBar({
 
   const handleThemeChange = () => {
     const currentTheme = localStorage.getItem('theme');
-    console.log(currentTheme);
     const newTheme = currentTheme === 'light' ? 'dark' : 'light';
     setTheme(newTheme);
   };
