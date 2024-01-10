@@ -58,7 +58,7 @@
   content: counter(item);
 }
 
-[data-theme='dark'] {
+[data-theme="dark"] {
   .wrap {
     color: white;
   }

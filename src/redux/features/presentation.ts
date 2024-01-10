@@ -48,6 +48,15 @@ export function changePresentation(presentation: TPresentation): TEditor {
   };
 }
 
+export function renamePresentation(presentation: TPresentation, name: string): TPresentation {
+  const newPresentation: TPresentation = {
+    ...presentation,
+    name,
+  };
+
+  return newPresentation;
+}
+
 export function deletePresentation() {
   const initSlide: TSlide = {
     selectedItem: null,

@@ -15,7 +15,7 @@
   color: #000;
 }
 
-[data-theme='dark'] {
+[data-theme="dark"] {
   .footer {
     background-color: #484848;
   }

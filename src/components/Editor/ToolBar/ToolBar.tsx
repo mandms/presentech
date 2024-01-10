@@ -7,7 +7,8 @@ import { connect } from "react-redux";
 import { AppDispatch, RootState } from "../../../redux/rootReducer.ts";
 import { CollapseSideBarContext } from "../../../context/collapseToolBar.ts";
 import logo from "../../../assets/logo.png";
-import {useTheme} from "../../ThemeProvider/Theme.tsx";
+import { useTheme } from "../../ThemeProvider/Theme.tsx";
+import Title from "../Title/Title.tsx";
 
 type ToolBarProps = {
   changePresentation: (presentation: TPresentation) => void;
@@ -45,11 +46,10 @@ function ToolBar({
   const { setTheme } = useTheme();
 
   const handleThemeChange = () => {
-    const currentTheme = localStorage.getItem('theme');
-    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+    const currentTheme = localStorage.getItem("theme");
+    const newTheme = currentTheme === "light" ? "dark" : "light";
     setTheme(newTheme);
   };
-
 
   return (
     <>
@@ -57,7 +57,7 @@ function ToolBar({
         <div className={styles["header-wrapper"]}>
           <img className={styles.logo} src={String(logo)} alt="logo" />
           <div className={styles.info}>
-            <p className={styles.name}>{presentation.name}</p>
+            <Title />
             <div className={styles.menu}>
               <button className={styles.button} onClick={() => saveJsonObjToFile(presentation)}>
                 Download presentation
@@ -66,7 +66,7 @@ function ToolBar({
                 Delete presentation
               </button>
               <label className={[styles.button].join(" ")}>
-                <input type="file" accept="application/json" name="file" onChange={handleFileChange}/>
+                <input type="file" accept="application/json" name="file" onChange={handleFileChange} />
                 <span>Choose presentation</span>
               </label>
               <button type="button" className={styles.theme} onClick={handleThemeChange}>

@@ -1,0 +1,21 @@
+.name {
+  width: 100px;
+  height: 30px;
+  margin-top: 15px;
+  margin-left: 25px;
+  font-family: Tahoma, serif;
+  background: #fff;
+  border: 1px solid #315957;
+  border-radius: 15px;
+  outline: none;
+}
+
+.name:hover {
+  border-color: #e2e2e2;
+  transition: 250ms;
+}
+
+.name:focus {
+  border-color: #9c15a4;
+  transition: 250ms;
+}

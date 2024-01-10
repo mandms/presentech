@@ -163,7 +163,7 @@ input[type="checkbox"] {
   border-radius: 5px;
 }
 
-[data-theme='dark'] {
+[data-theme="dark"] {
   .sidebar {
     background-color: #484848;
   }
